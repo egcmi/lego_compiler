@@ -1,0 +1,2 @@
+yacc -vd calc-ambiguo.y
+gcc y.tab.c -ly -ll

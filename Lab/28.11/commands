@@ -1,0 +1,5 @@
+flex -l first-lex.l ------ generate c file. lex.yy.c file that contains definition for function yyx
+
+gcc lex.yy.c ----------- creates a.out (if we don't rename it it's always gonna be like that)
+
+./a.out --- run the program and do whatever
