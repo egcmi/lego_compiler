@@ -11,29 +11,9 @@
        double value;			//value of an identifier of type NUM
        }
 
-%token <value>    NUM
-%token <lexeme>   COOR
-%token <lexeme>   DIR
-%token SHOW
-%token GRID
-%token HEIGHT
-%token FITS
-%token PLACE
-%token DELETE
-%token ALL
+%token <value>  NUM
 %token IF
-%token THEN
-%token WHILE
-%token DO
-%token ELSE
-%token MOVE
-%token AND
-%token OR
-%token EQ
-%token ASSIGN
-%token GR
-%token LOW
-%token <lexeme> VAR
+%token <lexeme> ID
 
 %type <value> expr
  /* %type <value> line */
