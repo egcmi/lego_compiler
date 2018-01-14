@@ -3,6 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include "lego.h"
+node_t *head;
+int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h);
+int rm(node_t ** head, char* id);
 %}
 
 
@@ -14,6 +18,7 @@
 %token <value>    NUM
 %token <lexeme>   DIR
 %token SHOW
+%token EXIT
 %token MATRIX
 %token ARRAY
 %token PYRAMID
@@ -34,10 +39,7 @@
 %token AT
 %token <lexeme> VAR
 
-%type <lexeme> matrix
-%type <lexeme> array
-%type <lexeme> pyramid
-%type <lexeme> dome
+%type <lexeme> type
 %type <value> expr
 
 %left '='
@@ -50,38 +52,27 @@ line  : expr '\n'                   {printf("Result: %f\n");}
       | expr line                   {}
       ;
 
-expr  : '+' NUM NUM                 {printf("grid has size %d %d \n", $2, $3);}
-      | VAR '=' types               {}
-      | PLACE VAR AT coo            {}
-      | MOVE VAR mopt               {}
-      | HEIGHT hopt                 {}
-      | DELETE dopt                 {}
-      | FITS VAR coo                {}
+expr  : EXIT                              {exit(EXIT_SUCCESS);}
+      | GRID NUM NUM                      {printf("grid has size %d %d \n", $2, $3);}
+      | type VAR '=' '(' NUM ',' NUM ')'  {printf("%d\n",add(head,$2,$5,$7,$1,-1,-1,-1,-1));}
+      | PLACE VAR AT '(' NUM ',' NUM ')'  {}
+      | MOVE VAR mopt                     {}
+      | HEIGHT hopt                       {}
+      | DELETE VAR                        {printf("%d",rm(head,$2));}
+      | FITS VAR '(' NUM ',' NUM ')'      {}
       ;
 
-types : matrix                      {}
-      | array                       {}
-      | pyramid                     {}
-      | dome                        {}
-      ;
-
-matrix : MATRIX NUM NUM             {}
-      ;
-
-array : ARRAY NUM                   {}
-      ;
-
-dome  : DOME NUM NUM                {}
-      ;
-
-pyramid : PYRAMID NUM NUM           {}
+type  : MATRIX NUM NUM              {}
+      | ARRAY NUM                   {}
+      | DOME                        {}
+      | PYRAMID NUM NUM             {}
       ;
 
 mopt  : DIR NUM                     {}
-      | AT coo                      {}
+      | AT '(' NUM ',' NUM ')'      {}
       ;
 
-hopt  : coo                         {}
+hopt  : '(' NUM ',' NUM ')'         {}
       | VAR                         {}
       ;
 
@@ -90,9 +81,74 @@ dopt  : VAR                         {}
       | GRID                        {}
       ;
 
-coo   : '(' NUM ',' NUM ')'         {}
-      ;
-
 %%
 
 #include "lex.yy.c"
+
+int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h) {
+    node_t * current = head;
+    node_t * node = malloc(sizeof(node_t));
+    node->id = id;
+    node->x = x;
+    node->y = y;
+    node->z = z;
+    node->type = type;
+    node->coox = coox;
+    node->cooy = cooy;
+    node->h = h;
+
+    if (head == NULL){
+      head = node;
+      head->next = NULL;
+      return 1;
+    }
+
+    while (current->next != NULL) {
+        if(current->id == id){
+          printf("This variable is already used. Error in line %d", yylineno);
+          return -1;
+        }
+        current = current->next;
+    }
+
+    current->next = malloc(sizeof(node_t));
+    current->next = node;
+    current->next->next = NULL;
+
+    return 1;
+}
+
+int rm(node_t ** head, char* id) {
+    node_t * current = *head;
+    node_t * prev = *head;
+    node_t * temp_node = NULL;
+
+    if(current == NULL){
+      printf("This variable does not exist. Thus, it cannot be deleted. Error in line %d", yylineno);
+      return -1;
+    }
+
+    if(current->id == id){
+      free(head);
+      head = current->next;
+      return 1;
+    }
+
+    while (current->next != NULL && current->next->id != id){
+        current = current->next;
+    }
+
+    temp_node = current->next;
+    current->next = temp_node->next;
+    free(temp_node);
+
+    return 1;
+
+}
+
+int main (void) {
+  node_t * head = NULL;
+  head = malloc(sizeof(node_t));
+
+  return yyparse ( );
+}

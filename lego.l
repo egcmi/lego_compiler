@@ -3,12 +3,13 @@
 %{
     #include <stdio.h>
     #include <string.h>
+    #include "y.tab.h"
 	void yyerror(char *);
 %}
 
 num			[0-9]+
 dir			(left|right|up|down)
-var			[A-Z]{num}{1,2}
+var			[a-z]{num}{1,2}
 
 %%
 [ \t\n]+ 	{/* do we need to skip blanks? */}
@@ -19,6 +20,9 @@ var			[A-Z]{num}{1,2}
 			 return DIR;}
 {var}		{yylval.lexeme = strdup(yytext);
 			return VAR;}
+[-()<>=+*/;{},] {return *yytext;}
+
+"exit"		{return EXIT;}
 "show"		{return SHOW;}
 "matrix"	{return MATRIX;}
 "array"		{return ARRAY;}

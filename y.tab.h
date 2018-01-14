@@ -48,63 +48,65 @@ extern int yydebug;
     NUM = 258,
     DIR = 259,
     SHOW = 260,
-    MATRIX = 261,
-    ARRAY = 262,
-    PYRAMID = 263,
-    DOME = 264,
-    GRID = 265,
-    HEIGHT = 266,
-    FITS = 267,
-    PLACE = 268,
-    DELETE = 269,
-    ALL = 270,
-    IF = 271,
-    THEN = 272,
-    ELSE = 273,
-    MOVE = 274,
-    AND = 275,
-    OR = 276,
-    EQ = 277,
-    AT = 278,
-    VAR = 279
+    EXIT = 261,
+    MATRIX = 262,
+    ARRAY = 263,
+    PYRAMID = 264,
+    DOME = 265,
+    GRID = 266,
+    HEIGHT = 267,
+    FITS = 268,
+    PLACE = 269,
+    DELETE = 270,
+    ALL = 271,
+    IF = 272,
+    THEN = 273,
+    ELSE = 274,
+    MOVE = 275,
+    AND = 276,
+    OR = 277,
+    EQ = 278,
+    AT = 279,
+    VAR = 280
   };
 #endif
 /* Tokens.  */
 #define NUM 258
 #define DIR 259
 #define SHOW 260
-#define MATRIX 261
-#define ARRAY 262
-#define PYRAMID 263
-#define DOME 264
-#define GRID 265
-#define HEIGHT 266
-#define FITS 267
-#define PLACE 268
-#define DELETE 269
-#define ALL 270
-#define IF 271
-#define THEN 272
-#define ELSE 273
-#define MOVE 274
-#define AND 275
-#define OR 276
-#define EQ 277
-#define AT 278
-#define VAR 279
+#define EXIT 261
+#define MATRIX 262
+#define ARRAY 263
+#define PYRAMID 264
+#define DOME 265
+#define GRID 266
+#define HEIGHT 267
+#define FITS 268
+#define PLACE 269
+#define DELETE 270
+#define ALL 271
+#define IF 272
+#define THEN 273
+#define ELSE 274
+#define MOVE 275
+#define AND 276
+#define OR 277
+#define EQ 278
+#define AT 279
+#define VAR 280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 9 "lego.y" /* yacc.c:1909  */
+#line 13 "lego.y" /* yacc.c:1909  */
 
        char* lexeme;			//identifier
        double value;			//value of an identifier of type NUM
        
 
-#line 108 "y.tab.h" /* yacc.c:1909  */
+#line 110 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
