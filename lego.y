@@ -38,6 +38,7 @@
 %type <lexeme> array
 %type <lexeme> pyramid
 %type <lexeme> dome
+%type <value> expr
 
 %left '='
 %left EQ '>' '<'
@@ -49,8 +50,8 @@ line  : expr '\n'                   {printf("Result: %f\n");}
       | expr line                   {}
       ;
 
-expr  : GRID NUM NUM                {printf("grid has size %d %d \n", $2, $3);}
-      | VAR '=' types               {} 
+expr  : '+' NUM NUM                 {printf("grid has size %d %d \n", $2, $3);}
+      | VAR '=' types               {}
       | PLACE VAR AT coo            {}
       | MOVE VAR mopt               {}
       | HEIGHT hopt                 {}
