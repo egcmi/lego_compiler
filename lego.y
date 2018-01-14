@@ -7,6 +7,7 @@
 node_t *head;
 int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h);
 int rm(node_t ** head, char* id);
+int place(node_t * head, char* id, int coox, int cooy);
 %}
 
 
@@ -55,7 +56,7 @@ line  : expr '\n'                   {printf("Result: %f\n");}
 expr  : EXIT                              {exit(EXIT_SUCCESS);}
       | GRID NUM NUM                      {printf("grid has size %d %d \n", $2, $3);}
       | type VAR '=' '(' NUM ',' NUM ')'  {printf("%d\n",add(head,$2,$5,$7,$1,-1,-1,-1,-1));}
-      | PLACE VAR AT '(' NUM ',' NUM ')'  {}
+      | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",place(head,$2,$5,$7));}
       | MOVE VAR mopt                     {}
       | HEIGHT hopt                       {}
       | DELETE VAR                        {printf("%d",rm(head,$2));}
@@ -116,6 +117,27 @@ int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int 
     current->next->next = NULL;
 
     return 1;
+}
+
+int place(node_t * head, char* id, int coox, int cooy) {
+    node_t * current = head;
+
+    if (head == NULL){
+      printf("This variable does not exist. Error in line %d", yylineno);
+    }
+
+    while (current->next != NULL) {
+        if(current->id == id){
+          current->coox = coox;
+          current->cooy = cooy;
+          return 1;
+        }
+        current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d", yylineno);
+
+    return -1;
 }
 
 int rm(node_t ** head, char* id) {

@@ -72,8 +72,9 @@
 node_t *head;
 int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h);
 int rm(node_t ** head, char* id);
+int place(node_t * head, char* id, int coox, int cooy);
 
-#line 77 "y.tab.c" /* yacc.c:339  */
+#line 78 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -163,13 +164,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 13 "lego.y" /* yacc.c:355  */
+#line 14 "lego.y" /* yacc.c:355  */
 
        char* lexeme;			//identifier
        double value;			//value of an identifier of type NUM
        
 
-#line 173 "y.tab.c" /* yacc.c:355  */
+#line 174 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -186,7 +187,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 190 "y.tab.c" /* yacc.c:358  */
+#line 191 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -486,8 +487,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    51,    51,    52,    55,    56,    57,    58,    59,    60,
-      61,    62,    65,    66,    67,    68,    71,    72,    75,    76
+       0,    52,    52,    53,    56,    57,    58,    59,    60,    61,
+      62,    63,    66,    67,    68,    69,    72,    73,    76,    77
 };
 #endif
 
@@ -1291,115 +1292,115 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 51 "lego.y" /* yacc.c:1646  */
+#line 52 "lego.y" /* yacc.c:1646  */
     {printf("Result: %f\n");}
-#line 1297 "y.tab.c" /* yacc.c:1646  */
+#line 1298 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 52 "lego.y" /* yacc.c:1646  */
+#line 53 "lego.y" /* yacc.c:1646  */
     {}
-#line 1303 "y.tab.c" /* yacc.c:1646  */
+#line 1304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 55 "lego.y" /* yacc.c:1646  */
+#line 56 "lego.y" /* yacc.c:1646  */
     {exit(EXIT_SUCCESS);}
-#line 1309 "y.tab.c" /* yacc.c:1646  */
+#line 1310 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 56 "lego.y" /* yacc.c:1646  */
+#line 57 "lego.y" /* yacc.c:1646  */
     {printf("grid has size %d %d \n", (yyvsp[-1].value), (yyvsp[0].value));}
-#line 1315 "y.tab.c" /* yacc.c:1646  */
+#line 1316 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 57 "lego.y" /* yacc.c:1646  */
+#line 58 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",add(head,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-7].lexeme),-1,-1,-1,-1));}
-#line 1321 "y.tab.c" /* yacc.c:1646  */
+#line 1322 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 58 "lego.y" /* yacc.c:1646  */
-    {}
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+#line 59 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",place(head,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1328 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 59 "lego.y" /* yacc.c:1646  */
+#line 60 "lego.y" /* yacc.c:1646  */
     {}
-#line 1333 "y.tab.c" /* yacc.c:1646  */
+#line 1334 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 60 "lego.y" /* yacc.c:1646  */
+#line 61 "lego.y" /* yacc.c:1646  */
     {}
-#line 1339 "y.tab.c" /* yacc.c:1646  */
+#line 1340 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 61 "lego.y" /* yacc.c:1646  */
+#line 62 "lego.y" /* yacc.c:1646  */
     {printf("%d",rm(head,(yyvsp[0].lexeme)));}
-#line 1345 "y.tab.c" /* yacc.c:1646  */
+#line 1346 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 62 "lego.y" /* yacc.c:1646  */
+#line 63 "lego.y" /* yacc.c:1646  */
     {}
-#line 1351 "y.tab.c" /* yacc.c:1646  */
+#line 1352 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 65 "lego.y" /* yacc.c:1646  */
+#line 66 "lego.y" /* yacc.c:1646  */
     {}
-#line 1357 "y.tab.c" /* yacc.c:1646  */
+#line 1358 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 66 "lego.y" /* yacc.c:1646  */
+#line 67 "lego.y" /* yacc.c:1646  */
     {}
-#line 1363 "y.tab.c" /* yacc.c:1646  */
+#line 1364 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 67 "lego.y" /* yacc.c:1646  */
+#line 68 "lego.y" /* yacc.c:1646  */
     {}
-#line 1369 "y.tab.c" /* yacc.c:1646  */
+#line 1370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 68 "lego.y" /* yacc.c:1646  */
+#line 69 "lego.y" /* yacc.c:1646  */
     {}
-#line 1375 "y.tab.c" /* yacc.c:1646  */
+#line 1376 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 71 "lego.y" /* yacc.c:1646  */
+#line 72 "lego.y" /* yacc.c:1646  */
     {}
-#line 1381 "y.tab.c" /* yacc.c:1646  */
+#line 1382 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 72 "lego.y" /* yacc.c:1646  */
+#line 73 "lego.y" /* yacc.c:1646  */
     {}
-#line 1387 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 75 "lego.y" /* yacc.c:1646  */
+#line 76 "lego.y" /* yacc.c:1646  */
     {}
-#line 1393 "y.tab.c" /* yacc.c:1646  */
+#line 1394 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 76 "lego.y" /* yacc.c:1646  */
+#line 77 "lego.y" /* yacc.c:1646  */
     {}
-#line 1399 "y.tab.c" /* yacc.c:1646  */
+#line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1403 "y.tab.c" /* yacc.c:1646  */
+#line 1404 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1627,7 +1628,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 84 "lego.y" /* yacc.c:1906  */
+#line 85 "lego.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
@@ -1663,6 +1664,28 @@ int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int 
     current->next->next = NULL;
 
     return 1;
+}
+
+int place(node_t * head, char* id, int coox, int cooy) {
+    node_t * current = head;
+
+    if (head == NULL){
+      printf("This variable does not exist. Error in line %d", yylineno);
+    }
+
+    while (current->next != NULL) {
+        if(current->id == id){
+          current->coox = coox;
+          current->cooy = cooy;
+          return 1;
+        }
+        current = current->next;
+    }
+
+
+    printf("This variable does not exist. Error in line %d", yylineno);
+
+    return -1;
 }
 
 int rm(node_t ** head, char* id) {
