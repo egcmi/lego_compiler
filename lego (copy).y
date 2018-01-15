@@ -51,22 +51,22 @@ line  : expr '\n'                   {printf("Result: %f\n");}
 
 expr  : EXIT                              {exit(EXIT_SUCCESS);}
       | GRID NUM NUM                      {printf("grid has size %d %d \n", $2, $3);}
-      | VAR '=' type '(' NUM ',' NUM ')'  {printf("%d\n",add(list,$1,$5,$7,$3,-1,-1,-1,-1));}
-      | VAR '=' ARRAY NUM                 {printf("%d\n",add(list,$1,1,$4,$3,-1,-1,-1,-1));}
-      | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(list,0,$2,$5,$7));}
+      | type VAR '=' '(' NUM ',' NUM ')'  {printf("%d\n",add(list,$2,$5,$7,$1,-1,-1,-1,-1));}
+      | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(0,$2,$5,$7));}
       | MOVE mopt                         {;}
       | HEIGHT hopt                       {}
-      | DELETE VAR                        {printf("%d\n",rm(list,$2));}
+      | DELETE VAR                        {printf("%d",rm($2));}
       | FITS VAR '(' NUM ',' NUM ')'      {}
       ;
 
-type  : MATRIX                            {;}
-      | DOME                              {;}
-      | PYRAMID                           {;}
+type  : MATRIX NUM NUM              {}
+      | ARRAY NUM                   {}
+      | DOME                        {}
+      | PYRAMID NUM NUM             {}
       ;
 
-mopt  : VAR DIR NUM                       {printf("%d\n",updateDir(list,$1,$2,$3));}
-      | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(list,1,$1,$4,$6));}
+mopt  : VAR DIR NUM                       {printf("%d\n",updateDir($1,$2,$3));}
+      | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(1,$1,$4,$6));}
       ;
 
 hopt  : '(' NUM ',' NUM ')'         {}
@@ -83,7 +83,8 @@ dopt  : VAR                         {}
 #include "lex.yy.c"
 
 int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
-    node_t * current = list->head;
+    node_t * head = list->head;
+    node_t * current = head;
     node_t * node = malloc(sizeof(node_t));
     node->id = id;
     node->x = x;
@@ -94,11 +95,15 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     node->cooy = cooy;
     node->h = h;
 
-    if (list->head == NULL){
-      list->head = node;
-      list->head->next = NULL;
+    printf("add1111\n");
+
+    if (head == NULL){
+      head = node;
+      printf("add21\n");
       return 1;
     }
+
+    printf("add1111\n");
 
     while (current->next != NULL) {
       if(strcmp(current->id, id) == 0){
@@ -117,13 +122,16 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     current->next = node;
     current->next->next = NULL;
 
+    printf("add2\n");
+
     return 1;
 }
 
-int update(l_list * list, int method, char* id, int coox, int cooy) {
-    node_t * current = list->head;
+int update(int method, char* id, int coox, int cooy) {
+    node_t * head = list->head;
+    node_t * current = head;
 
-    if (list->head == NULL){
+    if (head == NULL){
       printf("This variable does not exist. Error in line %d", yylineno);
       return 0;
     }
@@ -158,13 +166,14 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
     return 0;
 }
 
-int updateDir(l_list * list, char* id, int coox, int cooy){
-    node_t * current = list->head;
+int updateDir(char* id, int coox, int cooy){
+    node_t * head = list->head;
+    node_t * current = head;
 
     return 0;
 
-    if (list->head == NULL){
-      printf("There exist no variables. Error in line %d", yylineno);
+    if (head == NULL){
+      printf("This variable does not exist. Error in line %d", yylineno);
       return 0;
     }
 
@@ -188,19 +197,19 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
     return 0;
 }
 
-int rm(l_list * list, char* id) {
+int rm(char* id) {
 
     node_t* current = list->head;
     node_t* temp = malloc(sizeof(node_t));
 
-    if (list->head == NULL){
+    if (current == NULL){
       printf("Variable list is empty: could not delete %s. Error in line %d\n", id, yylineno);
       return 0;
     }
 
     if (strcmp(current->id, id) == 0){
       free(current);
-      list->head = current->next;
+      current = current->next;
       printf("Deleted node id=%s\n", id);
       return 1;
     }
@@ -221,14 +230,12 @@ int rm(l_list * list, char* id) {
     return 0;
 }
 
-l_list* create_list(void) {
-    l_list* p;
-    p = malloc(sizeof(l_list));
-    p->head = NULL;
-    return p;
+List * emptylist(){
+  List * list = malloc(sizeof(List));
+  list->head = NULL;
+  return list;
 }
 
 int main (void) {
-  list = create_list();
   return yyparse ( );
 }

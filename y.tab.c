@@ -69,13 +69,8 @@
 #include <ctype.h>
 #include <stdio.h>
 #include "lego.h"
-node_t * head;
-int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h);
-int rm(node_t ** head, char* id);
-int update(int method, char* id, int coox, int cooy);
-int updateDir(char* id, int coox, int cooy);
 
-#line 79 "y.tab.c" /* yacc.c:339  */
+#line 74 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -165,13 +160,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 15 "lego.y" /* yacc.c:355  */
+#line 10 "lego.y" /* yacc.c:355  */
 
        char* lexeme;			//identifier
        double value;			//value of an identifier of type NUM
        
 
-#line 175 "y.tab.c" /* yacc.c:355  */
+#line 170 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -188,7 +183,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 192 "y.tab.c" /* yacc.c:358  */
+#line 187 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -488,8 +483,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    53,    53,    54,    57,    58,    59,    60,    61,    62,
-      63,    64,    67,    68,    69,    70,    73,    74,    77,    78
+       0,    48,    48,    49,    52,    53,    54,    55,    56,    57,
+      58,    59,    62,    63,    64,    65,    68,    69,    72,    73
 };
 #endif
 
@@ -1293,115 +1288,115 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 53 "lego.y" /* yacc.c:1646  */
+#line 48 "lego.y" /* yacc.c:1646  */
     {printf("Result: %f\n");}
-#line 1299 "y.tab.c" /* yacc.c:1646  */
+#line 1294 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 54 "lego.y" /* yacc.c:1646  */
+#line 49 "lego.y" /* yacc.c:1646  */
     {}
-#line 1305 "y.tab.c" /* yacc.c:1646  */
+#line 1300 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 57 "lego.y" /* yacc.c:1646  */
+#line 52 "lego.y" /* yacc.c:1646  */
     {exit(EXIT_SUCCESS);}
-#line 1311 "y.tab.c" /* yacc.c:1646  */
+#line 1306 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 58 "lego.y" /* yacc.c:1646  */
+#line 53 "lego.y" /* yacc.c:1646  */
     {printf("grid has size %d %d \n", (yyvsp[-1].value), (yyvsp[0].value));}
-#line 1317 "y.tab.c" /* yacc.c:1646  */
+#line 1312 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 59 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",add((yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-7].lexeme),-1,-1,-1,-1));}
-#line 1323 "y.tab.c" /* yacc.c:1646  */
+#line 54 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",add(list,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-7].lexeme),-1,-1,-1,-1));}
+#line 1318 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 60 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update(0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1329 "y.tab.c" /* yacc.c:1646  */
+#line 55 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",update(list,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1324 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 61 "lego.y" /* yacc.c:1646  */
+#line 56 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1335 "y.tab.c" /* yacc.c:1646  */
+#line 1330 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 62 "lego.y" /* yacc.c:1646  */
+#line 57 "lego.y" /* yacc.c:1646  */
     {}
-#line 1341 "y.tab.c" /* yacc.c:1646  */
+#line 1336 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 63 "lego.y" /* yacc.c:1646  */
-    {printf("%d",rm(head,(yyvsp[0].lexeme)));}
-#line 1347 "y.tab.c" /* yacc.c:1646  */
+#line 58 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",rm(list,(yyvsp[0].lexeme)));}
+#line 1342 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 64 "lego.y" /* yacc.c:1646  */
+#line 59 "lego.y" /* yacc.c:1646  */
     {}
-#line 1353 "y.tab.c" /* yacc.c:1646  */
+#line 1348 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 67 "lego.y" /* yacc.c:1646  */
+#line 62 "lego.y" /* yacc.c:1646  */
     {}
-#line 1359 "y.tab.c" /* yacc.c:1646  */
+#line 1354 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 68 "lego.y" /* yacc.c:1646  */
+#line 63 "lego.y" /* yacc.c:1646  */
     {}
-#line 1365 "y.tab.c" /* yacc.c:1646  */
+#line 1360 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 69 "lego.y" /* yacc.c:1646  */
+#line 64 "lego.y" /* yacc.c:1646  */
     {}
-#line 1371 "y.tab.c" /* yacc.c:1646  */
+#line 1366 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 70 "lego.y" /* yacc.c:1646  */
+#line 65 "lego.y" /* yacc.c:1646  */
     {}
-#line 1377 "y.tab.c" /* yacc.c:1646  */
+#line 1372 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 73 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",updateDir((yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+#line 68 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",updateDir(list,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
+#line 1378 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 74 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update(1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1389 "y.tab.c" /* yacc.c:1646  */
+#line 69 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",update(list,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1384 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 77 "lego.y" /* yacc.c:1646  */
+#line 72 "lego.y" /* yacc.c:1646  */
     {}
-#line 1395 "y.tab.c" /* yacc.c:1646  */
+#line 1390 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 78 "lego.y" /* yacc.c:1646  */
+#line 73 "lego.y" /* yacc.c:1646  */
     {}
-#line 1401 "y.tab.c" /* yacc.c:1646  */
+#line 1396 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1405 "y.tab.c" /* yacc.c:1646  */
+#line 1400 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1629,13 +1624,13 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 86 "lego.y" /* yacc.c:1906  */
+#line 81 "lego.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
 
-int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
-    node_t * current = head;
+int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
+    node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
     node->id = id;
     node->x = x;
@@ -1646,15 +1641,13 @@ int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
     node->cooy = cooy;
     node->h = h;
 
-    if (head == NULL){
-      printf("head is null\n");
-      head = node;
-      head->next = NULL;
+    if (list->head == NULL){
+      list->head = node;
+      list->head->next = NULL;
       return 1;
     }
 
     while (current->next != NULL) {
-      printf("while\n");
       if(strcmp(current->id, id) == 0){
         printf("This variable is already used. Error in line %d\n", yylineno);
         return 0;
@@ -1667,7 +1660,6 @@ int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
       return 0;
     }
 
-    printf("endwhile\n");
     current->next = malloc(sizeof(node_t));
     current->next = node;
     current->next->next = NULL;
@@ -1675,35 +1667,32 @@ int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
     return 1;
 }
 
-int update(int method, char* id, int coox, int cooy) {
-    node_t * current = head;
+int update(l_list * list, int method, char* id, int coox, int cooy) {
+    node_t * current = list->head;
 
-    if (head == NULL){
+    if (list->head == NULL){
       printf("This variable does not exist. Error in line %d", yylineno);
       return 0;
     }
 
-    while (current->next != NULL) {
-      printf("itera\n");
+    while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
         if(method == 0){
           if(current->coox == -1 && current->cooy == -1){
             current->coox = coox;
             current->cooy = cooy;
-            printf("before coox = %d, cooy = %d\n", coox, cooy);
             return 1;
           }else{
-            printf("This lego was already placed. Please use move to move it. Error in line %d", yylineno);
+            printf("This lego was already placed. Please use move to move it. Error in line %d\n", yylineno);
             return 0;
           }
         }else{
           if(current->coox == -1 && current->cooy == -1){
-            printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d", yylineno);
+            printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
             return 0;
           }else{
             current->coox = coox;
             current->cooy = cooy;
-            printf("before coox = %d, cooy = %d\n", coox, cooy);
             return 1;
           }
         }
@@ -1711,20 +1700,25 @@ int update(int method, char* id, int coox, int cooy) {
       current = current->next;
     }
 
-    if((strcmp(current->id, id) == 0)){
-      if(method == 0){
+    printf("This variable does not exist. Error in line %d", yylineno);
+
+    return 0;
+}
+
+int updateDir(l_list * list, char* id, int coox, int cooy){
+    node_t * current = list->head;
+
+    return 0;
+
+    if (list->head == NULL){
+      printf("There exist no variables. Error in line %d", yylineno);
+      return 0;
+    }
+
+    while (current != NULL) {
+      if((strcmp(current->id, id) == 0)){
         if(current->coox == -1 && current->cooy == -1){
-          current->coox = coox;
-          current->cooy = cooy;
-          printf("before coox = %d, cooy = %d\n", coox, cooy);
-          return 1;
-        }else{
-          printf("This lego was already placed. Please use move to move it. Error in line %d", yylineno);
-          return 0;
-        }
-      }else{
-        if(current->coox == -1 && current->cooy == -1){
-          printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d", yylineno);
+          printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
           return 0;
         }else{
           current->coox = coox;
@@ -1733,6 +1727,7 @@ int update(int method, char* id, int coox, int cooy) {
           return 1;
         }
       }
+      current = current->next;
     }
 
     printf("This variable does not exist. Error in line %d", yylineno);
@@ -1740,39 +1735,47 @@ int update(int method, char* id, int coox, int cooy) {
     return 0;
 }
 
-int updateDir(char* id, int coox, int cooy){
-    node_t * current = head;
-    return -1;
-}
+int rm(l_list * list, char* id) {
 
-int rm(node_t ** head, char* id) {
-    node_t * current = *head;
-    node_t * prev = *head;
-    node_t * temp_node = NULL;
+    node_t* current = list->head;
+    node_t* temp = malloc(sizeof(node_t));
 
-    if(current == NULL){
-      printf("This variable does not exist. Thus, it cannot be deleted. Error in line %d", yylineno);
+    if (list->head == NULL){
+      printf("Variable list is empty: could not delete %s. Error in line %d\n", id, yylineno);
       return 0;
     }
 
-    if(current->id == id){
-      free(head);
-      head = current->next;
+    if (strcmp(current->id, id) == 0){
+      free(current);
+      list->head = current->next;
+      printf("Deleted node id=%s\n", id);
       return 1;
     }
 
-    while (current->next != NULL && current->next->id != id){
-        current = current->next;
+    // delete any element
+    while(current->next != NULL){
+      if (strcmp(current->next->id, id)==0 ){
+        temp = current->next;
+        current->next = temp->next;
+        free(temp);
+        printf("Deleted node id=%s\n", id);
+        return 1;
+      }
+      current = current->next;
     }
 
-    temp_node = current->next;
-    current->next = temp_node->next;
-    free(temp_node);
+    printf("Variable %s does not exist: it cannot be deleted. Error in line %d\n", id, yylineno);
+    return 0;
+}
 
-    return 1;
-
+l_list* create_list(void) {
+    l_list* p;
+    p = malloc(sizeof(l_list));
+    p->head = NULL;
+    return p;
 }
 
 int main (void) {
+  list = create_list();
   return yyparse ( );
 }
