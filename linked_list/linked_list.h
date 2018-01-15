@@ -11,16 +11,11 @@ typedef struct node {
 	int cooy;
 	int h;
 	struct node *next;
-} node_struct;
+} node_t;
 
-typedef struct list {
-	int count;
-	node_struct *first;
-} list_struct;
-
-node_struct* create_node(char* id, int x, int y, int z, int coox, int cooy, int h);
-list_struct* create_list(void);
-int insert_element(list_struct *list, node_struct *element);
-int delete_element(list_struct *list, char* id);
+node_t* create_node(char* id, int x, int y, int z, int coox, int cooy, int h);
+node_t* create_list(void);
+int insert_element(node_t *head, node_t *element);
+int delete_element(node_t *head, char* id);
 
 #endif /*LINKEDLIST_H*/

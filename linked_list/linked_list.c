@@ -11,9 +11,9 @@
 #define FALSE 0
 #endif
 
-node_struct* create_node(char* id, int x, int y, int z, int coox, int cooy, int h){
-	node_struct* p; //pointer
-	p=malloc(sizeof(node_struct));
+node_t* create_node(char* id, int x, int y, int z, int coox, int cooy, int h){
+	node_t* p; //pointer
+	p=malloc(sizeof(node_t));
 	p->id = id;								// !!! char* id /pointer???) !!!
 	p->x = x;
 	p->y = y;
@@ -27,69 +27,57 @@ node_struct* create_node(char* id, int x, int y, int z, int coox, int cooy, int 
 	return p;
 }
 
-list_struct* create_list(void) {
-	list_struct* p;	//pointer
-	p = malloc(sizeof(list_struct));
-	p->count = 0;
-	p->first = NULL;
-	printf("Created list, length=%d\n", p->count);
-	return p;
-}
-
 // add element to the end of the list
-int insert_element(list_struct *list, node_struct *element) {
+int insert_element(node_t *head, node_t *element) {
 	// list is empty
-	if(list->count == 0){
-		list->first = element;
-		printf("Added node id=%s, in position=%d\n", element->id, list->count);
-		list->count++;
+	if(head == NULL){
+		head = element;
+		printf("Added node id=%s\n", element->id);
 		return TRUE;
 	}
 
 	// list is not empty
-	node_struct* current;
-	current = list->first;
+	node_t* current;
+	current = head;
 	while(current->next != NULL){
-        if( strcmp(current->id, element->id)==0 ){				// !!! string comparison !!!
-        	printf("Variable %s already in use. Error in line %s\n", element->id, "yylineno");
-        	return FALSE;
-        }
-        current = current->next;
-    }
-    current->next = element;
-    printf("Added node id=%s, in position=%d\n", element->id, list->count);
-    list->count++;
-    return TRUE;
+		if( strcmp(current->id, element->id)==0 ){
+			printf("Variable %s already in use. Error in line %s\n", element->id, "yylineno");
+			return FALSE;
+		}
+		current = current->next;
+	}
+	current->next = element;
+	printf("Added node id=%s\n", element->id);
+	return TRUE;
 }
 
-int delete_element(list_struct *list, char* id) {
+int delete_element(node_t *head, char* id) {
+	printf("%s\n", id);
 	// list is empty
-	if (list->count == 0){
+	if (head == NULL){
 		printf("Variable list is empty: could not delete %s. Error in line %s\n", id, "yylineno");
 		return FALSE;
 	}
 
 	// list is not empty
-	node_struct* current;
-	current = list->first;
-	node_struct* temp = malloc(sizeof(node_struct));
+	node_t* current;
+	current = head;
+	node_t* temp = malloc(sizeof(node_t));
 
 	// delete first elelement
-	if ( strcmp(current->id, id)==0 ){								// !!! string comparison !!!
-		free(list->first);
-		list->first = current->next;
-		list->count--;
+	if ( strcmp(current->id, id)==0 ){
+		free(head);
+		head = current->next;
 		printf("Deleted node id=%s\n", id);
 		return TRUE;
 	}
 
 	// delete any element
 	while(current->next != NULL){
-		if ( strcmp(current->next->id, id)==0 ){					// !!! string comparison !!!
+		if ( strcmp(current->next->id, id)==0 ){
 			temp = current->next;
 			current->next = temp->next;
 			free(temp);
-			list->count--;
 			printf("Deleted node id=%s\n", id);
 			return TRUE;
 		}

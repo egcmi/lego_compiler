@@ -19,19 +19,19 @@
  */
 int main(int argc, char** argv) {
 
-	node_struct *node;
+	node_t *node;
 	node = create_node("b1", 1, 2, 1, 0, 1, 1);
 
-	list_struct *list;
-	list=create_list();
+	node_t *head;
+	head = malloc(sizeof(node_t));
 
-	if(insert_element(list, node)){
+	if(insert_element(head, node)){
 		printf("Insert successful\n");
 	} else {
 		printf("Insert failed\n");
 	}
 
-	if(delete_element(list, "b1")){
+	if(delete_element(head, "b1")){
 		printf("Delete successful\n");
 	} else {
 		printf("Insert failed\n");
