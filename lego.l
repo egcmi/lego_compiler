@@ -10,6 +10,7 @@
 num			[0-9]+
 dir			(left|right|up|down)
 var			[a-z]{num}{1,2}
+gvar		[A-Z]{num}{1,2}
 
 %%
 [ \t\n]+ 	{/* do we need to skip blanks? */}
@@ -20,6 +21,9 @@ var			[a-z]{num}{1,2}
 			 return DIR;}
 {var}		{yylval.lexeme = strdup(yytext);
 			return VAR;}
+{gvar}		{yylval.lexeme = strdup(yytext);
+			return GVAR;}
+
 [-()<>=+*/;{},] {return *yytext;}
 
 "exit"		{return EXIT;}

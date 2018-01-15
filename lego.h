@@ -14,15 +14,12 @@ typedef struct list {
 	node_t *head;
 } l_list;
 
-typedef struct matrix{
-	char* matrix[1][1];
-}matrix_t;
-
 typedef struct grid{
 	char* id;
 	int row;
 	int col;
 	l_list * blocks;
+    char *** matrix;
 	struct grid * next;
 } grid_t;
 
@@ -41,3 +38,5 @@ int updateDir(l_list * list, char* id, int coox, int cooy);
 int add_grid(g_list * list, char id[], int row, int col);
 int rm_grid(g_list * list, char* id);
 int switch_grid(g_list * list, char* id);
+int show(g_list * list, char* id);
+int free_matrix(char *** matrix, int row, int col);

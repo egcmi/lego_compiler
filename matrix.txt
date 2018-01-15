@@ -1,0 +1,14 @@
+A1 = grid (3,3)
+A2 = grid (2,2)
+show A2
+delete grid A2
+b1 = dome (2,3)
+b2 = dome (2,3)
+delete grid A1
+A2 = grid (4,4)
+A2 = grid (2,2)
+A3 = grid (2,3)
+A4 = grid (5,5)
+show A4
+delete grid A3
+exit

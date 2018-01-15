@@ -36,6 +36,7 @@
 %token EQ
 %token AT
 %token <lexeme> VAR
+%token <lexeme> GVAR
 
 %type <lexeme> type
 %type <value> expr
@@ -51,10 +52,11 @@ line  : expr '\n'                   {printf("Result: %f\n");}
       ;
 
 expr  : EXIT                              {exit(EXIT_SUCCESS);}
-      | SWITCH GRID VAR                   {printf("%d\n",switch_grid(grid_list,$3));}
-      | VAR '=' GRID '(' NUM ',' NUM ')'  {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
+      | SWITCH GRID GVAR                  {printf("%d\n",switch_grid(grid_list,$3));}
+      | GVAR '=' GRID '(' NUM ',' NUM ')' {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
       | VAR '=' type '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,$3,-1,-1,-1,-1));}
       | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(default_grid->blocks,0,$2,$5,$7));}
+      | SHOW GVAR                         {printf("%d\n",show(grid_list,$2));}
       | MOVE mopt                         {;}
       | HEIGHT hopt                       {}
       | DELETE dopt                       {;}
@@ -76,7 +78,7 @@ hopt  : '(' NUM ',' NUM ')'         {}
 
 dopt  : VAR                               {printf("%d\n",rm(default_grid->blocks,$1));}
       | ALL                               {printf("%d\n",rm_all(default_grid->blocks));}
-      | GRID VAR                          {printf("%d\n",rm_grid(grid_list,$2));}
+      | GRID GVAR                         {printf("%d\n",rm_grid(grid_list,$2));}
       ;
 
 %%
@@ -103,6 +105,16 @@ grid_t* create_grid_t(void) {
     return p;
 }
 
+int free_matrix(char *** matrix, int row, int col){
+    for(int i=0; i < row; i++){
+        for(int j=0; j < col; j++){
+            free(matrix[i][j]);
+        }
+    }
+    free(matrix);
+}
+
+
 int add_grid(g_list * list, char id[], int row, int col) {
     grid_t * current = list->head;
     grid_t * node = malloc(sizeof(grid_t));
@@ -111,6 +123,13 @@ int add_grid(g_list * list, char id[], int row, int col) {
     node->col = col;
     node->blocks = create_list();
     default_grid=create_grid_t();
+    node->matrix = (char * * *) malloc(row * sizeof(char * *));
+    for(int i=0; i < row; i++){
+        node->matrix[i] = (char * *) malloc(col * sizeof(char *));
+        for(int j=0; j < col; j++){
+            node->matrix[i][j] = "0";
+        }
+    }
 
     if (list->head == NULL){
       list->head = node;
@@ -123,6 +142,8 @@ int add_grid(g_list * list, char id[], int row, int col) {
     while (current->next != NULL) {
       if(strcmp(current->id, id) == 0){
         printf("This grid is already used. Error in line %d\n", yylineno);
+        free(node->matrix);
+        free(node);
         return 0;
       }
       current = current->next;
@@ -130,6 +151,8 @@ int add_grid(g_list * list, char id[], int row, int col) {
 
     if(strcmp(current->id, id) == 0){
       printf("This grid is already used. Error in line %d\n", yylineno);
+      free(node->matrix);
+      free(node);
       return 0;
     }
 
@@ -153,6 +176,7 @@ int switch_grid(g_list * list, char* id) {
     if(strcmp(id, "-1") == 0){
       id = list->head->id;
     } 
+
 
     grid_t* current = list->head;
     
@@ -201,7 +225,7 @@ int rm_grid(g_list * list, char* id) {
         free(temp);
         printf("Deleted grid id=%s\n", id);
         if (strcmp(def_id, id) == 0){
-          switch_grid(list, list->head);
+          switch_grid(list, list->head->id);
         }
         return 1;
       }
@@ -210,6 +234,32 @@ int rm_grid(g_list * list, char* id) {
 
     printf("Grid %s does not exist: it cannot be deleted. Error in line %d\n", id, yylineno);
     return 0;
+}
+
+int show(g_list * list, char* id){
+
+    grid_t* current = list->head;
+
+    if (list->head == NULL){
+      printf("Grid list is empty: could not print %s. Error in line %d\n", id, yylineno);
+      return 0;
+    }
+
+    while (current != NULL) {
+      if(strcmp(current->id, id) == 0){
+        int maxRow = current->row;
+        int maxCol = current->col;
+        for (int row=0; row<maxRow; row++){
+          for(int col=0; col<maxCol; col++){
+            printf("%s     ", current->matrix[row][col]);
+          }
+          printf("\n");
+        }
+        return 1;
+      }
+      current = current->next;
+    }
+
 }
 
 int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
@@ -234,6 +284,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     while (current->next != NULL) {
       if(strcmp(current->id, id) == 0){
         printf("This variable is already used. Error in line %d\n", yylineno);
+        free(node);
         return 0;
       }
       current = current->next;
@@ -241,6 +292,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
 
     if(strcmp(current->id, id) == 0){
       printf("This variable is already used. Error in line %d\n", yylineno);
+      free(node);
       return 0;
     }
 
@@ -248,7 +300,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     current->next = node;
     current->next->next = NULL;
 
-    printf("Added item %s to grid %s", current->next->id, default_grid->id);
+    printf("Added item %s to grid %s\n", current->next->id, default_grid->id);
 
     return 1;
 }
@@ -259,7 +311,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
     node_t * current = list->head;
 
     if (list->head == NULL){
-      printf("This variable does not exist. Error in line %d", yylineno);
+      printf("This variable does not exist. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -288,7 +340,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }
@@ -299,7 +351,7 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
     return 0;
 
     if (list->head == NULL){
-      printf("There exist no variables. Error in line %d", yylineno);
+      printf("There exist no variables. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -318,7 +370,7 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }

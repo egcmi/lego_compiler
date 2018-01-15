@@ -68,7 +68,8 @@ extern int yydebug;
     OR = 278,
     EQ = 279,
     AT = 280,
-    VAR = 281
+    VAR = 281,
+    GVAR = 282
   };
 #endif
 /* Tokens.  */
@@ -96,6 +97,7 @@ extern int yydebug;
 #define EQ 279
 #define AT 280
 #define VAR 281
+#define GVAR 282
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -108,7 +110,7 @@ union YYSTYPE
        double value;			//value of an identifier of type NUM
        
 
-#line 112 "y.tab.h" /* yacc.c:1909  */
+#line 114 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
