@@ -1,0 +1,790 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"list",
+				"list2"
+			],
+			[
+				"re",
+				"result"
+			],
+			[
+				"li",
+				"list2"
+			],
+			[
+				"lis",
+				"list2"
+			],
+			[
+				"ma",
+				"malloc"
+			],
+			[
+				"el",
+				"element"
+			],
+			[
+				"node",
+				"node_struct"
+			],
+			[
+				"e",
+				"element"
+			],
+			[
+				"coo",
+				"cooy"
+			],
+			[
+				"create",
+				"create_node"
+			],
+			[
+				"nod",
+				"node_type"
+			],
+			[
+				"bod",
+				"bodysimple"
+			],
+			[
+				"da",
+				"day"
+			],
+			[
+				"pho",
+				"photo"
+			],
+			[
+				"id",
+				"id_event"
+			],
+			[
+				"quer",
+				"query"
+			],
+			[
+				"sub",
+				"submit"
+			],
+			[
+				"stud",
+				"student_name"
+			],
+			[
+				"new_",
+				"new_form"
+			],
+			[
+				"new",
+				"new_form"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"m",
+				"mysurname"
+			],
+			[
+				"my",
+				"mysurname"
+			],
+			[
+				"in",
+				"input\tTag"
+			],
+			[
+				"p",
+				"php"
+			],
+			[
+				"bo",
+				"bold"
+			],
+			[
+				"fon",
+				"font-stack"
+			],
+			[
+				"border-c",
+				"border-collapse"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"appl",
+				"apply"
+			],
+			[
+				"pl",
+				"plugin"
+			],
+			[
+				"appy",
+				"apply"
+			],
+			[
+				"use",
+				"user_id"
+			],
+			[
+				"user",
+				"user_path"
+			],
+			[
+				"ni",
+				"nickname"
+			],
+			[
+				"aut",
+				"auth_hash"
+			],
+			[
+				"la",
+				"latest"
+			],
+			[
+				"brew",
+				"brewerylist"
+			],
+			[
+				"sor",
+				"sort_asc"
+			],
+			[
+				"fav",
+				"favorite_beer"
+			],
+			[
+				"beer",
+				"beer_count"
+			],
+			[
+				"t",
+				"td"
+			],
+			[
+				"bre",
+				"brewery"
+			],
+			[
+				"br",
+				"brewery"
+			],
+			[
+				"year",
+				"year_asc"
+			],
+			[
+				"reti",
+				"retired_breweries"
+			],
+			[
+				"ret",
+				"retired"
+			],
+			[
+				"name",
+				"name_asc"
+			],
+			[
+				"act",
+				"active_breweries"
+			],
+			[
+				"st",
+				"style"
+			],
+			[
+				"favo",
+				"favorite_style"
+			],
+			[
+				"co",
+				"count"
+			],
+			[
+				"sort",
+				"sorted_by_rating_in_desc_order"
+			],
+			[
+				"mem",
+				"memberships"
+			],
+			[
+				"na",
+				"name"
+			],
+			[
+				"stat",
+				"status"
+			],
+			[
+				"si",
+				"size"
+			],
+			[
+				"Beer",
+				"BeermappingApi"
+			],
+			[
+				"x",
+				"xml"
+			],
+			[
+				"Con",
+				"Content-Type"
+			],
+			[
+				"set",
+				"set_breweries_and_styles_for_template"
+			],
+			[
+				"me",
+				"memberships"
+			],
+			[
+				"els",
+				"else"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"ad",
+				"admin_accounts"
+			],
+			[
+				"rati",
+				"ratings_path"
+			],
+			[
+				"ratin",
+				"ratings"
+			],
+			[
+				"dle",
+				"delete"
+			],
+			[
+				"corre",
+				"correct_addresses"
+			],
+			[
+				"s",
+				"sorted"
+			],
+			[
+				"d",
+				"directory"
+			],
+			[
+				"IN",
+				"INTO"
+			],
+			[
+				"tmp",
+				"thmyprocesses"
+			],
+			[
+				"proc",
+				"processes"
+			],
+			[
+				"so",
+				"sorted"
+			],
+			[
+				"IFS",
+				"IFS_old"
+			],
+			[
+				"file",
+				"filename"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "rein",
+		"selected_items":
+		[
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"mark",
+				"Markdown Preview: Preview in Browser"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: i",
+				"Package Control: Install Package"
+			],
+			[
+				"color",
+				"Colorsublime: Install Theme"
+			],
+			[
+				"package control ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install package control",
+				"Install Package Control"
+			],
+			[
+				"install",
+				"Install Package Control"
+			]
+		],
+		"width": 461.0
+	},
+	"console":
+	{
+		"height": 120.0,
+		"history":
+		[
+			"exit()",
+			"exit",
+			"esc"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/emanuela/Desktop/lego/lego.h",
+		"/home/emanuela/Desktop/lego/lego.y",
+		"/home/emanuela/Desktop/lego/linked_list.c",
+		"/home/emanuela/Desktop/lego/lego.l",
+		"/home/emanuela/Desktop/ims/project/Database/uniscout (3).sql",
+		"/home/emanuela/Desktop/ims/project/src/scheduler.sh",
+		"/opt/lampp/htdocs/uniscout/home.html",
+		"/home/emanuela/Desktop/ims/project/Database/uniscout (2).sql",
+		"/opt/lampp/htdocs/uniscout/css/style.css",
+		"/home/emanuela/Desktop/ims/project/src/css/style.css",
+		"/home/emanuela/Desktop/UNI/Programming in C/hy-c-programming-2017Spring/Week2-2_10_SinglyLinkedList/src/linkedlist.c",
+		"/home/emanuela/Downloads/uniscout.sql",
+		"/opt/lampp/htdocs/uniscout/php/email_script.php",
+		"/opt/lampp/htdocs/uniscout/php/reminder_email.html",
+		"/opt/lampp/htdocs/uniscout/php/confirmation_email.html",
+		"/opt/lampp/htdocs/uniscout/php/save_participant.php",
+		"/home/emanuela/Desktop/ims/project/src/contact.html",
+		"/home/emanuela/Desktop/ims/project/src/libs/scheduler/Scheduler.java",
+		"/opt/lampp/htdocs/uniscout/contact.html",
+		"/opt/lampp/htdocs/uniscout/php/email_contact.php",
+		"/home/emanuela/Desktop/ims/lab/Assignment_1/sheet1/WebContent/booking.html",
+		"/opt/lampp/htdocs/uniscout/src/php/confirmation_email.html",
+		"/opt/lampp/htdocs/uniscout/src/home.html",
+		"/opt/lampp/htdocs/uniscout/src/css/style.css",
+		"/opt/lampp/htdocs/uniscout/src/php/save_participant.php",
+		"/opt/lampp/htdocs/uniscout/src/php/load_posts_past_events.php",
+		"/opt/lampp/htdocs/uniscout/src/php/load_posts_home.php",
+		"/opt/lampp/htdocs/uniscout/src/js/functions_save_part.js",
+		"/opt/lampp/htdocs/uniscout/src/js/functions_home.js",
+		"/opt/lampp/htdocs/uniscout/src/php/confirmation_email",
+		"/home/emanuela/Desktop/ims/project/src/php/save_participant.php",
+		"/home/emanuela/Desktop/ims/project/src/php/load_posts_home.php",
+		"/home/emanuela/Desktop/UNI/Formal Languages and Compilers/Compilers/lego/lex.yy.c",
+		"/home/emanuela/Desktop/UNI/Formal Languages and Compilers/Compilers/lego/grammarLegoCatalunya.g",
+		"/home/emanuela/Desktop/UNI/Formal Languages and Compilers/Compilers/lego/projv1.l",
+		"/usr/bin/plasma-discover",
+		"/home/emanuela/Desktop/UNI/Formal Languages and Compilers/Compilers/lego/proj.l",
+		"/home/emanuela/Desktop/ims/project/src/style.css",
+		"/home/emanuela/Desktop/ims/project/src/archive.html",
+		"/home/emanuela/Desktop/ims/project/src/home.html",
+		"/home/emanuela/Desktop/steam.desktop",
+		"/home/emanuela/Desktop/Steam.desktop",
+		"/home/emanuela/Desktop/ims/lab/Assignment_7/books.sql",
+		"/home/emanuela/Desktop/ims/lab/Assignment_7/queryfordb.txt",
+		"/home/emanuela/bin/FoxitReader",
+		"/home/emanuela/opt/iris-micro-linux-0.0.7/iris-micro.sh",
+		"/home/emanuela/opt/iris-micro-linux-0.0.7/night_mode.sh",
+		"/home/emanuela/opt/iris-micro-linux-0.0.7/reset.sh",
+		"/opt/lampp/htdocs/school.sql",
+		"/opt/lampp/htdocs/students.php",
+		"/home/emanuela/opt/iris-micro-linux-0.0.7/day_mode.sh",
+		"/home/emanuela/Desktop/ims/lab/Assignment_6/school.sql",
+		"/home/emanuela/.ssh/id_rsa.pub",
+		"/home/emanuela/.ssh/id_rsa",
+		"/opt/lampp/htdocs/welcome.html",
+		"/opt/lampp/htdocs/welcome.php",
+		"/home/emanuela/Desktop/ims/lab/Assignment_5/Downloaded_to_save_in_web_server_root/welcome.php",
+		"/home/emanuela/Desktop/ims/lab/Assignment_5/Downloaded_to_save_in_web_server_root/welcome.html",
+		"/home/emanuela/Desktop/ims/lab/Assignment_2/assignment2/WebContent/style.css",
+		"/home/emanuela/Desktop/ims/lab/Assignment_3/SASS_revalidate/WebContent/_h2.scss",
+		"/home/emanuela/Desktop/ims/lab/Assignment_3/SASS_revalidate/WebContent/_a.scss",
+		"/home/emanuela/Desktop/ims/lab/Assignment_3/SASS_revalidate/WebContent/style.scss",
+		"/home/emanuela/Desktop/ims/lab/Assignment_3/SASS_revalidate/WebContent/output.css",
+		"/home/emanuela/Desktop/ims/lab/Assignment_3/SASS_revalidate/WebContent/_heading.scss",
+		"/home/emanuela/Desktop/ims/lab/Assignment_2/assignment2/WebContent/home.html",
+		"/home/emanuela/Desktop/ims/lab/Assignment_2/assignment2/WebContent/booking1.html",
+		"/home/emanuela/Desktop/ims/lab/Assignment_2/html5_revalidation/WebContent/booking.html",
+		"/home/emanuela/.local/share/applications/eclipse.desktop",
+		"/home/emanuela/.local/share/applications/telegramdesktop.desktop",
+		"/home/emanuela/Desktop/ims/lab/Assignment_2/assignment2/WebContent/booking.html",
+		"/usr/share/applications/sublime_text.desktop",
+		"/home/emanuela/Desktop/foo.c",
+		"/home/emanuela/Desktop/UNI/Database Systems/classwork4.txt",
+		"/home/emanuela/Desktop/UNI/Database Systems/classwork3.txt",
+		"/home/emanuela/Downloads/qemu-2.10.1/README",
+		"/home/emanuela/Desktop/win_vids/Films/Game of Thrones/Season 6/English Subtitles/game.of.thrones.s06.e01.the.red.woman.(2016).eng.1cd.(6603644)/Game.of.Thrones.S06E01.INTERNAL.HDTV.x264-KILLERS.srt",
+		"/home/emanuela/Desktop/win_music/suggestions.txt",
+		"/home/emanuela/Desktop/otm/OTM1617/README.md",
+		"/home/emanuela/Desktop/otm/OTM1617/week2/week2.md",
+		"/tmp/mozilla_emanuela0/yam.erl",
+		"/tmp/mozilla_emanuela0/antIntelligence.cs",
+		"/home/emanuela/Desktop/beep.c",
+		"/usr/include/stdio.h",
+		"/home/emanuela/Downloads/iAFnZ47W.txt",
+		"/home/emanuela/Desktop/ohtu/ohtu-week4/WebLogin/salasanat.txt",
+		"/home/emanuela/opt/eclipse/java-neon/eclipse/eclipse",
+		"/home/emanuela/Downloads/(album).Verdena-Endkadenz.Vol.2.G-AsTrA.2015/(album).Verdena-Endkadenz.Vol.2.G-AsTrA.2015/Endkadenz Vol 2/playlist.m3u",
+		"/home/emanuela/Desktop/ohtu/ohtu-week4/TyhjaProjekti/src/main/java/ohtu/Main.java",
+		"/home/emanuela/Downloads/calabi_assignment.c",
+		"/home/emanuela/Desktop/netpro/NetPro/nbproject/configurations.xml",
+		"/home/emanuela/.local/share/applications/netbeans.desktop",
+		"/home/emanuela/Desktop/netbeans-8.2.desktop",
+		"/home/emanuela/Desktop/ohtu/mluukkai/koodi/viikko3/LoginCucumber/salasanat.txt",
+		"/home/emanuela/Desktop/ohtu/ohtu-week3/LoginCucumber/src/main/resources/spring-context.xml",
+		"/home/emanuela/Desktop/ohtu/mluukkai/koodi/viikko3/LoginCucumber/src/main/resources/spring-context.xml",
+		"/home/emanuela/Desktop/ohtu/mluukkai/koodi/viikko3/checstyle.xml",
+		"/media/emanuela/Windows/Users/Emanuela/Documents/UNI/Ohjelmistotuotanto/ohtu-week3/src/main/java/Main.java",
+		"/media/emanuela/Windows/Users/Emanuela/Documents/UNI/Ohjelmistotuotanto/ohtu-week3/src/main/java/ohtu/Multiplier.java",
+		"/home/emanuela/Desktop/ohtu/ohtu-week3/checkstyle.xml",
+		"/home/emanuela/Desktop/ohtu/ohtu-week3/build.gradle",
+		"/media/emanuela/Windows/Users/Emanuela/Documents/UNI/Ohjelmistotuotanto/mluukkai/koodi/viikko3/LoginCucumber/build/reports/tests/test/index.html",
+		"/media/emanuela/Windows/Users/Emanuela/Documents/UNI/Ohjelmistotuotanto/ohtu-week3/src/main/java/ohtu/MultiplierTest.java",
+		"/media/emanuela/Windows/Users/Emanuela/Documents/UNI/Ohjelmistotuotanto/ohtu-week3/src/main/java/ohtu/Multiplier.jaca",
+		"/home/emanuela/Desktop/ohtu/mluukkai/koodi/viikko2/Verkkokauppa1/src/main/resources/spring-context.xml",
+		"/home/emanuela/Desktop/ohtu/ohtu-week1/build.gradle",
+		"/home/emanuela/Desktop/ohtu/ohtu-week2/NhlStatistics/build.gradle",
+		"/home/emanuela/Desktop/ohtu/ohtu-week2/NhlStatistics/settings.gradle",
+		"/home/emanuela/Desktop/ohtu/ohtu-week1/settings.gradle",
+		"/home/emanuela/Downloads/Lucida-Console/install-a-new-font.txt",
+		"/home/emanuela/Desktop/ohtu/mluukkai/koodi/viikko2/RiippuvuuksienInjektointi1/settings.gradle",
+		"/home/emanuela/Desktop/UNI/Johdatus Tekoälyyn/instructions",
+		"/home/emanuela/Desktop/johtek/NaiveBayes/NaiveBayes.py",
+		"/home/emanuela/Desktop/UNI/Johdatus Tekoälyyn/email/spam4.txt",
+		"/home/emanuela/Desktop/johtek/email/=(){}",
+		"/home/emanuela/Downloads/Telegram Desktop/spam8",
+		"/home/emanuela/Downloads/Telegram Desktop/spam7",
+		"/home/emanuela/Desktop/johtek/instructions",
+		"/home/emanuela/Desktop/johtek/email/wiki9",
+		"/home/emanuela/Desktop/johtek/email/wiki5",
+		"/home/emanuela/Desktop/johtek/email/spam1",
+		"/home/emanuela/Downloads/python/Python-3.6.0/README",
+		"/home/emanuela/Downloads/Telegram Desktop/wiki7",
+		"/home/emanuela/Desktop/johtek/email/spam7",
+		"/home/emanuela/Desktop/johtek/email/wiki1",
+		"/home/emanuela/Desktop/johtek/email/spam8",
+		"/home/emanuela/Desktop/johtek/email/wiki2",
+		"/home/emanuela/Desktop/johtek/email/wiki3",
+		"/home/emanuela/Desktop/johtek/email/wiki4"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 103.0,
+		"where_history":
+		[
+			"<current file>",
+			"",
+			"/home/emanuela/Desktop/ror/ratebeer,<open folders>",
+			"/home/emanuela/Desktop/ror/ratebeer"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"linked_list",
+			"node_type",
+			"L",
+			"p",
+			"createList",
+			"deleteElement",
+			"insertElement",
+			"linkedList",
+			"nodeType",
+			"snodeType",
+			"list_type",
+			"sList",
+			"activity",
+			"primary",
+			"reset",
+			"5px",
+			"printf \\(",
+			"printf (",
+			"printf \\(",
+			"printf (",
+			"printf",
+			"train_set",
+			"strncpy",
+			"sadou",
+			"sad",
+			"sadou",
+			"port",
+			"BUFSIZE",
+			"buf",
+			"BUFSIZE",
+			"buf",
+			"BUFSIZE",
+			"buf",
+			", expires_in:10.minutes",
+			"\"",
+			"elem",
+			"beer_no",
+			"beer",
+			"beers",
+			"beertable",
+			"BEERS",
+			"beer",
+			"beers",
+			"beer",
+			"breweries",
+			"brewery_id",
+			"h4",
+			"h2",
+			"h3",
+			"5",
+			"h4",
+			"caption",
+			"user_path",
+			"rating_average",
+			"ratings",
+			", ",
+			"filename",
+			"ls",
+			" $",
+			"printf",
+			"45",
+			"205",
+			"378",
+			"555",
+			"287",
+			"439",
+			"565",
+			"121",
+			"233",
+			"379",
+			"504",
+			"403",
+			"542",
+			"231",
+			"checl",
+			"invoice",
+			"bill, ",
+			"0{2,}",
+			", description",
+			"date",
+			"American",
+			"nationality",
+			"DELETE ON CASCADE",
+			"selfpath",
+			"gedit"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"list_struct",
+			"node_struct",
+			"list",
+			"pointer",
+			"create_list",
+			"delete_element",
+			"insert_element",
+			"linked_list",
+			"node_type",
+			"nodeType",
+			"linkedList",
+			"list_type",
+			"event",
+			"prim",
+			"$zero-width",
+			"$def-width",
+			"train",
+			"portno",
+			"BUF_SIZE",
+			"buffer",
+			"BUF_SIZE",
+			"buffer",
+			"BUF_SIZE",
+			"buffer",
+			"",
+			"'",
+			"item",
+			"beer_count",
+			"brewery",
+			"breweries",
+			"brewerytable",
+			"BREWERIES",
+			"brewery",
+			"breweries",
+			"brewery",
+			"h3",
+			"h4",
+			"h3",
+			"h4",
+			"input",
+			"212",
+			"411",
+			"1010",
+			"409",
+			"208",
+			"1007",
+			"206",
+			"405",
+			"205",
+			"1004",
+			"203",
+			"202",
+			"401",
+			"check",
+			"id",
+			"",
+			"date_time",
+			"USA",
+			"country",
+			"ON DELETE CASCADE",
+			"path",
+			"sublime-text"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 37.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "linkedlist.sublime-project",
+	"replace":
+	{
+		"height": 69.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 32.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 242.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
