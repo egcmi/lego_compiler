@@ -100,7 +100,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "lego.y" /* yacc.c:1909  */
+#line 15 "lego.y" /* yacc.c:1909  */
 
        char* lexeme;			//identifier
        double value;			//value of an identifier of type NUM

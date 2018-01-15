@@ -35,7 +35,7 @@ Grammar
     4     | GRID NUM NUM
     5     | type VAR '=' '(' NUM ',' NUM ')'
     6     | PLACE VAR AT '(' NUM ',' NUM ')'
-    7     | MOVE VAR mopt
+    7     | MOVE mopt
     8     | HEIGHT hopt
     9     | DELETE VAR
    10     | FITS VAR '(' NUM ',' NUM ')'
@@ -45,8 +45,8 @@ Grammar
    13     | DOME
    14     | PYRAMID NUM NUM
 
-   15 mopt: DIR NUM
-   16     | AT '(' NUM ',' NUM ')'
+   15 mopt: VAR DIR NUM
+   16     | VAR AT '(' NUM ',' NUM ')'
 
    17 hopt: '(' NUM ',' NUM ')'
    18     | VAR
@@ -85,7 +85,7 @@ AND (276)
 OR (277)
 EQ (278)
 AT (279) 6 16
-VAR (280) 5 6 7 9 10 18
+VAR (280) 5 6 9 10 15 16 18
 
 
 Nonterminals, with rules where they appear
@@ -200,16 +200,18 @@ State 10
 
 State 11
 
-    7 expr: MOVE . VAR mopt
+    7 expr: MOVE . mopt
 
     VAR  shift, and go to state 25
+
+    mopt  go to state 26
 
 
 State 12
 
     0 $accept: line . $end
 
-    $end  shift, and go to state 26
+    $end  shift, and go to state 27
 
 
 State 13
@@ -228,9 +230,9 @@ State 13
     PLACE    shift, and go to state 9
     DELETE   shift, and go to state 10
     MOVE     shift, and go to state 11
-    '\n'     shift, and go to state 27
+    '\n'     shift, and go to state 28
 
-    line  go to state 28
+    line  go to state 29
     expr  go to state 13
     type  go to state 14
 
@@ -239,14 +241,14 @@ State 14
 
     5 expr: type . VAR '=' '(' NUM ',' NUM ')'
 
-    VAR  shift, and go to state 29
+    VAR  shift, and go to state 30
 
 
 State 15
 
    11 type: MATRIX NUM . NUM
 
-    NUM  shift, and go to state 30
+    NUM  shift, and go to state 31
 
 
 State 16
@@ -260,14 +262,14 @@ State 17
 
    14 type: PYRAMID NUM . NUM
 
-    NUM  shift, and go to state 31
+    NUM  shift, and go to state 32
 
 
 State 18
 
     4 expr: GRID NUM . NUM
 
-    NUM  shift, and go to state 32
+    NUM  shift, and go to state 33
 
 
 State 19
@@ -281,7 +283,7 @@ State 20
 
    17 hopt: '(' . NUM ',' NUM ')'
 
-    NUM  shift, and go to state 33
+    NUM  shift, and go to state 34
 
 
 State 21
@@ -295,14 +297,14 @@ State 22
 
    10 expr: FITS VAR . '(' NUM ',' NUM ')'
 
-    '('  shift, and go to state 34
+    '('  shift, and go to state 35
 
 
 State 23
 
     6 expr: PLACE VAR . AT '(' NUM ',' NUM ')'
 
-    AT  shift, and go to state 35
+    AT  shift, and go to state 36
 
 
 State 24
@@ -314,103 +316,102 @@ State 24
 
 State 25
 
-    7 expr: MOVE VAR . mopt
+   15 mopt: VAR . DIR NUM
+   16     | VAR . AT '(' NUM ',' NUM ')'
 
-    DIR  shift, and go to state 36
-    AT   shift, and go to state 37
-
-    mopt  go to state 38
+    DIR  shift, and go to state 37
+    AT   shift, and go to state 38
 
 
 State 26
+
+    7 expr: MOVE mopt .
+
+    $default  reduce using rule 7 (expr)
+
+
+State 27
 
     0 $accept: line $end .
 
     $default  accept
 
 
-State 27
+State 28
 
     1 line: expr '\n' .
 
     $default  reduce using rule 1 (line)
 
 
-State 28
+State 29
 
     2 line: expr line .
 
     $default  reduce using rule 2 (line)
 
 
-State 29
+State 30
 
     5 expr: type VAR . '=' '(' NUM ',' NUM ')'
 
     '='  shift, and go to state 39
 
 
-State 30
+State 31
 
    11 type: MATRIX NUM NUM .
 
     $default  reduce using rule 11 (type)
 
 
-State 31
+State 32
 
    14 type: PYRAMID NUM NUM .
 
     $default  reduce using rule 14 (type)
 
 
-State 32
+State 33
 
     4 expr: GRID NUM NUM .
 
     $default  reduce using rule 4 (expr)
 
 
-State 33
+State 34
 
    17 hopt: '(' NUM . ',' NUM ')'
 
     ','  shift, and go to state 40
 
 
-State 34
+State 35
 
    10 expr: FITS VAR '(' . NUM ',' NUM ')'
 
     NUM  shift, and go to state 41
 
 
-State 35
+State 36
 
     6 expr: PLACE VAR AT . '(' NUM ',' NUM ')'
 
     '('  shift, and go to state 42
 
 
-State 36
+State 37
 
-   15 mopt: DIR . NUM
+   15 mopt: VAR DIR . NUM
 
     NUM  shift, and go to state 43
 
 
-State 37
-
-   16 mopt: AT . '(' NUM ',' NUM ')'
-
-    '('  shift, and go to state 44
-
-
 State 38
 
-    7 expr: MOVE VAR mopt .
+   16 mopt: VAR AT . '(' NUM ',' NUM ')'
 
-    $default  reduce using rule 7 (expr)
+    '('  shift, and go to state 44
 
 
 State 39
@@ -443,14 +444,14 @@ State 42
 
 State 43
 
-   15 mopt: DIR NUM .
+   15 mopt: VAR DIR NUM .
 
     $default  reduce using rule 15 (mopt)
 
 
 State 44
 
-   16 mopt: AT '(' . NUM ',' NUM ')'
+   16 mopt: VAR AT '(' . NUM ',' NUM ')'
 
     NUM  shift, and go to state 49
 
@@ -485,7 +486,7 @@ State 48
 
 State 49
 
-   16 mopt: AT '(' NUM . ',' NUM ')'
+   16 mopt: VAR AT '(' NUM . ',' NUM ')'
 
     ','  shift, and go to state 54
 
@@ -520,7 +521,7 @@ State 53
 
 State 54
 
-   16 mopt: AT '(' NUM ',' . NUM ')'
+   16 mopt: VAR AT '(' NUM ',' . NUM ')'
 
     NUM  shift, and go to state 58
 
@@ -548,7 +549,7 @@ State 57
 
 State 58
 
-   16 mopt: AT '(' NUM ',' NUM . ')'
+   16 mopt: VAR AT '(' NUM ',' NUM . ')'
 
     ')'  shift, and go to state 61
 
@@ -569,7 +570,7 @@ State 60
 
 State 61
 
-   16 mopt: AT '(' NUM ',' NUM ')' .
+   16 mopt: VAR AT '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 16 (mopt)
 

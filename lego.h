@@ -9,3 +9,8 @@ typedef struct node {
     int h;
     struct node * next;
 } node_t;
+
+typedef struct list {
+	int count;
+	node_t *head;
+} list_t;

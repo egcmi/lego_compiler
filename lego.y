@@ -4,10 +4,11 @@
 #include <ctype.h>
 #include <stdio.h>
 #include "lego.h"
-node_t *head;
-int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h);
+node_t * head;
+int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h);
 int rm(node_t ** head, char* id);
-int place(node_t * head, char* id, int coox, int cooy);
+int update(int method, char* id, int coox, int cooy);
+int updateDir(char* id, int coox, int cooy);
 %}
 
 
@@ -55,9 +56,9 @@ line  : expr '\n'                   {printf("Result: %f\n");}
 
 expr  : EXIT                              {exit(EXIT_SUCCESS);}
       | GRID NUM NUM                      {printf("grid has size %d %d \n", $2, $3);}
-      | type VAR '=' '(' NUM ',' NUM ')'  {printf("%d\n",add(head,$2,$5,$7,$1,-1,-1,-1,-1));}
-      | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",place(head,$2,$5,$7));}
-      | MOVE VAR mopt                     {}
+      | type VAR '=' '(' NUM ',' NUM ')'  {printf("%d\n",add($2,$5,$7,$1,-1,-1,-1,-1));}
+      | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(0,$2,$5,$7));}
+      | MOVE mopt                         {;}
       | HEIGHT hopt                       {}
       | DELETE VAR                        {printf("%d",rm(head,$2));}
       | FITS VAR '(' NUM ',' NUM ')'      {}
@@ -69,8 +70,8 @@ type  : MATRIX NUM NUM              {}
       | PYRAMID NUM NUM             {}
       ;
 
-mopt  : DIR NUM                     {}
-      | AT '(' NUM ',' NUM ')'      {}
+mopt  : VAR DIR NUM                       {printf("%d\n",updateDir($1,$2,$3));}
+      | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(1,$1,$4,$6));}
       ;
 
 hopt  : '(' NUM ',' NUM ')'         {}
@@ -86,7 +87,7 @@ dopt  : VAR                         {}
 
 #include "lex.yy.c"
 
-int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int cooy, int h) {
+int add(char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
     node_t * current = head;
     node_t * node = malloc(sizeof(node_t));
     node->id = id;
@@ -99,19 +100,27 @@ int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int 
     node->h = h;
 
     if (head == NULL){
+      printf("head is null\n");
       head = node;
       head->next = NULL;
       return 1;
     }
 
     while (current->next != NULL) {
-        if(current->id == id){
-          printf("This variable is already used. Error in line %d", yylineno);
-          return -1;
-        }
-        current = current->next;
+      printf("while\n");
+      if(strcmp(current->id, id) == 0){
+        printf("This variable is already used. Error in line %d\n", yylineno);
+        return 0;
+      }
+      current = current->next;
     }
 
+    if(strcmp(current->id, id) == 0){
+      printf("This variable is already used. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    printf("endwhile\n");
     current->next = malloc(sizeof(node_t));
     current->next = node;
     current->next->next = NULL;
@@ -119,24 +128,73 @@ int add(node_t * head, char* id, int x, int y, int z, char* type, int coox, int 
     return 1;
 }
 
-int place(node_t * head, char* id, int coox, int cooy) {
+int update(int method, char* id, int coox, int cooy) {
     node_t * current = head;
 
     if (head == NULL){
       printf("This variable does not exist. Error in line %d", yylineno);
+      return 0;
     }
 
     while (current->next != NULL) {
-        if(current->id == id){
+      printf("itera\n");
+      if((strcmp(current->id, id) == 0)){
+        if(method == 0){
+          if(current->coox == -1 && current->cooy == -1){
+            current->coox = coox;
+            current->cooy = cooy;
+            printf("before coox = %d, cooy = %d\n", coox, cooy);
+            return 1;
+          }else{
+            printf("This lego was already placed. Please use move to move it. Error in line %d\n", yylineno);
+            return 0;
+          }
+        }else{
+          if(current->coox == -1 && current->cooy == -1){
+            printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
+            return 0;
+          }else{
+            current->coox = coox;
+            current->cooy = cooy;
+            printf("before coox = %d, cooy = %d\n", coox, cooy);
+            return 1;
+          }
+        }
+      }
+      current = current->next;
+    }
+
+    if((strcmp(current->id, id) == 0)){
+      if(method == 0){
+        if(current->coox == -1 && current->cooy == -1){
           current->coox = coox;
           current->cooy = cooy;
+          printf("before coox = %d, cooy = %d\n", coox, cooy);
+          return 1;
+        }else{
+          printf("This lego was already placed. Please use move to move it. Error in line %d", yylineno);
+          return 0;
+        }
+      }else{
+        if(current->coox == -1 && current->cooy == -1){
+          printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d", yylineno);
+          return 0;
+        }else{
+          current->coox = coox;
+          current->cooy = cooy;
+          printf("before coox = %d, cooy = %d\n", coox, cooy);
           return 1;
         }
-        current = current->next;
+      }
     }
 
     printf("This variable does not exist. Error in line %d", yylineno);
 
+    return 0;
+}
+
+int updateDir(char* id, int coox, int cooy){
+    node_t * current = head;
     return -1;
 }
 
@@ -147,7 +205,7 @@ int rm(node_t ** head, char* id) {
 
     if(current == NULL){
       printf("This variable does not exist. Thus, it cannot be deleted. Error in line %d", yylineno);
-      return -1;
+      return 0;
     }
 
     if(current->id == id){
@@ -169,8 +227,5 @@ int rm(node_t ** head, char* id) {
 }
 
 int main (void) {
-  node_t * head = NULL;
-  head = malloc(sizeof(node_t));
-
   return yyparse ( );
 }
