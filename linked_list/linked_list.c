@@ -27,18 +27,28 @@ node_t* create_node(char* id, int x, int y, int z, int coox, int cooy, int h){
 	return p;
 }
 
+l_list* create_list(void) {
+	l_list* p;
+	p = malloc(sizeof(l_list));
+	p->count = 0;
+	p->first = NULL;
+	printf("Created list, length=%d\n", p->count);
+	return p;
+}
+
 // add element to the end of the list
-int insert_element(node_t *head, node_t *element) {
+int insert_element(l_list *list, node_t *element) {
 	// list is empty
-	if(head == NULL){
-		head = element;
-		printf("Added node id=%s\n", element->id);
+	if(list->count == 0){
+		list->first = element;
+		printf("Added node id=%s, in position=%d\n", element->id, list->count);
+		list->count++;
 		return TRUE;
 	}
 
 	// list is not empty
 	node_t* current;
-	current = head;
+	current = list->first;
 	while(current->next != NULL){
 		if( strcmp(current->id, element->id)==0 ){
 			printf("Variable %s already in use. Error in line %s\n", element->id, "yylineno");
@@ -47,28 +57,29 @@ int insert_element(node_t *head, node_t *element) {
 		current = current->next;
 	}
 	current->next = element;
-	printf("Added node id=%s\n", element->id);
+	printf("Added node id=%s, in position=%d\n", element->id, list->count);
+	list->count++;
 	return TRUE;
 }
 
-int delete_element(node_t *head, char* id) {
-	printf("%s\n", id);
+int delete_element(l_list *list, char* id) {
 	// list is empty
-	if (head == NULL){
+	if (list->count == 0){
 		printf("Variable list is empty: could not delete %s. Error in line %s\n", id, "yylineno");
 		return FALSE;
 	}
 
 	// list is not empty
 	node_t* current;
-	current = head;
+	current = list->first;
 	node_t* temp = malloc(sizeof(node_t));
 
 	// delete first elelement
 	if ( strcmp(current->id, id)==0 ){
-		free(head);
-		head = current->next;
-		printf("Deleted node id=%s\n", id);
+		free(list->first);
+		list->first = current->next;
+		printf("Deleted node id=%s at position=%d\n", id, list->count);
+		list->count--;
 		return TRUE;
 	}
 
@@ -78,7 +89,8 @@ int delete_element(node_t *head, char* id) {
 			temp = current->next;
 			current->next = temp->next;
 			free(temp);
-			printf("Deleted node id=%s\n", id);
+			printf("Deleted node id=%s at position=%d\n", id, list->count);
+			list->count--;
 			return TRUE;
 		}
 	}
