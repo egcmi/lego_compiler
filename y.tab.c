@@ -1658,6 +1658,11 @@ g_list* create_grid_list(void) {
     p->head = NULL;
     return p;
 }
+grid_t* create_grid_t(void) {
+  grid_t* p;
+    p = malloc(sizeof(grid_t));
+    return p;
+}
 
 int add_grid(g_list * list, char id[], int row, int col) {
     grid_t * current = list->head;
@@ -1666,11 +1671,15 @@ int add_grid(g_list * list, char id[], int row, int col) {
     node->row = row;
     node->col = col;
     node->blocks = create_list();
+    default_grid=create_grid_t();
+
+
 
     if (list->head == NULL){
       list->head = node;
       list->head->next = NULL;
       default_grid = list->head;
+
       return 1;
     }
 
@@ -1691,28 +1700,29 @@ int add_grid(g_list * list, char id[], int row, int col) {
     current->next = node;
     current->next->next = NULL;
 
-    default_grid = current;
+    default_grid = current->next;
 
 
     return 1;
 }
 
 int rm_grid(g_list * list, char* id) {
+  if (list == NULL){
+      printf("Grid list is empty: could not delete %s. Error in line %d\n", id, yylineno);
+      return 0;
+    }
 
     grid_t* current = list->head;
     grid_t* temp = malloc(sizeof(grid_t));
 
-    if (list->head == NULL){
-      printf("Grid list is empty: could not delete %s. Error in line %d\n", id, yylineno);
-      return 0;
-    }
+    
 
 
     if (strcmp(current->id, id) == 0){
       rm_all(current->blocks);
       free(current);
       list->head = current->next;
-      default_grid = current->next;
+      //default_grid = current->next;
       printf("Deleted grid id=%s\n", id);
       return 1;
     }
@@ -1724,7 +1734,7 @@ int rm_grid(g_list * list, char* id) {
         temp = current->next;
         current->next = temp->next;
         free(temp);
-        default_grid = current->next;
+        //default_grid = current->next;
         printf("Deleted grid id=%s\n", id);
         return 1;
       }
@@ -1750,6 +1760,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     if (list->head == NULL){
       list->head = node;
       list->head->next = NULL;
+      printf("Added item %s to grid %s", list->head->id, default_grid->id);
       return 1;
     }
 
@@ -1769,6 +1780,8 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     current->next = malloc(sizeof(node_t));
     current->next = node;
     current->next->next = NULL;
+
+    printf("Added item %s to grid %s", current->next->id, default_grid->id);
 
     return 1;
 }
@@ -1885,14 +1898,13 @@ int rm_all(l_list * list){
       return 0;
     }
 
-
     // delete any element
     while(current != NULL){
-      temp = current->next;
-      current->next = temp->next;
-      free(temp);
-      printf("Deleted node id=%s\n", current->id);
-      current = current->next;
+      printf("deleted id=%s\n",current->id );
+      temp=current->next;
+      free(current);
+      current=temp;
+      
     }
 
     //printf("Variable does not exist: it cannot be deleted. Error in line %d\n", yylineno);
