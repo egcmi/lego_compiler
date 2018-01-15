@@ -49,25 +49,26 @@ extern int yydebug;
     DIR = 259,
     SHOW = 260,
     EXIT = 261,
-    MATRIX = 262,
-    ARRAY = 263,
-    PYRAMID = 264,
-    DOME = 265,
-    GRID = 266,
-    HEIGHT = 267,
-    FITS = 268,
-    PLACE = 269,
-    DELETE = 270,
-    ALL = 271,
-    IF = 272,
-    THEN = 273,
-    ELSE = 274,
-    MOVE = 275,
-    AND = 276,
-    OR = 277,
-    EQ = 278,
-    AT = 279,
-    VAR = 280
+    SWITCH = 262,
+    MATRIX = 263,
+    ARRAY = 264,
+    PYRAMID = 265,
+    DOME = 266,
+    GRID = 267,
+    HEIGHT = 268,
+    FITS = 269,
+    PLACE = 270,
+    DELETE = 271,
+    ALL = 272,
+    IF = 273,
+    THEN = 274,
+    ELSE = 275,
+    MOVE = 276,
+    AND = 277,
+    OR = 278,
+    EQ = 279,
+    AT = 280,
+    VAR = 281
   };
 #endif
 /* Tokens.  */
@@ -75,25 +76,26 @@ extern int yydebug;
 #define DIR 259
 #define SHOW 260
 #define EXIT 261
-#define MATRIX 262
-#define ARRAY 263
-#define PYRAMID 264
-#define DOME 265
-#define GRID 266
-#define HEIGHT 267
-#define FITS 268
-#define PLACE 269
-#define DELETE 270
-#define ALL 271
-#define IF 272
-#define THEN 273
-#define ELSE 274
-#define MOVE 275
-#define AND 276
-#define OR 277
-#define EQ 278
-#define AT 279
-#define VAR 280
+#define SWITCH 262
+#define MATRIX 263
+#define ARRAY 264
+#define PYRAMID 265
+#define DOME 266
+#define GRID 267
+#define HEIGHT 268
+#define FITS 269
+#define PLACE 270
+#define DELETE 271
+#define ALL 272
+#define IF 273
+#define THEN 274
+#define ELSE 275
+#define MOVE 276
+#define AND 277
+#define OR 278
+#define EQ 279
+#define AT 280
+#define VAR 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -106,7 +108,7 @@ union YYSTYPE
        double value;			//value of an identifier of type NUM
        
 
-#line 110 "y.tab.h" /* yacc.c:1909  */
+#line 112 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -23,6 +23,7 @@ var			[a-z]{num}{1,2}
 [-()<>=+*/;{},] {return *yytext;}
 
 "exit"		{return EXIT;}
+"switch"	{return SWITCH;}
 "show"		{return SHOW;}
 "matrix"	{return MATRIX;}
 "array"		{return ARRAY;}

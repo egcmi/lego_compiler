@@ -1,0 +1,10 @@
+a1 = grid (1,2)
+delete grid a1
+a1 = grid (3,4)
+switch grid a2
+a2 = grid (3,4)
+b1 = dome (2,3)
+switch grid a1
+delete b1
+delete grid a2
+exit

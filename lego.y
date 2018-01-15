@@ -16,6 +16,7 @@
 %token <lexeme>   DIR
 %token SHOW
 %token EXIT
+%token SWITCH
 %token MATRIX
 %token ARRAY
 %token PYRAMID
@@ -50,6 +51,7 @@ line  : expr '\n'                   {printf("Result: %f\n");}
       ;
 
 expr  : EXIT                              {exit(EXIT_SUCCESS);}
+      | SWITCH GRID VAR                   {printf("%d\n",switch_grid(grid_list,$3));}
       | VAR '=' GRID '(' NUM ',' NUM ')'  {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
       | VAR '=' type '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,$3,-1,-1,-1,-1));}
       | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(default_grid->blocks,0,$2,$5,$7));}
@@ -110,13 +112,11 @@ int add_grid(g_list * list, char id[], int row, int col) {
     node->blocks = create_list();
     default_grid=create_grid_t();
 
-
-
     if (list->head == NULL){
       list->head = node;
       list->head->next = NULL;
       default_grid = list->head;
-
+      default_grid->id=list->head->id;
       return 1;
     }
 
@@ -143,24 +143,52 @@ int add_grid(g_list * list, char id[], int row, int col) {
     return 1;
 }
 
+int switch_grid(g_list * list, char* id) {
+
+    if (list->head == NULL){
+      printf("Grid list is empty: could not switch to any grid. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    if(strcmp(id, "-1") == 0){
+      id = list->head->id;
+    } 
+
+    grid_t* current = list->head;
+    
+    while(current != NULL){
+      if (strcmp(current->id, id)==0 ){
+        default_grid = current;
+        printf("Switched to grid id=%s\n", id);
+        return 1;
+      }
+      current = current->next;
+    }
+
+    printf("Grid %s does not exist: you cannot switch to it. Error in line %d\n", id, yylineno);
+    return 0;
+}
+
+
 int rm_grid(g_list * list, char* id) {
-  if (list == NULL){
+
+    if (list->head == NULL){
       printf("Grid list is empty: could not delete %s. Error in line %d\n", id, yylineno);
       return 0;
     }
 
     grid_t* current = list->head;
     grid_t* temp = malloc(sizeof(grid_t));
-
-    
-
+    char* def_id = default_grid->id;
 
     if (strcmp(current->id, id) == 0){
       rm_all(current->blocks);
       free(current);
       list->head = current->next;
-      //default_grid = current->next;
       printf("Deleted grid id=%s\n", id);
+      if (strcmp(def_id, id) == 0){
+        switch_grid(list, "-1");
+      }
       return 1;
     }
 
@@ -171,8 +199,10 @@ int rm_grid(g_list * list, char* id) {
         temp = current->next;
         current->next = temp->next;
         free(temp);
-        //default_grid = current->next;
         printf("Deleted grid id=%s\n", id);
+        if (strcmp(def_id, id) == 0){
+          switch_grid(list, list->head);
+        }
         return 1;
       }
       current = current->next;
@@ -197,7 +227,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     if (list->head == NULL){
       list->head = node;
       list->head->next = NULL;
-      printf("Added item %s to grid %s", list->head->id, default_grid->id);
+      printf("Added item %s to grid %s\n", list->head->id, default_grid->id);
       return 1;
     }
 

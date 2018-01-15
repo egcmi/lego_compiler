@@ -40,3 +40,4 @@ int update(l_list * list, int method, char* id, int coox, int cooy);
 int updateDir(l_list * list, char* id, int coox, int cooy);
 int add_grid(g_list * list, char id[], int row, int col);
 int rm_grid(g_list * list, char* id);
+int switch_grid(g_list * list, char* id);
