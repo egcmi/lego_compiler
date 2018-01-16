@@ -1880,7 +1880,7 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     current->next = node;
     current->next->next = NULL;
 
-    printf("Added item %s to grid %s", current->next->id, default_grid->id);
+    printf("Added item %s to grid %s\n", current->next->id, default_grid->id);
 
     return 1;
 }
@@ -1891,7 +1891,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
     node_t * current = list->head;
 
     if (list->head == NULL){
-      printf("This variable does not exist. Error in line %d", yylineno);
+      printf("This variable does not exist. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -1920,7 +1920,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }
@@ -1931,7 +1931,7 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
     return 0;
 
     if (list->head == NULL){
-      printf("There exist no variables. Error in line %d", yylineno);
+      printf("There exist no variables. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -1950,7 +1950,7 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }
