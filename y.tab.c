@@ -107,10 +107,10 @@ extern int yydebug;
   {
     NUM = 258,
     DIR = 259,
-    SHOW = 260,
-    EXIT = 261,
-    SWITCH = 262,
-    MATRIX = 263,
+    TYPE = 260,
+    SHOW = 261,
+    EXIT = 262,
+    SWITCH = 263,
     ARRAY = 264,
     PYRAMID = 265,
     DOME = 266,
@@ -135,10 +135,10 @@ extern int yydebug;
 /* Tokens.  */
 #define NUM 258
 #define DIR 259
-#define SHOW 260
-#define EXIT 261
-#define SWITCH 262
-#define MATRIX 263
+#define TYPE 260
+#define SHOW 261
+#define EXIT 262
+#define SWITCH 263
 #define ARRAY 264
 #define PYRAMID 265
 #define DOME 266
@@ -429,16 +429,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  28
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   73
+#define YYLAST   71
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  35
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  23
+#define YYNRULES  20
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  71
+#define YYNSTATES  68
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -488,8 +488,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    50,    50,    51,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    66,    67,    68,    71,    72,    75,
-      76,    79,    80,    81
+      60,    61,    62,    63,    66,    67,    70,    71,    74,    75,
+      76
 };
 #endif
 
@@ -498,11 +498,11 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NUM", "DIR", "SHOW", "EXIT", "SWITCH",
-  "MATRIX", "ARRAY", "PYRAMID", "DOME", "GRID", "HEIGHT", "FITS", "PLACE",
+  "$end", "error", "$undefined", "NUM", "DIR", "TYPE", "SHOW", "EXIT",
+  "SWITCH", "ARRAY", "PYRAMID", "DOME", "GRID", "HEIGHT", "FITS", "PLACE",
   "DELETE", "ALL", "IF", "THEN", "ELSE", "MOVE", "AND", "OR", "EQ", "AT",
   "VAR", "GVAR", "'='", "'>'", "'<'", "'\\n'", "'('", "','", "')'",
-  "$accept", "line", "expr", "type", "mopt", "hopt", "dopt", YY_NULLPTR
+  "$accept", "line", "stmt", "mopt", "hopt", "dopt", YY_NULLPTR
 };
 #endif
 
@@ -532,14 +532,13 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      18,   -24,   -25,    -8,   -19,   -21,   -14,     3,   -12,   -11,
-     -10,    19,    -5,   -25,     1,   -25,    33,   -25,    -2,    15,
-      14,   -25,   -25,   -25,     2,   -25,    27,    30,   -25,   -25,
-     -25,   -25,    10,    43,    16,   -25,    44,    17,   -25,   -25,
-     -25,    20,    21,    47,    22,    48,   -25,    51,    53,    54,
-      24,    56,    28,    29,    31,    32,   -25,    26,    60,    63,
-      64,    65,   -25,    35,    36,    37,    38,   -25,   -25,   -25,
-     -25
+      16,   -24,   -25,    -8,   -20,   -15,   -13,     2,   -10,   -11,
+      -1,    18,    -6,   -25,     6,   -25,    31,   -25,     3,    11,
+      12,   -25,   -25,   -25,     1,   -25,    33,    28,   -25,   -25,
+     -25,   -25,     8,    41,    13,   -25,    43,    15,    17,    19,
+      45,    20,    47,   -25,    49,    51,    52,    22,    54,    25,
+      26,    27,    29,   -25,    30,    58,    60,    62,    63,   -25,
+      34,    35,    36,    37,   -25,   -25,   -25,   -25
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -548,25 +547,24 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        0,     0,     4,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     9,     0,    20,     0,    11,     0,     0,
-       0,    22,    21,    12,     0,    10,     0,     0,     1,     2,
-       3,     5,     0,     0,     0,    23,     0,     0,    14,    16,
-      15,     0,     0,     0,     0,     0,    17,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,    19,     0,     0,     0,
-       0,     0,    13,     0,     0,     0,     0,     8,    18,     7,
-       6
+       0,     0,     0,     9,     0,    17,     0,    11,     0,     0,
+       0,    19,    18,    12,     0,    10,     0,     0,     1,     2,
+       3,     5,     0,     0,     0,    20,     0,     0,     0,     0,
+       0,     0,     0,    14,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,    16,     0,     0,     0,     0,     0,    13,
+       0,     0,     0,     0,     8,    15,     7,     6
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -25,    61,   -25,   -25,   -25,   -25,   -25
+     -25,    55,   -25,   -25,   -25,   -25
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,    11,    12,    41,    25,    17,    23
+      -1,    11,    12,    25,    17,    23
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -574,56 +572,55 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     2,     3,    13,    14,    18,    36,    15,     4,     5,
-       6,     7,    19,    16,    24,    20,     8,    26,    27,    28,
-      21,     9,    10,     1,     2,     3,    29,    37,    31,    22,
-      33,     4,     5,     6,     7,    38,    32,    39,    40,     8,
-      34,    35,    42,    43,     9,    10,    44,    46,    45,    47,
-      50,    52,    48,    49,    53,    51,    54,    55,    56,    57,
-      62,    58,    59,    63,    60,    61,    64,    65,    66,    67,
-      68,    69,    70,    30
+       1,     2,     3,    13,    14,    36,    15,     4,     5,     6,
+       7,    18,    16,    19,    20,     8,    24,    26,    28,    21,
+       9,    10,     1,     2,     3,    29,    37,    27,    22,     4,
+       5,     6,     7,    31,    32,    33,    34,     8,    38,    35,
+      39,    40,     9,    10,    41,    42,    43,    44,    47,    45,
+      49,    46,    50,    48,    51,    52,    53,    54,    55,    56,
+      57,    60,    58,    61,    59,    62,    63,    30,    64,    65,
+      66,    67
 };
 
 static const yytype_uint8 yycheck[] =
 {
-       5,     6,     7,    27,    12,    26,     4,    26,    13,    14,
-      15,    16,    26,    32,    26,    12,    21,    28,    28,     0,
-      17,    26,    27,     5,     6,     7,    31,    25,    27,    26,
-      32,    13,    14,    15,    16,     8,     3,    10,    11,    21,
-      25,    27,    12,    33,    26,    27,     3,     3,    32,    32,
-       3,     3,    32,    32,     3,    33,     3,     3,    34,     3,
-      34,    33,    33,     3,    33,    33,     3,     3,     3,    34,
-      34,    34,    34,    12
+       6,     7,     8,    27,    12,     4,    26,    13,    14,    15,
+      16,    26,    32,    26,    12,    21,    26,    28,     0,    17,
+      26,    27,     6,     7,     8,    31,    25,    28,    26,    13,
+      14,    15,    16,    27,     3,    32,    25,    21,     5,    27,
+      12,    33,    26,    27,     3,    32,     3,    32,     3,    32,
+       3,    32,     3,    33,     3,     3,    34,     3,    33,    33,
+      33,     3,    33,     3,    34,     3,     3,    12,    34,    34,
+      34,    34
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     5,     6,     7,    13,    14,    15,    16,    21,    26,
-      27,    36,    37,    27,    12,    26,    32,    40,    26,    26,
-      12,    17,    26,    41,    26,    39,    28,    28,     0,    31,
-      36,    27,     3,    32,    25,    27,     4,    25,     8,    10,
-      11,    38,    12,    33,     3,    32,     3,    32,    32,    32,
-       3,    33,     3,     3,     3,     3,    34,     3,    33,    33,
-      33,    33,    34,     3,     3,     3,     3,    34,    34,    34,
-      34
+       0,     6,     7,     8,    13,    14,    15,    16,    21,    26,
+      27,    36,    37,    27,    12,    26,    32,    39,    26,    26,
+      12,    17,    26,    40,    26,    38,    28,    28,     0,    31,
+      36,    27,     3,    32,    25,    27,     4,    25,     5,    12,
+      33,     3,    32,     3,    32,    32,    32,     3,    33,     3,
+       3,     3,     3,    34,     3,    33,    33,    33,    33,    34,
+       3,     3,     3,     3,    34,    34,    34,    34
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
        0,    35,    36,    36,    37,    37,    37,    37,    37,    37,
-      37,    37,    37,    37,    38,    38,    38,    39,    39,    40,
-      40,    41,    41,    41
+      37,    37,    37,    37,    38,    38,    39,    39,    40,    40,
+      40
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     2,     1,     3,     8,     8,     8,     2,
-       2,     2,     2,     7,     1,     1,     1,     3,     7,     5,
-       1,     1,     1,     2
+       2,     2,     2,     7,     3,     7,     5,     1,     1,     1,
+       2
 };
 
 
@@ -1302,137 +1299,119 @@ yyreduce:
         case 2:
 #line 50 "lego.y" /* yacc.c:1646  */
     {printf("Result: %f\n");}
-#line 1306 "y.tab.c" /* yacc.c:1646  */
+#line 1303 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 51 "lego.y" /* yacc.c:1646  */
     {}
-#line 1312 "y.tab.c" /* yacc.c:1646  */
+#line 1309 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 54 "lego.y" /* yacc.c:1646  */
     {exit(EXIT_SUCCESS);}
-#line 1318 "y.tab.c" /* yacc.c:1646  */
+#line 1315 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
 #line 55 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",switch_grid(grid_list,(yyvsp[0].lexeme)));}
-#line 1324 "y.tab.c" /* yacc.c:1646  */
+#line 1321 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
 #line 56 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",add_grid(grid_list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1330 "y.tab.c" /* yacc.c:1646  */
+#line 1327 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
 #line 57 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",add(default_grid->blocks,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-5].lexeme),-1,-1,-1,-1));}
-#line 1336 "y.tab.c" /* yacc.c:1646  */
+    {printf("%d\n",add(default_grid->blocks,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),-1,(yyvsp[-5].lexeme),-1,-1,-1));}
+#line 1333 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
 #line 58 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",update(default_grid->blocks,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1342 "y.tab.c" /* yacc.c:1646  */
+#line 1339 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
 #line 59 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",show(grid_list,(yyvsp[0].lexeme)));}
-#line 1348 "y.tab.c" /* yacc.c:1646  */
+#line 1345 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 60 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1354 "y.tab.c" /* yacc.c:1646  */
+#line 1351 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 61 "lego.y" /* yacc.c:1646  */
     {}
-#line 1360 "y.tab.c" /* yacc.c:1646  */
+#line 1357 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 62 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1366 "y.tab.c" /* yacc.c:1646  */
+#line 1363 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 63 "lego.y" /* yacc.c:1646  */
-    {}
-#line 1372 "y.tab.c" /* yacc.c:1646  */
+    {printf("%d\n",fits(default_grid->blocks,(yyvsp[-5].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 66 "lego.y" /* yacc.c:1646  */
-    {;}
-#line 1378 "y.tab.c" /* yacc.c:1646  */
+    {printf("%d\n",update_dir(default_grid->blocks,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 67 "lego.y" /* yacc.c:1646  */
-    {;}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+    {printf("%d\n",update(default_grid->blocks,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1381 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 68 "lego.y" /* yacc.c:1646  */
-    {;}
-#line 1390 "y.tab.c" /* yacc.c:1646  */
+#line 70 "lego.y" /* yacc.c:1646  */
+    {}
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
 #line 71 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",updateDir(default_grid->blocks,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
-#line 1396 "y.tab.c" /* yacc.c:1646  */
+    {}
+#line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 72 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update(default_grid->blocks,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1402 "y.tab.c" /* yacc.c:1646  */
+#line 74 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",rm(default_grid->blocks,(yyvsp[0].lexeme)));}
+#line 1399 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 75 "lego.y" /* yacc.c:1646  */
-    {}
-#line 1408 "y.tab.c" /* yacc.c:1646  */
+    {printf("%d\n",rm_all(default_grid->blocks));}
+#line 1405 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 76 "lego.y" /* yacc.c:1646  */
-    {}
-#line 1414 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 21:
-#line 79 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",rm(default_grid->blocks,(yyvsp[0].lexeme)));}
-#line 1420 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 22:
-#line 80 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",rm_all(default_grid->blocks));}
-#line 1426 "y.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 23:
-#line 81 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",rm_grid(grid_list,(yyvsp[0].lexeme)));}
-#line 1432 "y.tab.c" /* yacc.c:1646  */
+#line 1411 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1436 "y.tab.c" /* yacc.c:1646  */
+#line 1415 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1660,7 +1639,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 84 "lego.y" /* yacc.c:1906  */
+#line 79 "lego.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
@@ -1842,6 +1821,57 @@ int show(g_list * list, char* id){
 
 }
 
+int fits(l_list * list, char id[], int x, int y){
+		node_t * current = list->head;
+		int gridx = default_grid->row;
+		int gridy = default_grid->col;
+		grid_t * def = default_grid;
+
+    if (list->head == NULL){
+      printf("Grid list is empty: could not find %s. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    if (x > gridx || y > gridy){
+			printf("The coordinates are too big for the grid. Error in line %d\n", yylineno);
+		  	return 0;
+    }
+
+    while (current != NULL) {
+      if(strcmp(current->id, id) == 0){
+      	int checkx = (current->x)-gridx+x;
+      	int checky = (current->y)-gridy+y;
+      	if(checkx > 0 || checky > 0){
+      		printf("Cannot insert this variable at this point. There is not enough space. Check the grid size and the coordinates. Error in line %d\n", yylineno);
+      		return 0;
+      	}
+
+      	char * var = def->matrix[x][y];
+      	if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
+		      printf("Cannot place the variable on the top of a dome or pyramid block. Error in line %d\n", yylineno);
+		      return 0;
+				}
+				char * currVar;
+
+				for(int i = x; i < x+current->x; i++){
+		      for(int j = y; j < y+current->y; j++){
+            currVar = def->matrix[i][j];
+            if(strcmp(var,currVar) != 0){
+                  printf("Cannot place the variable on blocks with different heights. Error in line %d\n", yylineno);
+                  return 0;
+            }
+		      }
+				}
+      	printf("The block fits in the desidered coordinates %d, %d.\n", x, y);
+      	return 1;
+      }
+      current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d\n", yylineno);
+    return 0;
+}
+
 int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
     node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
@@ -1880,18 +1910,41 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     current->next = node;
     current->next->next = NULL;
 
-    printf("Added item %s to grid %s", current->next->id, default_grid->id);
+    printf("Added item %s to grid %s\n", current->next->id, default_grid->id);
 
     return 1;
 }
 
 
+int add_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
+		char * t = "";
+		if(strcmp(type, "dome") == 0){
+			t = "o";
+		}else if (strcmp(type, "pyramid") == 0){
+			t = "x";
+		}
+
+		for(int i = coox; i < x+coox; i++){
+	    for(int j = cooy; j < y+cooy; j++){
+	    	int curr = atoi(grid->matrix[i][j])+1;
+	    	char * res = malloc(sizeof(char)*4);
+	    	snprintf(res, sizeof(res), "%d", curr);
+	    	strcat(res, t);
+	    	grid->matrix[i][j] = res;
+	    }
+		}
+
+}
+
+int delete_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
+
+}
 
 int update(l_list * list, int method, char* id, int coox, int cooy) {
     node_t * current = list->head;
 
     if (list->head == NULL){
-      printf("This variable does not exist. Error in line %d", yylineno);
+      printf("This variable does not exist. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -1899,39 +1952,50 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
       if((strcmp(current->id, id) == 0)){
         if(method == 0){
           if(current->coox == -1 && current->cooy == -1){
-            current->coox = coox;
-            current->cooy = cooy;
-            return 1;
+          	if(fits(list, current->id, coox, cooy)){
+          		current->coox = coox;
+            	current->cooy = cooy;
+            	add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+            	return 1;
+          	}else{
+          		return 0;
+          	}
           }else{
             printf("This lego was already placed. Please use move to move it. Error in line %d\n", yylineno);
             return 0;
           }
         }else{
-          if(current->coox == -1 && current->cooy == -1){
-            printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
-            return 0;
+          if(current->coox != -1 && current->cooy != -1 && fits(list, current->id, coox, cooy)){
+          	if(fits(list, current->id, coox, cooy)){
+	            current->coox = coox;
+	            current->cooy = cooy;
+	            add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+	            delete_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+	            return 1;
+          	}else{
+          		return 0;
+          	}
           }else{
-            current->coox = coox;
-            current->cooy = cooy;
-            return 1;
+          	printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
+            return 0;
           }
         }
       }
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }
 
-int updateDir(l_list * list, char* id, int coox, int cooy){
+int update_dir(l_list * list, char* id, int coox, int cooy){
     node_t * current = list->head;
 
     return 0;
 
     if (list->head == NULL){
-      printf("There exist no variables. Error in line %d", yylineno);
+      printf("There exist no variables. Error in line %d\n", yylineno);
       return 0;
     }
 
@@ -1950,7 +2014,7 @@ int updateDir(l_list * list, char* id, int coox, int cooy){
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d", yylineno);
+    printf("This variable does not exist. Error in line %d\n", yylineno);
 
     return 0;
 }

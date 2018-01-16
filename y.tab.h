@@ -47,10 +47,10 @@ extern int yydebug;
   {
     NUM = 258,
     DIR = 259,
-    SHOW = 260,
-    EXIT = 261,
-    SWITCH = 262,
-    MATRIX = 263,
+    TYPE = 260,
+    SHOW = 261,
+    EXIT = 262,
+    SWITCH = 263,
     ARRAY = 264,
     PYRAMID = 265,
     DOME = 266,
@@ -75,10 +75,10 @@ extern int yydebug;
 /* Tokens.  */
 #define NUM 258
 #define DIR 259
-#define SHOW 260
-#define EXIT 261
-#define SWITCH 262
-#define MATRIX 263
+#define TYPE 260
+#define SHOW 261
+#define EXIT 262
+#define SWITCH 263
 #define ARRAY 264
 #define PYRAMID 265
 #define DOME 266

@@ -9,6 +9,7 @@
 
 num			[0-9]+
 dir			(left|right|up|down)
+type		(dome|pyramid|matrix|array)	
 var			[a-z]{num}{1,2}
 gvar		[A-Z]{num}{1,2}
 
@@ -24,15 +25,14 @@ gvar		[A-Z]{num}{1,2}
 {gvar}		{yylval.lexeme = strdup(yytext);
 			return GVAR;}
 
+{type}		{yylval.lexeme = strdup(yytext);
+			return TYPE;}
+
 [-()<>=+*/;{},] {return *yytext;}
 
 "exit"		{return EXIT;}
 "switch"	{return SWITCH;}
 "show"		{return SHOW;}
-"matrix"	{return MATRIX;}
-"array"		{return ARRAY;}
-"pyramid"	{return PYRAMID;}
-"dome"		{return DOME;}
 "grid"		{return GRID;}
 "height"	{return HEIGHT;}
 "fits"		{return FITS;}

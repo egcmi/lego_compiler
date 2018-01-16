@@ -14,10 +14,10 @@
 
 %token <value>    NUM
 %token <lexeme>   DIR
+%token <lexeme>   TYPE
 %token SHOW
 %token EXIT
 %token SWITCH
-%token MATRIX
 %token ARRAY
 %token PYRAMID
 %token DOME
@@ -38,8 +38,8 @@
 %token <lexeme> VAR
 %token <lexeme> GVAR
 
-%type <lexeme> type
-%type <value> expr
+%type <lexeme> stmt
+
 
 %left '='
 %left EQ '>' '<'
@@ -47,33 +47,28 @@
 %start line
 
 %%
-line  : expr '\n'                   {printf("Result: %f\n");}
-      | expr line                   {}
+line  : stmt '\n'                   {printf("Result: %f\n");}
+      | stmt line                   {}
       ;
 
-expr  : EXIT                              {exit(EXIT_SUCCESS);}
+stmt  : EXIT                              {exit(EXIT_SUCCESS);}
       | SWITCH GRID GVAR                  {printf("%d\n",switch_grid(grid_list,$3));}
       | GVAR '=' GRID '(' NUM ',' NUM ')' {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
-      | VAR '=' type '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,$3,-1,-1,-1,-1));}
+      | VAR '=' TYPE '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,-1,$3,-1,-1,-1));}
       | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(default_grid->blocks,0,$2,$5,$7));}
       | SHOW GVAR                         {printf("%d\n",show(grid_list,$2));}
       | MOVE mopt                         {;}
       | HEIGHT hopt                       {}
       | DELETE dopt                       {;}
-      | FITS VAR '(' NUM ',' NUM ')'      {}
+      | FITS VAR '(' NUM ',' NUM ')'      {printf("%d\n",fits(default_grid->blocks,$2,$4,$6));}
       ;
 
-type  : MATRIX                            {;}
-      | DOME                              {;}
-      | PYRAMID                           {;}
-      ;
-
-mopt  : VAR DIR NUM                       {printf("%d\n",updateDir(default_grid->blocks,$1,$2,$3));}
+mopt  : VAR DIR NUM                       {printf("%d\n",update_dir(default_grid->blocks,$1,$2,$3));}
       | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(default_grid->blocks,1,$1,$4,$6));}
       ;
 
-hopt  : '(' NUM ',' NUM ')'         {}
-      | VAR                         {}
+hopt  : '(' NUM ',' NUM ')'         	  {}
+      | VAR                         	  {}
       ;
 
 dopt  : VAR                               {printf("%d\n",rm(default_grid->blocks,$1));}
@@ -262,6 +257,57 @@ int show(g_list * list, char* id){
 
 }
 
+int fits(l_list * list, char id[], int x, int y){
+		node_t * current = list->head;
+		int gridx = default_grid->row;
+		int gridy = default_grid->col;
+		grid_t * def = default_grid;
+
+    if (list->head == NULL){
+      printf("Grid list is empty: could not find %s. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    if (x > gridx || y > gridy){
+			printf("The coordinates are too big for the grid. Error in line %d\n", yylineno);
+		  	return 0;
+    }
+
+    while (current != NULL) {
+      if(strcmp(current->id, id) == 0){
+      	int checkx = (current->x)-gridx+x;
+      	int checky = (current->y)-gridy+y;
+      	if(checkx > 0 || checky > 0){
+      		printf("Cannot insert this variable at this point. There is not enough space. Check the grid size and the coordinates. Error in line %d\n", yylineno);
+      		return 0;
+      	}
+
+      	char * var = def->matrix[x][y];
+      	if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
+		      printf("Cannot place the variable on the top of a dome or pyramid block. Error in line %d\n", yylineno);
+		      return 0;
+				}
+				char * currVar;
+
+				for(int i = x; i < x+current->x; i++){
+		      for(int j = y; j < y+current->y; j++){
+            currVar = def->matrix[i][j];
+            if(strcmp(var,currVar) != 0){
+                  printf("Cannot place the variable on blocks with different heights. Error in line %d\n", yylineno);
+                  return 0;
+            }
+		      }
+				}
+      	printf("The block fits in the desidered coordinates %d, %d.\n", x, y);
+      	return 1;
+      }
+      current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d\n", yylineno);
+    return 0;
+}
+
 int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
     node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
@@ -306,6 +352,44 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
 }
 
 
+int add_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
+		char * t = "";
+		if(strcmp(type, "dome") == 0){
+			t = "o";
+		}else if (strcmp(type, "pyramid") == 0){
+			t = "x";
+		}
+
+		for(int i = coox; i < x+coox; i++){
+	    for(int j = cooy; j < y+cooy; j++){
+	    	int curr = atoi(grid->matrix[i][j])+1;
+	    	char * res = malloc(sizeof(char)*4);
+	    	snprintf(res, sizeof(res), "%d", curr);
+	    	strcat(res, t);
+	    	grid->matrix[i][j] = res;
+	    }
+		}
+
+}
+
+int delete_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
+		char * t = "";
+		if(strcmp(type, "dome") == 0){
+			t = "o";
+		}else if (strcmp(type, "pyramid") == 0){
+			t = "x";
+		}
+
+		for(int i = coox; i < x+coox; i++){
+	    for(int j = cooy; j < y+cooy; j++){
+	    	int curr = atoi(grid->matrix[i][j])+1;
+	    	char * res = malloc(sizeof(char)*4);
+	    	snprintf(res, sizeof(res), "%d", curr);
+	    	strcat(res, t);
+	    	grid->matrix[i][j] = res;
+	    }
+		}
+}
 
 int update(l_list * list, int method, char* id, int coox, int cooy) {
     node_t * current = list->head;
@@ -319,21 +403,32 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
       if((strcmp(current->id, id) == 0)){
         if(method == 0){
           if(current->coox == -1 && current->cooy == -1){
-            current->coox = coox;
-            current->cooy = cooy;
-            return 1;
+          	if(fits(list, current->id, coox, cooy)){
+          		current->coox = coox;
+            	current->cooy = cooy;
+            	add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+            	return 1;
+          	}else{
+          		return 0;
+          	}
           }else{
             printf("This lego was already placed. Please use move to move it. Error in line %d\n", yylineno);
             return 0;
           }
         }else{
-          if(current->coox == -1 && current->cooy == -1){
-            printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
-            return 0;
+          if(current->coox != -1 && current->cooy != -1 && fits(list, current->id, coox, cooy)){
+          	if(fits(list, current->id, coox, cooy)){
+	            current->coox = coox;
+	            current->cooy = cooy;
+	            add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+	            delete_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+	            return 1;
+          	}else{
+          		return 0;
+          	}
           }else{
-            current->coox = coox;
-            current->cooy = cooy;
-            return 1;
+          	printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
+            return 0;
           }
         }
       }
@@ -345,7 +440,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
     return 0;
 }
 
-int updateDir(l_list * list, char* id, int coox, int cooy){
+int update_dir(l_list * list, char* id, int coox, int cooy){
     node_t * current = list->head;
 
     return 0;
