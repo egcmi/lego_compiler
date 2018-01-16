@@ -31,7 +31,7 @@ typedef struct grid_list {
 
 g_list * grid_list;
 grid_t * default_grid;
-int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h);
+int add(l_list * list, char id[], int x, int y, char* type, int coox, int cooy);
 int rm(l_list * list, char* id);
 int update(l_list * list, int method, char* id, int coox, int cooy);
 int update_dir(l_list * list, char* id, int coox, int cooy);
@@ -41,5 +41,7 @@ int switch_grid(g_list * list, char* id);
 int show(g_list * list, char* id);
 int free_matrix(char *** matrix, int row, int col);
 int fits(l_list * list, char id[], int x, int y);
-int add_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy);
-int delete_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy);
+int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy);
+int delete_in_matrix(grid_t * grid, node_t * node);
+int on_top(grid_t * grid, node_t * node);
+int height(grid_t * grid, int x, int y);

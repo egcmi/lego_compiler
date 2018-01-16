@@ -54,11 +54,11 @@ line  : stmt '\n'                   {printf("Result: %f\n");}
 stmt  : EXIT                              {exit(EXIT_SUCCESS);}
       | SWITCH GRID GVAR                  {printf("%d\n",switch_grid(grid_list,$3));}
       | GVAR '=' GRID '(' NUM ',' NUM ')' {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
-      | VAR '=' TYPE '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,-1,$3,-1,-1,-1));}
+      | VAR '=' TYPE '(' NUM ',' NUM ')'  {printf("%d\n",add(default_grid->blocks,$1,$5,$7,$3,-1,-1));}
       | PLACE VAR AT '(' NUM ',' NUM ')'  {printf("%d\n",update(default_grid->blocks,0,$2,$5,$7));}
       | SHOW GVAR                         {printf("%d\n",show(grid_list,$2));}
       | MOVE mopt                         {;}
-      | HEIGHT hopt                       {}
+      | HEIGHT hopt                       {;}
       | DELETE dopt                       {;}
       | FITS VAR '(' NUM ',' NUM ')'      {printf("%d\n",fits(default_grid->blocks,$2,$4,$6));}
       ;
@@ -67,8 +67,8 @@ mopt  : VAR DIR NUM                       {printf("%d\n",update_dir(default_grid
       | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(default_grid->blocks,1,$1,$4,$6));}
       ;
 
-hopt  : '(' NUM ',' NUM ')'         	  {}
-      | VAR                         	  {}
+hopt  : '(' NUM ',' NUM ')'         	  	{printf("%d\n",height(default_grid,$2,$4));}
+      | VAR                         	  	{}
       ;
 
 dopt  : VAR                               {printf("%d\n",rm(default_grid->blocks,$1));}
@@ -95,9 +95,9 @@ g_list* create_grid_list(void) {
     return p;
 }
 grid_t* create_grid_t(void) {
-  grid_t* p;
-    p = malloc(sizeof(grid_t));
-    return p;
+		grid_t* p;
+		p = malloc(sizeof(grid_t));
+		return p;
 }
 
 int free_matrix(char *** matrix, int row, int col){
@@ -111,23 +111,28 @@ int free_matrix(char *** matrix, int row, int col){
 
 
 int add_grid(g_list * list, char id[], int row, int col) {
+
+	  if (row == 0 || col == 0){
+    	printf("You cannot create a grid with size 0. Error in line %d\n", yylineno);
+      return 0;
+    }
     grid_t * current = list->head;
-    grid_t * node = malloc(sizeof(grid_t));
-    node->id = id;
-    node->row = row;
-    node->col = col;
-    node->blocks = create_list();
+    grid_t * grid = malloc(sizeof(grid_t));
+    grid->id = id;
+    grid->row = row;
+    grid->col = col;
+    grid->blocks = create_list();
     default_grid=create_grid_t();
-    node->matrix = (char * * *) malloc(row * sizeof(char * *));
+    grid->matrix = (char * * *) malloc(row * sizeof(char * *));
     for(int i=0; i < row; i++){
-        node->matrix[i] = (char * *) malloc(col * sizeof(char *));
+        grid->matrix[i] = (char * *) malloc(col * sizeof(char *));
         for(int j=0; j < col; j++){
-            node->matrix[i][j] = "0";
+            grid->matrix[i][j] = "0";
         }
     }
 
     if (list->head == NULL){
-      list->head = node;
+      list->head = grid;
       list->head->next = NULL;
       default_grid = list->head;
       default_grid->id=list->head->id;
@@ -137,8 +142,8 @@ int add_grid(g_list * list, char id[], int row, int col) {
     while (current->next != NULL) {
       if(strcmp(current->id, id) == 0){
         printf("This grid is already used. Error in line %d\n", yylineno);
-        free(node->matrix);
-        free(node);
+        free(grid->matrix);
+        free(grid);
         return 0;
       }
       current = current->next;
@@ -146,13 +151,13 @@ int add_grid(g_list * list, char id[], int row, int col) {
 
     if(strcmp(current->id, id) == 0){
       printf("This grid is already used. Error in line %d\n", yylineno);
-      free(node->matrix);
-      free(node);
+      free(grid->matrix);
+      free(grid);
       return 0;
     }
 
     current->next = malloc(sizeof(grid_t));
-    current->next = node;
+    current->next = grid;
     current->next->next = NULL;
 
     default_grid = current->next;
@@ -308,17 +313,19 @@ int fits(l_list * list, char id[], int x, int y){
     return 0;
 }
 
-int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int cooy, int h) {
+int add(l_list * list, char id[], int x, int y, char* type, int coox, int cooy) {
+	  if (x == 0 || y == 0){
+    	printf("You cannot create a variable with size 0. Error in line %d\n", yylineno);
+      return 0;
+    }
     node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
     node->id = id;
     node->x = x;
     node->y = y;
-    node->z = z;
     node->type = type;
     node->coox = coox;
     node->cooy = cooy;
-    node->h = h;
 
     if (list->head == NULL){
       list->head = node;
@@ -351,8 +358,39 @@ int add(l_list * list, char id[], int x, int y, int z, char* type, int coox, int
     return 1;
 }
 
+int on_top(grid_t * grid, node_t * node){ // problem is here
 
-int add_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
+		int coox = node->coox;
+		int cooy = node->cooy;
+		printf("here3\n");
+		
+		if (node->h == height(grid, coox, cooy)){
+			printf("here1\n");
+			return 1;
+		}
+
+		return 0;
+}
+
+int height(grid_t * grid, int x, int y){
+
+		if(x >= grid->row || y >= grid-> row){
+			printf("Cannot calculate the height of a cell not in the grid boundary. Error in line %d\n", yylineno);
+      return 0;
+		}
+
+    char * var = grid->matrix[x][y];
+		int h = atoi(var);
+		return h;
+}
+
+int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
+		int x = node->x;
+		int y = node->y;
+		char * type = node->type;
+		int cell_height = height(grid, coox,cooy);
+		node->h = cell_height + 1;
+
 		char * t = "";
 		if(strcmp(type, "dome") == 0){
 			t = "o";
@@ -372,20 +410,22 @@ int add_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
 
 }
 
-int delete_in_matrix(grid_t * grid, char* type, int x, int y, int coox, int cooy){
-		char * t = "";
-		if(strcmp(type, "dome") == 0){
-			t = "o";
-		}else if (strcmp(type, "pyramid") == 0){
-			t = "x";
+int delete_in_matrix(grid_t * grid, node_t * node){
+		int x = node->x;
+		int y = node->y;
+		int coox = node->coox;
+		int cooy = node->cooy;
+		printf("here1\n");
+		if(on_top(grid, node) == 0){
+			printf("here2\n");
+			return 0;
 		}
 
 		for(int i = coox; i < x+coox; i++){
 	    for(int j = cooy; j < y+cooy; j++){
-	    	int curr = atoi(grid->matrix[i][j])+1;
+	    	int curr = atoi(grid->matrix[i][j])-1;
 	    	char * res = malloc(sizeof(char)*4);
 	    	snprintf(res, sizeof(res), "%d", curr);
-	    	strcat(res, t);
 	    	grid->matrix[i][j] = res;
 	    }
 		}
@@ -406,7 +446,7 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
           	if(fits(list, current->id, coox, cooy)){
           		current->coox = coox;
             	current->cooy = cooy;
-            	add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+            	add_in_matrix(default_grid, current, coox, cooy);
             	return 1;
           	}else{
           		return 0;
@@ -416,14 +456,17 @@ int update(l_list * list, int method, char* id, int coox, int cooy) {
             return 0;
           }
         }else{
-          if(current->coox != -1 && current->cooy != -1 && fits(list, current->id, coox, cooy)){
+          if(current->coox != -1 && current->cooy != -1){
+						int past_x = current->coox;
+						int past_y = current->cooy;
+	          delete_in_matrix(default_grid, current);
           	if(fits(list, current->id, coox, cooy)){
 	            current->coox = coox;
 	            current->cooy = cooy;
-	            add_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
-	            delete_in_matrix(default_grid, current->type, current->x, current->y, coox, cooy);
+	            add_in_matrix(default_grid, current, coox, cooy);
 	            return 1;
           	}else{
+          		add_in_matrix(default_grid, current, past_x, past_y);
           		return 0;
           	}
           }else{
@@ -483,6 +526,7 @@ int rm(l_list * list, char* id) {
     if (strcmp(current->id, id) == 0){
       free(current);
       list->head = current->next;
+      delete_in_matrix(default_grid, current);
       printf("Deleted node id=%s\n", id);
       return 1;
     }
@@ -493,6 +537,7 @@ int rm(l_list * list, char* id) {
         temp = current->next;
         current->next = temp->next;
         free(temp);
+        delete_in_matrix(default_grid, current->next);
         printf("Deleted node id=%s\n", id);
         return 1;
       }
@@ -514,6 +559,7 @@ int rm_all(l_list * list){
 
     // delete any element
     while(current != NULL){
+    	//delete_in_matrix(default_grid, current);
       printf("deleted id=%s\n",current->id );
       temp=current->next;
       free(current);
