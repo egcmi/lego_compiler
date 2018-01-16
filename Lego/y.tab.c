@@ -68,9 +68,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
-#include "lego.h"
+#include "header_files/block.h"
+#include "header_files/grid.h"
 
-#line 74 "y.tab.c" /* yacc.c:339  */
+#line 75 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -164,13 +165,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 10 "lego.y" /* yacc.c:355  */
+#line 11 "lego.y" /* yacc.c:355  */
 
        char* lexeme;			//identifier
        double value;			//value of an identifier of type NUM
        
 
-#line 174 "y.tab.c" /* yacc.c:355  */
+#line 175 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -187,7 +188,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 191 "y.tab.c" /* yacc.c:358  */
+#line 192 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -487,9 +488,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    50,    50,    51,    54,    55,    56,    57,    58,    59,
-      60,    61,    62,    63,    66,    67,    70,    71,    74,    75,
-      76
+       0,    51,    51,    52,    55,    56,    57,    58,    59,    60,
+      61,    62,    63,    64,    67,    68,    71,    72,    75,    76,
+      77
 };
 #endif
 
@@ -1297,121 +1298,121 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 50 "lego.y" /* yacc.c:1646  */
+#line 51 "lego.y" /* yacc.c:1646  */
     {printf("Result: %f\n");}
-#line 1303 "y.tab.c" /* yacc.c:1646  */
+#line 1304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 51 "lego.y" /* yacc.c:1646  */
+#line 52 "lego.y" /* yacc.c:1646  */
     {}
-#line 1309 "y.tab.c" /* yacc.c:1646  */
+#line 1310 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 54 "lego.y" /* yacc.c:1646  */
+#line 55 "lego.y" /* yacc.c:1646  */
     {exit(EXIT_SUCCESS);}
-#line 1315 "y.tab.c" /* yacc.c:1646  */
+#line 1316 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 55 "lego.y" /* yacc.c:1646  */
+#line 56 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",switch_grid(grid_list,(yyvsp[0].lexeme)));}
-#line 1321 "y.tab.c" /* yacc.c:1646  */
+#line 1322 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 56 "lego.y" /* yacc.c:1646  */
+#line 57 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",add_grid(grid_list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1327 "y.tab.c" /* yacc.c:1646  */
+#line 1328 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 57 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",add(default_grid->blocks,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-5].lexeme),-1,-1));}
-#line 1333 "y.tab.c" /* yacc.c:1646  */
+#line 58 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",add(default_grid,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-5].lexeme),-1,-1));}
+#line 1334 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 58 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update(default_grid->blocks,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1339 "y.tab.c" /* yacc.c:1646  */
+#line 59 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",update(default_grid,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1340 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 59 "lego.y" /* yacc.c:1646  */
+#line 60 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",show(grid_list,(yyvsp[0].lexeme)));}
-#line 1345 "y.tab.c" /* yacc.c:1646  */
+#line 1346 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 60 "lego.y" /* yacc.c:1646  */
+#line 61 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1351 "y.tab.c" /* yacc.c:1646  */
+#line 1352 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 61 "lego.y" /* yacc.c:1646  */
+#line 62 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1357 "y.tab.c" /* yacc.c:1646  */
+#line 1358 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 62 "lego.y" /* yacc.c:1646  */
+#line 63 "lego.y" /* yacc.c:1646  */
     {;}
-#line 1363 "y.tab.c" /* yacc.c:1646  */
+#line 1364 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 63 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",fits(default_grid->blocks,(yyvsp[-5].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1369 "y.tab.c" /* yacc.c:1646  */
+#line 64 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",fits(default_grid,(yyvsp[-5].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1370 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 66 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update_dir(default_grid->blocks,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
-#line 1375 "y.tab.c" /* yacc.c:1646  */
+#line 67 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)));}
+#line 1376 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 67 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",update(default_grid->blocks,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1381 "y.tab.c" /* yacc.c:1646  */
+#line 68 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",update(default_grid,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)));}
+#line 1382 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 70 "lego.y" /* yacc.c:1646  */
+#line 71 "lego.y" /* yacc.c:1646  */
     {printf("%d\n",height(default_grid,(yyvsp[-3].value),(yyvsp[-1].value)));}
-#line 1387 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 71 "lego.y" /* yacc.c:1646  */
+#line 72 "lego.y" /* yacc.c:1646  */
     {}
-#line 1393 "y.tab.c" /* yacc.c:1646  */
+#line 1394 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 74 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",rm(default_grid->blocks,(yyvsp[0].lexeme)));}
-#line 1399 "y.tab.c" /* yacc.c:1646  */
+#line 75 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",delete_block(default_grid,(yyvsp[0].lexeme)));}
+#line 1400 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 75 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",rm_all(default_grid->blocks));}
-#line 1405 "y.tab.c" /* yacc.c:1646  */
+#line 76 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",delete_all(default_grid));}
+#line 1406 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 76 "lego.y" /* yacc.c:1646  */
-    {printf("%d\n",rm_grid(grid_list,(yyvsp[0].lexeme)));}
-#line 1411 "y.tab.c" /* yacc.c:1646  */
+#line 77 "lego.y" /* yacc.c:1646  */
+    {printf("%d\n",delete_grid(grid_list,(yyvsp[0].lexeme)));}
+#line 1412 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1416 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1639,494 +1640,12 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 79 "lego.y" /* yacc.c:1906  */
+#line 80 "lego.y" /* yacc.c:1906  */
 
 
 #include "lex.yy.c"
-
-
-l_list* create_list(void) {
-    l_list* p;
-    p = malloc(sizeof(l_list));
-    p->head = NULL;
-    return p;
-}
-
-g_list* create_grid_list(void) {
-    g_list* p;
-    p = malloc(sizeof(g_list));
-    p->head = NULL;
-    return p;
-}
-grid_t* create_grid_t(void) {
-		grid_t* p;
-		p = malloc(sizeof(grid_t));
-		return p;
-}
-
-int free_matrix(char *** matrix, int row, int col){
-    for(int i=0; i < row; i++){
-        for(int j=0; j < col; j++){
-            free(matrix[i][j]);
-        }
-    }
-    free(matrix);
-}
-
-
-int add_grid(g_list * list, char id[], int row, int col) {
-
-	  if (row == 0 || col == 0){
-    	printf("You cannot create a grid with size 0. Error in line %d\n", yylineno);
-      return 0;
-    }
-    grid_t * current = list->head;
-    grid_t * grid = malloc(sizeof(grid_t));
-    grid->id = id;
-    grid->row = row;
-    grid->col = col;
-    grid->blocks = create_list();
-    default_grid=create_grid_t();
-    grid->matrix = (char * * *) malloc(row * sizeof(char * *));
-    for(int i=0; i < row; i++){
-        grid->matrix[i] = (char * *) malloc(col * sizeof(char *));
-        for(int j=0; j < col; j++){
-            grid->matrix[i][j] = "0";
-        }
-    }
-
-    if (list->head == NULL){
-      list->head = grid;
-      list->head->next = NULL;
-      default_grid = list->head;
-      default_grid->id=list->head->id;
-      return 1;
-    }
-
-    while (current->next != NULL) {
-      if(strcmp(current->id, id) == 0){
-        printf("This grid is already used. Error in line %d\n", yylineno);
-        free(grid->matrix);
-        free(grid);
-        return 0;
-      }
-      current = current->next;
-    }
-
-    if(strcmp(current->id, id) == 0){
-      printf("This grid is already used. Error in line %d\n", yylineno);
-      free(grid->matrix);
-      free(grid);
-      return 0;
-    }
-
-    current->next = malloc(sizeof(grid_t));
-    current->next = grid;
-    current->next->next = NULL;
-
-    default_grid = current->next;
-
-
-    return 1;
-}
-
-int switch_grid(g_list * list, char* id) {
-
-    if (list->head == NULL){
-      printf("Grid list is empty: could not switch to any grid. Error in line %d\n", yylineno);
-      return 0;
-    }
-
-    if(strcmp(id, "-1") == 0){
-      id = list->head->id;
-    } 
-
-
-    grid_t* current = list->head;
-    
-    while(current != NULL){
-      if (strcmp(current->id, id)==0 ){
-        default_grid = current;
-        printf("Switched to grid id=%s\n", id);
-        return 1;
-      }
-      current = current->next;
-    }
-
-    printf("Grid %s does not exist: you cannot switch to it. Error in line %d\n", id, yylineno);
-    return 0;
-}
-
-
-int rm_grid(g_list * list, char* id) {
-
-    if (list->head == NULL){
-      printf("Grid list is empty: could not delete %s. Error in line %d\n", id, yylineno);
-      return 0;
-    }
-
-    grid_t* current = list->head;
-    grid_t* temp = malloc(sizeof(grid_t));
-    char* def_id = default_grid->id;
-
-    if (strcmp(current->id, id) == 0){
-      rm_all(current->blocks);
-      free(current);
-      list->head = current->next;
-      printf("Deleted grid id=%s\n", id);
-      if (strcmp(def_id, id) == 0){
-        switch_grid(list, "-1");
-      }
-      return 1;
-    }
-
-    // delete any element
-    while(current->next != NULL){
-      if (strcmp(current->next->id, id)==0 ){
-        rm_all(current->blocks);
-        temp = current->next;
-        current->next = temp->next;
-        free(temp);
-        printf("Deleted grid id=%s\n", id);
-        if (strcmp(def_id, id) == 0){
-          switch_grid(list, list->head->id);
-        }
-        return 1;
-      }
-      current = current->next;
-    }
-
-    printf("Grid %s does not exist: it cannot be deleted. Error in line %d\n", id, yylineno);
-    return 0;
-}
-
-int show(g_list * list, char* id){
-
-    grid_t* current = list->head;
-
-    if (list->head == NULL){
-      printf("Grid list is empty: could not print %s. Error in line %d\n", id, yylineno);
-      return 0;
-    }
-
-    while (current != NULL) {
-      if(strcmp(current->id, id) == 0){
-        int maxRow = current->row;
-        int maxCol = current->col;
-        for (int row=0; row<maxRow; row++){
-          for(int col=0; col<maxCol; col++){
-            printf("%s     ", current->matrix[row][col]);
-          }
-          printf("\n");
-        }
-        return 1;
-      }
-      current = current->next;
-    }
-
-}
-
-int fits(l_list * list, char id[], int x, int y){
-		node_t * current = list->head;
-		int gridx = default_grid->row;
-		int gridy = default_grid->col;
-		grid_t * def = default_grid;
-
-    if (list->head == NULL){
-      printf("Grid list is empty: could not find %s. Error in line %d\n", yylineno);
-      return 0;
-    }
-
-    if (x > gridx || y > gridy){
-			printf("The coordinates are too big for the grid. Error in line %d\n", yylineno);
-		  	return 0;
-    }
-
-    while (current != NULL) {
-      if(strcmp(current->id, id) == 0){
-      	int checkx = (current->x)-gridx+x;
-      	int checky = (current->y)-gridy+y;
-      	if(checkx > 0 || checky > 0){
-      		printf("Cannot insert this variable at this point. There is not enough space. Check the grid size and the coordinates. Error in line %d\n", yylineno);
-      		return 0;
-      	}
-
-      	char * var = def->matrix[x][y];
-      	if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
-		      printf("Cannot place the variable on the top of a dome or pyramid block. Error in line %d\n", yylineno);
-		      return 0;
-				}
-				char * currVar;
-
-				for(int i = x; i < x+current->x; i++){
-		      for(int j = y; j < y+current->y; j++){
-            currVar = def->matrix[i][j];
-            if(strcmp(var,currVar) != 0){
-                  printf("Cannot place the variable on blocks with different heights. Error in line %d\n", yylineno);
-                  return 0;
-            }
-		      }
-				}
-      	printf("The block fits in the desidered coordinates %d, %d.\n", x, y);
-      	return 1;
-      }
-      current = current->next;
-    }
-
-    printf("This variable does not exist. Error in line %d\n", yylineno);
-    return 0;
-}
-
-int add(l_list * list, char id[], int x, int y, char* type, int coox, int cooy) {
-	  if (x == 0 || y == 0){
-    	printf("You cannot create a variable with size 0. Error in line %d\n", yylineno);
-      return 0;
-    }
-    node_t * current = list->head;
-    node_t * node = malloc(sizeof(node_t));
-    node->id = id;
-    node->x = x;
-    node->y = y;
-    node->type = type;
-    node->coox = coox;
-    node->cooy = cooy;
-
-    if (list->head == NULL){
-      list->head = node;
-      list->head->next = NULL;
-      printf("Added item %s to grid %s\n", list->head->id, default_grid->id);
-      return 1;
-    }
-
-    while (current->next != NULL) {
-      if(strcmp(current->id, id) == 0){
-        printf("This variable is already used. Error in line %d\n", yylineno);
-        free(node);
-        return 0;
-      }
-      current = current->next;
-    }
-
-    if(strcmp(current->id, id) == 0){
-      printf("This variable is already used. Error in line %d\n", yylineno);
-      free(node);
-      return 0;
-    }
-
-    current->next = malloc(sizeof(node_t));
-    current->next = node;
-    current->next->next = NULL;
-
-    printf("Added item %s to grid %s\n", current->next->id, default_grid->id);
-
-    return 1;
-}
-
-int on_top(grid_t * grid, node_t * node){
-
-
-		return 0;
-}
-
-int height(grid_t * grid, int x, int y){
-
-		if(x >= grid->row || y >= grid-> row){
-			printf("Cannot calculate the height of a cell not in the grid boundary. Error in line %d\n", yylineno);
-      return 0;
-		}
-
-    char * var = grid->matrix[x][y];
-		int h = atoi(var);
-		return h;
-}
-
-int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
-		int x = node->x;
-		int y = node->y;
-		char * type = node->type;
-		int cell_height = height(grid, coox,cooy);
-		node->h = cell_height + 1;
-
-		char * t = "";
-		if(strcmp(type, "dome") == 0){
-			t = "o";
-		}else if (strcmp(type, "pyramid") == 0){
-			t = "x";
-		}
-
-		for(int i = coox; i < x+coox; i++){
-	    for(int j = cooy; j < y+cooy; j++){
-	    	int curr = atoi(grid->matrix[i][j])+1;
-	    	char * res = malloc(sizeof(char)*4);
-	    	snprintf(res, sizeof(res), "%d", curr);
-	    	strcat(res, t);
-	    	grid->matrix[i][j] = res;
-	    }
-		}
-
-}
-
-int delete_in_matrix(grid_t * grid, node_t * node){
-		int x = node->x;
-		int y = node->y;
-		int coox = node->coox;
-		int cooy = node->cooy;
-		printf("here1\n");
-		if(on_top(grid, node) == 0){
-			printf("here2\n");
-			return 0;
-		}
-
-		for(int i = coox; i < x+coox; i++){
-	    for(int j = cooy; j < y+cooy; j++){
-	    	int curr = atoi(grid->matrix[i][j])-1;
-	    	char * res = malloc(sizeof(char)*4);
-	    	snprintf(res, sizeof(res), "%d", curr);
-	    	grid->matrix[i][j] = res;
-	    }
-		}
-}
-
-int update(l_list * list, int method, char* id, int coox, int cooy) {
-    node_t * current = list->head;
-
-    if (list->head == NULL){
-      printf("This variable does not exist. Error in line %d\n", yylineno);
-      return 0;
-    }
-
-    while (current != NULL) {
-      if((strcmp(current->id, id) == 0)){
-        if(method == 0){
-          if(current->coox == -1 && current->cooy == -1){
-          	if(fits(list, current->id, coox, cooy)){
-          		current->coox = coox;
-            	current->cooy = cooy;
-            	add_in_matrix(default_grid, current, coox, cooy);
-            	return 1;
-          	}else{
-          		return 0;
-          	}
-          }else{
-            printf("This lego was already placed. Please use move to move it. Error in line %d\n", yylineno);
-            return 0;
-          }
-        }else{
-          if(current->coox != -1 && current->cooy != -1){
-						int past_x = current->coox;
-						int past_y = current->cooy;
-	          delete_in_matrix(default_grid, current);
-          	if(fits(list, current->id, coox, cooy)){
-	            current->coox = coox;
-	            current->cooy = cooy;
-	            add_in_matrix(default_grid, current, coox, cooy);
-	            return 1;
-          	}else{
-          		add_in_matrix(default_grid, current, past_x, past_y);
-          		return 0;
-          	}
-          }else{
-          	printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
-            return 0;
-          }
-        }
-      }
-      current = current->next;
-    }
-
-    printf("This variable does not exist. Error in line %d\n", yylineno);
-
-    return 0;
-}
-
-int update_dir(l_list * list, char* id, int coox, int cooy){
-    node_t * current = list->head;
-
-    return 0;
-
-    if (list->head == NULL){
-      printf("There exist no variables. Error in line %d\n", yylineno);
-      return 0;
-    }
-
-    while (current != NULL) {
-      if((strcmp(current->id, id) == 0)){
-        if(current->coox == -1 && current->cooy == -1){
-          printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
-          return 0;
-        }else{
-          current->coox = coox;
-          current->cooy = cooy;
-          printf("before coox = %d, cooy = %d\n", coox, cooy);
-          return 1;
-        }
-      }
-      current = current->next;
-    }
-
-    printf("This variable does not exist. Error in line %d\n", yylineno);
-
-    return 0;
-}
-
-int rm(l_list * list, char* id) {
-
-    node_t* current = list->head;
-    node_t* temp = malloc(sizeof(node_t));
-
-    if (list->head == NULL){
-      printf("Variable list is empty: could not delete %s. Error in line %d\n", id, yylineno);
-      return 0;
-    }
-
-    if (strcmp(current->id, id) == 0){
-      free(current);
-      list->head = current->next;
-      delete_in_matrix(default_grid, current);
-      printf("Deleted node id=%s\n", id);
-      return 1;
-    }
-
-    // delete any element
-    while(current->next != NULL){
-      if (strcmp(current->next->id, id)==0 ){
-        temp = current->next;
-        current->next = temp->next;
-        free(temp);
-        delete_in_matrix(default_grid, current->next);
-        printf("Deleted node id=%s\n", id);
-        return 1;
-      }
-      current = current->next;
-    }
-
-    printf("Variable %s does not exist: it cannot be deleted. Error in line %d\n", id, yylineno);
-    return 0;
-}
-
-int rm_all(l_list * list){
-    node_t* current = list->head;
-    node_t* temp = malloc(sizeof(node_t));
-
-    if (list->head == NULL){
-      printf("Variable list is empty: could not delete any element. Error in line %d\n", yylineno);
-      return 0;
-    }
-
-    // delete any element
-    while(current != NULL){
-    	//delete_in_matrix(default_grid, current);
-      printf("deleted id=%s\n",current->id );
-      temp=current->next;
-      free(current);
-      current=temp;
-      
-    }
-
-    //printf("Variable does not exist: it cannot be deleted. Error in line %d\n", yylineno);
-    return 1;
-}
-
+#include "c_files/grid_handling.c"
+#include "c_files/block_handling.c"
 
 int main (void) {
   grid_list = create_list();
