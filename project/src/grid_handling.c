@@ -161,9 +161,16 @@ int show(g_list * list, char* id){
         int maxRow = current->row;
         int maxCol = current->col;
         
+        printf("%-6s", id);
+        for(int col=0; col<maxCol; col++){
+          printf("%-4d", col);
+        }
+        printf("\n\n");
+
         for (int row=0; row<maxRow; row++){
+          printf("%-6d", row);
           for(int col=0; col<maxCol; col++){
-            printf("%s     ", current->matrix[row][col]);
+            printf("%-4s", current->matrix[row][col]);
           }
           printf("\n");
         }
