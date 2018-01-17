@@ -3,8 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
-#include "header_files/block.h"
-#include "header_files/grid.h"
+#include "src/block.h"
+#include "src/grid.h"
+#include "lex.yy.c"
+#include "src/grid_handling.c"
+#include "src/block_handling.c"
 %}
 
 
@@ -78,10 +81,6 @@ dopt  : VAR                               {printf("%d\n",delete_block(default_gr
       ;
 
 %%
-
-#include "lex.yy.c"
-#include "c_files/grid_handling.c"
-#include "c_files/block_handling.c"
 
 int main (void) {
   grid_list = create_list();
