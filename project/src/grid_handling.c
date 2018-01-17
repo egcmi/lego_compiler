@@ -1,3 +1,6 @@
+/*
+
+*/
 g_list* create_grid_list(void) {
     g_list* p;
     p = malloc(sizeof(g_list));
@@ -5,12 +8,18 @@ g_list* create_grid_list(void) {
     return p;
 }
 
+/*
+
+*/
 grid_t* create_grid_t(void) {
 		grid_t* p;
 		p = malloc(sizeof(grid_t));
 		return p;
 }
 
+/*
+
+*/
 int free_matrix(char *** matrix, int row, int col){
     for(int i=0; i < row; i++){
         for(int j=0; j < col; j++){
@@ -20,7 +29,9 @@ int free_matrix(char *** matrix, int row, int col){
     free(matrix);
 }
 
+/*
 
+*/
 int add_grid(g_list * list, char id[], int row, int col) {
 
 	  if (row == 0 || col == 0){
@@ -77,6 +88,9 @@ int add_grid(g_list * list, char id[], int row, int col) {
     return 1;
 }
 
+/*
+
+*/
 int switch_grid(g_list * list, char* id) {
 
     if (list->head == NULL){
@@ -104,7 +118,9 @@ int switch_grid(g_list * list, char* id) {
     return 0;
 }
 
+/*
 
+*/
 int delete_grid(g_list * list, char* id) {
 
     if (list->head == NULL){
@@ -147,6 +163,9 @@ int delete_grid(g_list * list, char* id) {
     return 0;
 }
 
+/*
+
+*/
 int show(g_list * list, char* id){
 
     grid_t* current = list->head;

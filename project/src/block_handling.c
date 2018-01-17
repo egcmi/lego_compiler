@@ -1,3 +1,6 @@
+/*
+
+*/
 l_list * create_list(void) {
     l_list* p;
     p = malloc(sizeof(l_list));
@@ -5,7 +8,9 @@ l_list * create_list(void) {
     return p;
 }
 
+/*
 
+*/
 int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) {
 	  if (x == 0 || y == 0){
     	printf("You cannot create a variable with size 0. Error in line %d\n", yylineno);
@@ -52,6 +57,9 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
     return 1;
 }
 
+/*
+
+*/
 int fits(grid_t * grid, char id[], int x, int y){
     l_list * list = grid->blocks;
     node_t * current = list->head;
@@ -106,6 +114,9 @@ int fits(grid_t * grid, char id[], int x, int y){
 }
 
 
+/*
+
+*/
 int on_top(grid_t * grid, node_t * node){
     int coox = node->coox;
     int cooy = node->cooy;
@@ -117,6 +128,9 @@ int on_top(grid_t * grid, node_t * node){
     return 0;
 }
 
+/*
+
+*/
 int height(grid_t * grid, int x, int y){
 
 		if(x >= grid->row || y >= grid-> row){
@@ -129,6 +143,9 @@ int height(grid_t * grid, int x, int y){
 		return h;
 }
 
+/*
+
+*/
 int height_var(grid_t * grid, char* id){
 
     l_list * list = grid->blocks;
@@ -158,7 +175,9 @@ int height_var(grid_t * grid, char* id){
     return 0;
 }
 
+/*
 
+*/
 int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
 		int x = node->x;
 		int y = node->y;
@@ -185,6 +204,9 @@ int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
 
 }
 
+/*
+
+*/
 int delete_in_matrix(grid_t * grid, node_t * node){
 
 		int x = node->x;
@@ -202,6 +224,9 @@ int delete_in_matrix(grid_t * grid, node_t * node){
 		}
 }
 
+/*
+
+*/
 int update(grid_t * grid, int method, char* id, int coox, int cooy) {
     l_list * list = grid->blocks;
     node_t * current = list->head;
@@ -260,6 +285,9 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
     return 0;
 }
 
+/*
+
+*/
 int update_dir(grid_t * grid, char* id, char* dir, int num){
     l_list * list = grid->blocks;
     node_t * current = list->head;
@@ -325,6 +353,9 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
     return 0;
 }
 
+/*
+
+*/
 int delete_block(grid_t * grid, char* id) {
     l_list * list = grid->blocks;
     node_t* current = list->head;
@@ -372,6 +403,9 @@ int delete_block(grid_t * grid, char* id) {
     return 0;
 }
 
+/*
+
+*/
 int delete_all(grid_t * grid){
     l_list * list = grid->blocks;
     node_t* current = list->head;
