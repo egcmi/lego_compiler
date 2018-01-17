@@ -207,7 +207,6 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
               printf("Variable %s is not on top. Thus, it cannot be deleted. Error in line %d\n", id, yylineno);
               return 0;
             }
-	          delete_in_matrix(grid, current);
           	if(fits(grid, current->id, coox, cooy)){
 	            current->coox = coox;
 	            current->cooy = cooy;
