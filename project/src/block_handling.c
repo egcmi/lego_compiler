@@ -1,5 +1,5 @@
 /*
-
+creates an empty list of blocks
 */
 l_list * create_list(void) {
     l_list* p;
@@ -9,13 +9,21 @@ l_list * create_list(void) {
 }
 
 /*
-
+creates brick with desired caracteristics. returns error if:
+  - no grid exists
+  - any of of the sides (x,y) is 0
+  - another brick with the same id exists
 */
 int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) {
+  if (default_grid == NULL){
+    printf("No grid exists: you must create a new grid first. Error in line %d\n", yylineno);
+    return 0;
+  }
 	  if (x == 0 || y == 0){
-    	printf("You cannot create a variable with size 0. Error in line %d\n", yylineno);
+    	printf("Brick size cannot be 0. Error in line %d\n", yylineno);
       return 0;
     }
+
     l_list * list = grid->blocks;
     node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
@@ -29,13 +37,13 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
     if (list->head == NULL){
       list->head = node;
       list->head->next = NULL;
-      printf("Added item %s to grid %s\n", list->head->id, grid->id);
+      printf("Created brick %s\n", id);
       return 1;
     }
 
     while (current->next != NULL) {
       if(strcmp(current->id, id) == 0){
-        printf("This variable is already used. Error in line %d\n", yylineno);
+        printf("Another brick exists with name %s. Error in line %d\n", id, yylineno);
         free(node);
         return 0;
       }
@@ -43,7 +51,7 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
     }
 
     if(strcmp(current->id, id) == 0){
-      printf("This variable is already used. Error in line %d\n", yylineno);
+      printf("Another brick exists with name %s. Error in line %d\n", id, yylineno);
       free(node);
       return 0;
     }
@@ -52,13 +60,19 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
     current->next = node;
     current->next->next = NULL;
 
-    printf("Added item %s to grid %s\n", current->next->id, grid->id);
-
+    printf("Created brick %s\n", id);
     return 1;
 }
 
 /*
-
+checks if the block identified by id fits at the given coordinates (x,y)
+returns 1 if it fits, 0 if it doesn't
+returns error if:
+  - no bricks exists
+  - coordinates (x,y) are less than 0 or bigger than the grid
+returns 0 (false) if:
+  - there is not enough room (brick would be "hanging" out of the grid)
+  - the surface where the brick needs to be placed is uneven (blocks of different heights, domes, pyramid)
 */
 int fits(grid_t * grid, char id[], int x, int y){
     l_list * list = grid->blocks;
@@ -67,12 +81,12 @@ int fits(grid_t * grid, char id[], int x, int y){
     int gridy = grid->col;
 
     if (list->head == NULL){
-      printf("Grid list is empty: could not find %s. Error in line %d\n", yylineno);
+      printf("No bricks exist. Error in line %d\n", yylineno);
       return 0;
     }
 
     if (x > gridx || y > gridy || x < 0 || y < 0){
-      printf("The coordinates are out of the grid. Error in line %d\n", yylineno);
+      printf("Coordinates out of bounds. Error in line %d\n", yylineno);
         return 0;
     }
 
@@ -82,13 +96,13 @@ int fits(grid_t * grid, char id[], int x, int y){
         int checkx = (current->x)-gridx+x;
         int checky = (current->y)-gridy+y;
         if(checkx > 0 || checky > 0){
-          printf("Cannot insert this variable at this point. There is not enough space. Check the grid size and the coordinates. Error in line %d\n", yylineno);
+          printf("Not enough room for %s here: check size and coordinates\n", id, yylineno);
           return 0;
         }
 
         char * var = grid->matrix[x][y];
         if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
-          printf("Cannot place the variable on the top of a dome or pyramid block. Error in line %d\n", yylineno);
+          printf("Cannot place brick on top of dome or pyramid\n", yylineno);
           return 0;
         }
 
@@ -98,24 +112,24 @@ int fits(grid_t * grid, char id[], int x, int y){
           for(int j = y; j < y+current->y; j++){
             currVar = grid->matrix[i][j];
             if(strcmp(var,currVar) != 0){
-                printf("Cannot place the variable on blocks with different heights. Error in line %d\n", yylineno);
+                printf("Cannot place brick on blocks different heights\n", yylineno);
                 return 0;
             }
           }
         }
-        printf("The block fits in the desidered coordinates %d, %d.\n", x, y);
+        printf("Brick %s placed at %d, %d.\n", id, x, y);
         return 1;
       }
       current = current->next;
     }
 
-    printf("This variable does not exist. Error in line %d\n", yylineno);
+    printf("Brick %s not found. Error in line %d\n", id, yylineno);
     return 0;
 }
 
 
 /*
-
+checks if brick (node) is on top of the grid. returns 1 when true, 0 otherwise.
 */
 int on_top(grid_t * grid, node_t * node){
     int coox = node->coox;
@@ -133,9 +147,9 @@ int on_top(grid_t * grid, node_t * node){
 */
 int height(grid_t * grid, int x, int y){
 
-		if(x >= grid->row || y >= grid-> row){
-			printf("Cannot calculate the height of a cell not in the grid boundary. Error in line %d\n", yylineno);
-      return 0;
+		if(x >= grid->row || y >= grid->col || x<=0 || y<=0){
+			printf("Coordinates out of bounds. Error in line %d\n", yylineno);
+      return -1;
 		}
 
     char * var = grid->matrix[x][y];

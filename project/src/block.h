@@ -2,10 +2,10 @@
 #define BLOCK_H
 
 /*
-node_t represents a lego brick characterised as follows:
+represents a lego brick characterised as follows:
     id:     unique name
-    x:      width; e.g. if x==2 then the brick has width of 2 units
-    y:      depth; e.g. if y==3 then the brick has depth 3 units
+    x:      depth; e.g. if x==2 then the brick has depth of 2 units
+    y:      width; e.g. if y==3 then the brick has width 3 units
     type:   matrix, dome or pyramid
     coox:   coordinate x on which it is placed to on the grid, -1 before it is placed on the grid
     cooy:   coordinate y on which it is placed to on the grid, -1 before it is placed on the grid
@@ -17,17 +17,17 @@ node_t represents a lego brick characterised as follows:
 */
 typedef struct node {
     char* id;
-    int x;
-    int y;
+    int x;      // swapped
+    int y;      // swapped
     char* type;
-    int coox;
-    int cooy;
+    int coox;   // swapped
+    int cooy;   // swapped
     int h;
     struct node * next;
 } node_t;
 
 /*
-l_list represents a linked list of lego bricks characterised as follows:
+represents a linked list of lego bricks characterised as follows:
     head:   points to the first lego brick (node_t) in the list
 */
 typedef struct list {
@@ -35,7 +35,7 @@ typedef struct list {
 } l_list;
 
 /*
-grid_t represents a grid to place lego bricks on and is characterised as follows:
+represents a grid to place lego bricks on and is characterised as follows:
     id:     
     row:    
     col:    
@@ -53,7 +53,7 @@ typedef struct grid{
 } grid_t;
 
 /*
-    functions prototypes; defined in block_handling.c
+functions prototypes; defined in block_handling.c
 */
 l_list * create_list(void);
 int add(grid_t * grid, char* id, int x, int y, char* type, int coox, int cooy);
