@@ -143,11 +143,11 @@ int on_top(grid_t * grid, node_t * node){
 }
 
 /*
-
+returns height of the cell (x,y) on which it is invoked, -1 if coordinates less than 0 or bigger than the grid
 */
 int height(grid_t * grid, int x, int y){
 
-		if(x >= grid->row || y >= grid->col || x<=0 || y<=0){
+		if(x >= grid->row || y >= grid->col || x<0 || y<0){
 			printf("Coordinates out of bounds. Error in line %d\n", yylineno);
       return -1;
 		}
