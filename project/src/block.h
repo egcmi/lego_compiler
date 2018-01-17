@@ -4,11 +4,11 @@
 /*
 node_t represents a lego brick characterised as follows:
     id:     unique name
-    x:      width; e.g. if x==2 then the brick is 2 units wide
-    y:      depth; e.g. if y==3 then the brick is 3 units long
+    x:      width; e.g. if x==2 then the brick has width of 2 units
+    y:      depth; e.g. if y==3 then the brick has depth 3 units
     type:   matrix, dome or pyramid
-    coox:   coordinate x on which it is placed to on the grid, default set to -1 before it is placed on the grid
-    cooy:   coordinate y on which it is placed to on the grid, default set to -1 before it is placed on the grid
+    coox:   coordinate x on which it is placed to on the grid, -1 before it is placed on the grid
+    cooy:   coordinate y on which it is placed to on the grid, -1 before it is placed on the grid
     h:      vertical position at which the brick is placed.
             given that each brick is 1 unit tall, h is defined as the sum of the number of bricks placed under it plus 1.
             e.g. if the brick is placed directly on the grid its height is 1;
@@ -53,7 +53,7 @@ typedef struct grid{
 } grid_t;
 
 /*
-
+    functions prototypes; defined in block_handling.c
 */
 l_list * create_list(void);
 int add(grid_t * grid, char* id, int x, int y, char* type, int coox, int cooy);
