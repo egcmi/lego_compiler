@@ -64,9 +64,12 @@ stmt  : EXIT                              {exit(EXIT_SUCCESS);}
       | MOVE mopt                         {;}
       | HEIGHT hopt                       {;}
       | DELETE dopt                       {;}
-      | FITS VAR '(' NUM ',' NUM ')'      {printf("%d\n",fits(default_grid,$2,$4,$6));}
+      | FITS VAR '(' NUM ',' NUM ')'      {printf("%d\n",fits(default_grid,$2,$4,$6));} 
+      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE              {printf("%d\n",update(default_grid,0,$3,$6,$8));}
+      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE               {printf("%d\n",update(default_grid,1,$3,$6,$8));}
       ;
 
+      ;
 mopt  : VAR DIR NUM                       {printf("%d\n",update_dir(default_grid,$1,$2,$3));}
       | VAR AT '(' NUM ',' NUM ')'        {printf("%d\n",update(default_grid,1,$1,$4,$6));}
       ;
