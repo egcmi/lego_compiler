@@ -72,7 +72,7 @@ mopt  : VAR DIR NUM                       {printf("%d\n",update_dir(default_grid
       ;
 
 hopt  : '(' NUM ',' NUM ')'         	  	{printf("%d\n",height(default_grid,$2,$4));}
-      | VAR                         	  	{}
+      | VAR                         	  	{printf("%d\n",height_var(default_grid,$1));}
       ;
 
 dopt  : VAR                               {printf("%d\n",delete_block(default_grid,$1));}

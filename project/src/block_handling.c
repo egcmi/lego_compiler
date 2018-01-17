@@ -63,10 +63,11 @@ int fits(grid_t * grid, char id[], int x, int y){
       return 0;
     }
 
-    if (x > gridx || y > gridy){
-      printf("The coordinates are too big for the grid. Error in line %d\n", yylineno);
+    if (x > gridx || y > gridy || x < 0 || y < 0){
+      printf("The coordinates are out of the grid. Error in line %d\n", yylineno);
         return 0;
     }
+
 
     while (current != NULL) {
       if(strcmp(current->id, id) == 0){
@@ -105,8 +106,7 @@ int fits(grid_t * grid, char id[], int x, int y){
 }
 
 
-int on_top(grid_t * grid, node_t * node){ // problem is here
-    printf("%d, %d\n", node->coox, node->cooy );
+int on_top(grid_t * grid, node_t * node){
     int coox = node->coox;
     int cooy = node->cooy;
     
@@ -128,6 +128,36 @@ int height(grid_t * grid, int x, int y){
 		int h = atoi(var);
 		return h;
 }
+
+int height_var(grid_t * grid, char* id){
+
+    l_list * list = grid->blocks;
+    node_t * current = list->head;
+    int h = 0;
+
+    if (list->head == NULL){
+      printf("There exist no variables. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    while (current != NULL) {
+      if((strcmp(current->id, id) == 0)){
+        if(current->coox == -1 && current->cooy == -1){
+          printf("Cannot check height of lego. It has to be placed before the height can be retrieved. Error in line %d\n", yylineno);
+          return 0;
+        }else{
+          h = current->h;
+          return h;
+        }
+      }
+      current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d\n", yylineno);
+
+    return 0;
+}
+
 
 int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
 		int x = node->x;
@@ -230,16 +260,31 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
     return 0;
 }
 
-int update_dir(grid_t * grid, char* id, int coox, int cooy){
+int update_dir(grid_t * grid, char* id, char* dir, int num){
     l_list * list = grid->blocks;
     node_t * current = list->head;
-
-    return 0;
 
     if (list->head == NULL){
       printf("There exist no variables. Error in line %d\n", yylineno);
       return 0;
     }
+    int dir_num;
+    if(strcmp(dir, "left") == 0){
+      dir_num = 1;
+    }
+
+    if(strcmp(dir, "right") == 0){
+      dir_num = 2;
+    }
+
+    if(strcmp(dir, "up") == 0){
+      dir_num = 3;
+    }
+
+    if(strcmp(dir, "down") == 0){
+      dir_num = 4;
+    }
+
 
     while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
@@ -247,9 +292,28 @@ int update_dir(grid_t * grid, char* id, int coox, int cooy){
           printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
           return 0;
         }else{
-          current->coox = coox;
-          current->cooy = cooy;
-          printf("before coox = %d, cooy = %d\n", coox, cooy);
+          int tempx;
+          int tempy;
+          switch (dir_num){
+            case 1:
+              tempx = current->coox;
+              tempy = current->cooy-num;
+              break;
+            case 2:
+              tempx = current->coox;
+              tempy = current->cooy+num;
+              break;
+            case 3:
+              tempx = current->coox-num;
+              tempy = current->cooy;
+              break;
+            case 4:
+              tempx = current->coox+num;
+              tempy = current->cooy;
+              break;
+          }
+          update(grid, 1, id, tempx, tempy);
+          //printf("before coox = %d, cooy = %d\n", coox, cooy);
           return 1;
         }
       }
@@ -273,9 +337,9 @@ int delete_block(grid_t * grid, char* id) {
 
     if (strcmp(current->id, id) == 0){
       if (on_top(grid, current)){
+        free(current);
         list->head = current->next;
         delete_in_matrix(grid, current);
-        free(current);
         printf("Deleted node id=%s\n", id);
         return 1;
       }else{
@@ -288,19 +352,17 @@ int delete_block(grid_t * grid, char* id) {
     while(current->next != NULL){
       if (strcmp(current->next->id, id)==0 ){
         if (on_top(grid, current->next)){
-          list->head = current->next;
-          delete_in_matrix(grid, current->next);
-          free(current);
+          temp = current->next;
+          current->next = temp->next;
+          delete_in_matrix(grid, temp);
+          free(temp);
           printf("Deleted node id=%s\n", id);
           return 1;
         }else{
           printf("Variable %s is not on top. Thus, it cannot be deleted. Error in line %d\n", id, yylineno);
           return 0;
         }
-        temp = current->next;
-        current->next = temp->next;
-        free(temp);
-        printf("Deleted node id=%s\n", id);
+
         return 1;
       }
       current = current->next;

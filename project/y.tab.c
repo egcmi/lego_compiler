@@ -1392,7 +1392,7 @@ yyreduce:
 
   case 17:
 #line 75 "lego.y" /* yacc.c:1646  */
-    {}
+    {printf("%d\n",height_var(default_grid,(yyvsp[0].lexeme)));}
 #line 1397 "y.tab.c" /* yacc.c:1646  */
     break;
 

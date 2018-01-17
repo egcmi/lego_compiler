@@ -1,0 +1,15 @@
+A1 = grid (10,10)
+a1 = matrix (2,2)
+a2 = matrix (2,2)
+a3 = matrix (2,2)
+place a1 at (0,0)
+place a2 at (0,0)
+place a3 at (0,0)
+delete a2
+delete a1
+show A1
+delete a3
+show A1
+delete a2
+show A1
+exit
