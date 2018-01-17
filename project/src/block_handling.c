@@ -289,7 +289,7 @@ int delete_block(grid_t * grid, char* id) {
       if (strcmp(current->next->id, id)==0 ){
         if (on_top(grid, current->next)){
           list->head = current->next;
-          delete_in_matrix(grid, current);
+          delete_in_matrix(grid, current->next);
           free(current);
           printf("Deleted node id=%s\n", id);
           return 1;
