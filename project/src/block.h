@@ -67,5 +67,6 @@ int delete_in_matrix(grid_t * grid, node_t * node);
 int on_top(grid_t * grid, node_t * node);
 int height(grid_t * grid, int x, int y);
 int height_var(grid_t * grid, char* id);
+int while_move(grid_t * grid, char* id, char* dir, int num);
 
 #endif

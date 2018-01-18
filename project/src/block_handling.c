@@ -96,13 +96,13 @@ int fits(grid_t * grid, char id[], int x, int y){
         int checkx = (current->x)-gridx+x;
         int checky = (current->y)-gridy+y;
         if(checkx > 0 || checky > 0){
-          printf("Not enough room for %s here: check size and coordinates\n", id, yylineno);
+          printf("Not enough room for %s here: check size and coordinates\n", id);
           return 0;
         }
 
         char * var = grid->matrix[x][y];
         if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
-          printf("Cannot place brick on top of dome or pyramid\n", yylineno);
+          printf("Cannot place brick on top of dome or pyramid\n");
           return 0;
         }
 
@@ -112,7 +112,7 @@ int fits(grid_t * grid, char id[], int x, int y){
           for(int j = y; j < y+current->y; j++){
             currVar = grid->matrix[i][j];
             if(strcmp(var,currVar) != 0){
-                printf("Cannot place brick on blocks different heights\n", yylineno);
+                printf("Cannot place brick on blocks different heights\n");
                 return 0;
             }
           }
@@ -444,3 +444,81 @@ int delete_all(grid_t * grid){
     return 1;
 }
 
+int while_move (grid_t * grid, char* id, char* dir, int num){
+    l_list * list = grid->blocks;
+    node_t * current = list->head;
+
+    if (list->head == NULL){
+      printf("This variable does not exist. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    int dir_num;
+    if(strcmp(dir, "left") == 0){
+      dir_num = 1;
+    }
+
+    if(strcmp(dir, "right") == 0){
+      dir_num = 2;
+    }
+
+    if(strcmp(dir, "up") == 0){
+      dir_num = 3;
+    }
+
+    if(strcmp(dir, "down") == 0){
+      dir_num = 4;
+    }
+
+
+    while (current != NULL) {
+      if((strcmp(current->id, id) == 0)){
+        int tempx;
+        int tempy;
+        switch (dir_num){
+          case 1:
+            tempx = current->coox;
+            tempy = current->cooy-num;
+            break;
+          case 2:
+            tempx = current->coox;
+            tempy = current->cooy+num;
+            break;
+          case 3:
+            tempx = current->coox-num;
+            tempy = current->cooy;
+            break;
+          case 4:
+            tempx = current->coox+num;
+            tempy = current->cooy;
+            break;
+        }
+          while(fits(grid, id, )){
+            switch (dir_num){
+              case 1:
+                tempx = current->coox;
+                tempy = current->cooy-num;
+                break;
+              case 2:
+                tempx = current->coox;
+                tempy = current->cooy+num;
+                break;
+              case 3:
+                tempx = current->coox-num;
+                tempy = current->cooy;
+                break;
+              case 4:
+                tempx = current->coox+num;
+                tempy = current->cooy;
+                break;
+            }
+
+          }
+      }
+      current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d\n", yylineno);
+
+    return 0;
+}

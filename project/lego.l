@@ -28,7 +28,7 @@ gvar		[A-Z]{num}{1,2}
 {type}		{yylval.lexeme = strdup(yytext);
 			return TYPE;}
 
-[-()<>=+*/;{},] {return *yytext;}
+[(),=:] 	{return *yytext;}
 
 "exit"		{return EXIT;}
 "switch"	{return SWITCH;}
@@ -42,11 +42,9 @@ gvar		[A-Z]{num}{1,2}
 "at"		{return AT;}
 "if"		{return IF;}
 "then"		{return THEN;}
-"else"		{return ELSE;}
+"possible"	{return POSSIBLE;}
+"while"		{return WHILE;}
 "move"		{return MOVE;}
-"and"		{return AND;}
-"or"		{return OR;}
-"=="		{return EQ;}
 
 .			{yyerror("Unknown character");}
 
