@@ -1,5 +1,5 @@
 /*
-
+creates an empty list of blocks
 */
 g_list* create_grid_list(void) {
     g_list* p;
@@ -9,7 +9,7 @@ g_list* create_grid_list(void) {
 }
 
 /*
-
+creates empty grid
 */
 grid_t* create_grid_t(void) {
 		grid_t* p;
@@ -18,7 +18,7 @@ grid_t* create_grid_t(void) {
 }
 
 /*
-
+frees memory allocated for matrix
 */
 int free_matrix(char *** matrix, int row, int col){
     for(int i=0; i < row; i++){
@@ -26,16 +26,18 @@ int free_matrix(char *** matrix, int row, int col){
             free(matrix[i][j]);
         }
     }
-    free(matrix);
+  free(matrix);
 }
 
 /*
-
+creates grid with desired characteristics:
+  - id:   unique name
+  - row:  
+  - col:  
 */
 int add_grid(g_list * list, char id[], int row, int col) {
-
-	  if (row == 0 || col == 0){
-    	printf("You cannot create a grid with size 0. Error in line %d\n", yylineno);
+	  if (row <= 0 || col <= 0){
+    	printf("Grid size must be greater than 0. Error in line %d\n", yylineno);
       return 0;
     }
     grid_t * current = list->head;
