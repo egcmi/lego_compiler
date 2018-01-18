@@ -1,4 +1,4 @@
-State 34 conflicts: 1 reduce/reduce
+State 36 conflicts: 1 reduce/reduce
 
 
 Grammar
@@ -16,70 +16,72 @@ Grammar
     8     | PLACE VAR AT '(' NUM ',' NUM ')'
     9     | SHOW GVAR
    10     | MOVE mopt
-   11     | HEIGHT hopt
-   12     | DELETE dopt
-   13     | FITS VAR '(' NUM ',' NUM ')'
-   14     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE
-   15     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE
-   16     | WHILE POSSIBLE ':' MOVE VAR DIR NUM
+   11     | ROTATE VAR
+   12     | HEIGHT hopt
+   13     | DELETE dopt
+   14     | FITS VAR '(' NUM ',' NUM ')'
+   15     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE
+   16     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE
+   17     | WHILE POSSIBLE ':' MOVE VAR DIR NUM
 
-   17 mopt: VAR DIR NUM
-   18     | VAR AT '(' NUM ',' NUM ')'
+   18 mopt: VAR DIR NUM
+   19     | VAR AT '(' NUM ',' NUM ')'
 
-   19 hopt: '(' NUM ',' NUM ')'
-   20     | VAR
+   20 hopt: '(' NUM ',' NUM ')'
+   21     | VAR
 
-   21 dopt: VAR
-   22     | ALL
-   23     | GRID GVAR
+   22 dopt: VAR
+   23     | ALL
+   24     | GRID GVAR
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 '\n' (10) 1 3
-'(' (40) 6 7 8 13 14 15 18 19
-')' (41) 6 7 8 13 14 15 18 19
-',' (44) 6 7 8 13 14 15 18 19
-':' (58) 16
+'(' (40) 6 7 8 14 15 16 19 20
+')' (41) 6 7 8 14 15 16 19 20
+',' (44) 6 7 8 14 15 16 19 20
+':' (58) 17
 '=' (61) 6 7
 error (256)
-NUM (258) 6 7 8 13 14 15 16 17 18 19
-DIR (259) 16 17
+NUM (258) 6 7 8 14 15 16 17 18 19 20
+DIR (259) 17 18
 TYPE (260) 7
-VAR (261) 7 8 13 14 15 16 17 18 20 21
-GVAR (262) 5 6 9 23
+VAR (261) 7 8 11 14 15 16 17 18 19 21 22
+GVAR (262) 5 6 9 24
 SHOW (263) 9
 EXIT (264) 4
 SWITCH (265) 5
-POSSIBLE (266) 16
-WHILE (267) 16
-GRID (268) 5 6 23
-HEIGHT (269) 11
-FITS (270) 13 14 15
-PLACE (271) 8 14
-DELETE (272) 12
-ALL (273) 22
-IF (274) 14 15
-THEN (275) 14 15
-MOVE (276) 10 15 16
-AT (277) 8 14 15 18
+ROTATE (266) 11
+POSSIBLE (267) 17
+WHILE (268) 17
+GRID (269) 5 6 24
+HEIGHT (270) 12
+FITS (271) 14 15 16
+PLACE (272) 8 15
+DELETE (273) 13
+ALL (274) 23
+IF (275) 15 16
+THEN (276) 15 16
+MOVE (277) 10 16 17
+AT (278) 8 15 16 19
 
 
 Nonterminals, with rules where they appear
 
-$accept (29)
+$accept (30)
     on left: 0
-line (30)
+line (31)
     on left: 1 2 3, on right: 0 2
-stmt (31)
-    on left: 4 5 6 7 8 9 10 11 12 13 14 15 16, on right: 1 2
-mopt (32)
-    on left: 17 18, on right: 10
-hopt (33)
-    on left: 19 20, on right: 11
-dopt (34)
-    on left: 21 22 23, on right: 12
+stmt (32)
+    on left: 4 5 6 7 8 9 10 11 12 13 14 15 16 17, on right: 1 2
+mopt (33)
+    on left: 18 19, on right: 10
+hopt (34)
+    on left: 20 21, on right: 12
+dopt (35)
+    on left: 22 23 24, on right: 13
 
 
 State 0
@@ -91,38 +93,39 @@ State 0
     SHOW    shift, and go to state 3
     EXIT    shift, and go to state 4
     SWITCH  shift, and go to state 5
-    WHILE   shift, and go to state 6
-    HEIGHT  shift, and go to state 7
-    FITS    shift, and go to state 8
-    PLACE   shift, and go to state 9
-    DELETE  shift, and go to state 10
-    IF      shift, and go to state 11
-    MOVE    shift, and go to state 12
-    '\n'    shift, and go to state 13
+    ROTATE  shift, and go to state 6
+    WHILE   shift, and go to state 7
+    HEIGHT  shift, and go to state 8
+    FITS    shift, and go to state 9
+    PLACE   shift, and go to state 10
+    DELETE  shift, and go to state 11
+    IF      shift, and go to state 12
+    MOVE    shift, and go to state 13
+    '\n'    shift, and go to state 14
 
-    line  go to state 14
-    stmt  go to state 15
+    line  go to state 15
+    stmt  go to state 16
 
 
 State 1
 
     7 stmt: VAR . '=' TYPE '(' NUM ',' NUM ')'
 
-    '='  shift, and go to state 16
+    '='  shift, and go to state 17
 
 
 State 2
 
     6 stmt: GVAR . '=' GRID '(' NUM ',' NUM ')'
 
-    '='  shift, and go to state 17
+    '='  shift, and go to state 18
 
 
 State 3
 
     9 stmt: SHOW . GVAR
 
-    GVAR  shift, and go to state 18
+    GVAR  shift, and go to state 19
 
 
 State 4
@@ -136,83 +139,90 @@ State 5
 
     5 stmt: SWITCH . GRID GVAR
 
-    GRID  shift, and go to state 19
+    GRID  shift, and go to state 20
 
 
 State 6
 
-   16 stmt: WHILE . POSSIBLE ':' MOVE VAR DIR NUM
+   11 stmt: ROTATE . VAR
 
-    POSSIBLE  shift, and go to state 20
+    VAR  shift, and go to state 21
 
 
 State 7
 
-   11 stmt: HEIGHT . hopt
+   17 stmt: WHILE . POSSIBLE ':' MOVE VAR DIR NUM
 
-    VAR  shift, and go to state 21
-    '('  shift, and go to state 22
-
-    hopt  go to state 23
+    POSSIBLE  shift, and go to state 22
 
 
 State 8
 
-   13 stmt: FITS . VAR '(' NUM ',' NUM ')'
+   12 stmt: HEIGHT . hopt
 
-    VAR  shift, and go to state 24
+    VAR  shift, and go to state 23
+    '('  shift, and go to state 24
+
+    hopt  go to state 25
 
 
 State 9
 
-    8 stmt: PLACE . VAR AT '(' NUM ',' NUM ')'
+   14 stmt: FITS . VAR '(' NUM ',' NUM ')'
 
-    VAR  shift, and go to state 25
+    VAR  shift, and go to state 26
 
 
 State 10
 
-   12 stmt: DELETE . dopt
+    8 stmt: PLACE . VAR AT '(' NUM ',' NUM ')'
 
-    VAR   shift, and go to state 26
-    GRID  shift, and go to state 27
-    ALL   shift, and go to state 28
-
-    dopt  go to state 29
+    VAR  shift, and go to state 27
 
 
 State 11
 
-   14 stmt: IF . FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE
-   15     | IF . FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE
+   13 stmt: DELETE . dopt
 
-    FITS  shift, and go to state 30
+    VAR   shift, and go to state 28
+    GRID  shift, and go to state 29
+    ALL   shift, and go to state 30
+
+    dopt  go to state 31
 
 
 State 12
 
-   10 stmt: MOVE . mopt
+   15 stmt: IF . FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE
+   16     | IF . FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE
 
-    VAR  shift, and go to state 31
-
-    mopt  go to state 32
+    FITS  shift, and go to state 32
 
 
 State 13
+
+   10 stmt: MOVE . mopt
+
+    VAR  shift, and go to state 33
+
+    mopt  go to state 34
+
+
+State 14
 
     3 line: '\n' .
 
     $default  reduce using rule 3 (line)
 
 
-State 14
+State 15
 
     0 $accept: line . $end
 
-    $end  shift, and go to state 33
+    $end  shift, and go to state 35
 
 
-State 15
+State 16
 
     1 line: stmt . '\n'
     2     | stmt . line
@@ -222,149 +232,157 @@ State 15
     SHOW    shift, and go to state 3
     EXIT    shift, and go to state 4
     SWITCH  shift, and go to state 5
-    WHILE   shift, and go to state 6
-    HEIGHT  shift, and go to state 7
-    FITS    shift, and go to state 8
-    PLACE   shift, and go to state 9
-    DELETE  shift, and go to state 10
-    IF      shift, and go to state 11
-    MOVE    shift, and go to state 12
-    '\n'    shift, and go to state 34
+    ROTATE  shift, and go to state 6
+    WHILE   shift, and go to state 7
+    HEIGHT  shift, and go to state 8
+    FITS    shift, and go to state 9
+    PLACE   shift, and go to state 10
+    DELETE  shift, and go to state 11
+    IF      shift, and go to state 12
+    MOVE    shift, and go to state 13
+    '\n'    shift, and go to state 36
 
-    line  go to state 35
-    stmt  go to state 15
-
-
-State 16
-
-    7 stmt: VAR '=' . TYPE '(' NUM ',' NUM ')'
-
-    TYPE  shift, and go to state 36
+    line  go to state 37
+    stmt  go to state 16
 
 
 State 17
 
-    6 stmt: GVAR '=' . GRID '(' NUM ',' NUM ')'
+    7 stmt: VAR '=' . TYPE '(' NUM ',' NUM ')'
 
-    GRID  shift, and go to state 37
+    TYPE  shift, and go to state 38
 
 
 State 18
+
+    6 stmt: GVAR '=' . GRID '(' NUM ',' NUM ')'
+
+    GRID  shift, and go to state 39
+
+
+State 19
 
     9 stmt: SHOW GVAR .
 
     $default  reduce using rule 9 (stmt)
 
 
-State 19
+State 20
 
     5 stmt: SWITCH GRID . GVAR
 
-    GVAR  shift, and go to state 38
-
-
-State 20
-
-   16 stmt: WHILE POSSIBLE . ':' MOVE VAR DIR NUM
-
-    ':'  shift, and go to state 39
+    GVAR  shift, and go to state 40
 
 
 State 21
 
-   20 hopt: VAR .
-
-    $default  reduce using rule 20 (hopt)
-
-
-State 22
-
-   19 hopt: '(' . NUM ',' NUM ')'
-
-    NUM  shift, and go to state 40
-
-
-State 23
-
-   11 stmt: HEIGHT hopt .
+   11 stmt: ROTATE VAR .
 
     $default  reduce using rule 11 (stmt)
 
 
+State 22
+
+   17 stmt: WHILE POSSIBLE . ':' MOVE VAR DIR NUM
+
+    ':'  shift, and go to state 41
+
+
+State 23
+
+   21 hopt: VAR .
+
+    $default  reduce using rule 21 (hopt)
+
+
 State 24
 
-   13 stmt: FITS VAR . '(' NUM ',' NUM ')'
+   20 hopt: '(' . NUM ',' NUM ')'
 
-    '('  shift, and go to state 41
+    NUM  shift, and go to state 42
 
 
 State 25
 
-    8 stmt: PLACE VAR . AT '(' NUM ',' NUM ')'
+   12 stmt: HEIGHT hopt .
 
-    AT  shift, and go to state 42
+    $default  reduce using rule 12 (stmt)
 
 
 State 26
 
-   21 dopt: VAR .
+   14 stmt: FITS VAR . '(' NUM ',' NUM ')'
 
-    $default  reduce using rule 21 (dopt)
+    '('  shift, and go to state 43
 
 
 State 27
 
-   23 dopt: GRID . GVAR
+    8 stmt: PLACE VAR . AT '(' NUM ',' NUM ')'
 
-    GVAR  shift, and go to state 43
+    AT  shift, and go to state 44
 
 
 State 28
 
-   22 dopt: ALL .
+   22 dopt: VAR .
 
     $default  reduce using rule 22 (dopt)
 
 
 State 29
 
-   12 stmt: DELETE dopt .
+   24 dopt: GRID . GVAR
 
-    $default  reduce using rule 12 (stmt)
+    GVAR  shift, and go to state 45
 
 
 State 30
 
-   14 stmt: IF FITS . VAR AT '(' NUM ',' NUM ')' THEN PLACE
-   15     | IF FITS . VAR AT '(' NUM ',' NUM ')' THEN MOVE
+   23 dopt: ALL .
 
-    VAR  shift, and go to state 44
+    $default  reduce using rule 23 (dopt)
 
 
 State 31
 
-   17 mopt: VAR . DIR NUM
-   18     | VAR . AT '(' NUM ',' NUM ')'
+   13 stmt: DELETE dopt .
 
-    DIR  shift, and go to state 45
-    AT   shift, and go to state 46
+    $default  reduce using rule 13 (stmt)
 
 
 State 32
+
+   15 stmt: IF FITS . VAR AT '(' NUM ',' NUM ')' THEN PLACE
+   16     | IF FITS . VAR AT '(' NUM ',' NUM ')' THEN MOVE
+
+    VAR  shift, and go to state 46
+
+
+State 33
+
+   18 mopt: VAR . DIR NUM
+   19     | VAR . AT '(' NUM ',' NUM ')'
+
+    DIR  shift, and go to state 47
+    AT   shift, and go to state 48
+
+
+State 34
 
    10 stmt: MOVE mopt .
 
     $default  reduce using rule 10 (stmt)
 
 
-State 33
+State 35
 
     0 $accept: line $end .
 
     $default  accept
 
 
-State 34
+State 36
 
     1 line: stmt '\n' .
     3     | '\n' .
@@ -374,381 +392,381 @@ State 34
     $default  reduce using rule 1 (line)
 
 
-State 35
+State 37
 
     2 line: stmt line .
 
     $default  reduce using rule 2 (line)
 
 
-State 36
+State 38
 
     7 stmt: VAR '=' TYPE . '(' NUM ',' NUM ')'
 
-    '('  shift, and go to state 47
+    '('  shift, and go to state 49
 
 
-State 37
+State 39
 
     6 stmt: GVAR '=' GRID . '(' NUM ',' NUM ')'
 
-    '('  shift, and go to state 48
+    '('  shift, and go to state 50
 
 
-State 38
+State 40
 
     5 stmt: SWITCH GRID GVAR .
 
     $default  reduce using rule 5 (stmt)
 
 
-State 39
-
-   16 stmt: WHILE POSSIBLE ':' . MOVE VAR DIR NUM
-
-    MOVE  shift, and go to state 49
-
-
-State 40
-
-   19 hopt: '(' NUM . ',' NUM ')'
-
-    ','  shift, and go to state 50
-
-
 State 41
 
-   13 stmt: FITS VAR '(' . NUM ',' NUM ')'
+   17 stmt: WHILE POSSIBLE ':' . MOVE VAR DIR NUM
 
-    NUM  shift, and go to state 51
+    MOVE  shift, and go to state 51
 
 
 State 42
 
-    8 stmt: PLACE VAR AT . '(' NUM ',' NUM ')'
+   20 hopt: '(' NUM . ',' NUM ')'
 
-    '('  shift, and go to state 52
+    ','  shift, and go to state 52
 
 
 State 43
 
-   23 dopt: GRID GVAR .
+   14 stmt: FITS VAR '(' . NUM ',' NUM ')'
 
-    $default  reduce using rule 23 (dopt)
+    NUM  shift, and go to state 53
 
 
 State 44
 
-   14 stmt: IF FITS VAR . AT '(' NUM ',' NUM ')' THEN PLACE
-   15     | IF FITS VAR . AT '(' NUM ',' NUM ')' THEN MOVE
+    8 stmt: PLACE VAR AT . '(' NUM ',' NUM ')'
 
-    AT  shift, and go to state 53
+    '('  shift, and go to state 54
 
 
 State 45
 
-   17 mopt: VAR DIR . NUM
+   24 dopt: GRID GVAR .
 
-    NUM  shift, and go to state 54
+    $default  reduce using rule 24 (dopt)
 
 
 State 46
 
-   18 mopt: VAR AT . '(' NUM ',' NUM ')'
+   15 stmt: IF FITS VAR . AT '(' NUM ',' NUM ')' THEN PLACE
+   16     | IF FITS VAR . AT '(' NUM ',' NUM ')' THEN MOVE
 
-    '('  shift, and go to state 55
+    AT  shift, and go to state 55
 
 
 State 47
 
-    7 stmt: VAR '=' TYPE '(' . NUM ',' NUM ')'
+   18 mopt: VAR DIR . NUM
 
     NUM  shift, and go to state 56
 
 
 State 48
 
-    6 stmt: GVAR '=' GRID '(' . NUM ',' NUM ')'
+   19 mopt: VAR AT . '(' NUM ',' NUM ')'
 
-    NUM  shift, and go to state 57
+    '('  shift, and go to state 57
 
 
 State 49
 
-   16 stmt: WHILE POSSIBLE ':' MOVE . VAR DIR NUM
+    7 stmt: VAR '=' TYPE '(' . NUM ',' NUM ')'
 
-    VAR  shift, and go to state 58
+    NUM  shift, and go to state 58
 
 
 State 50
 
-   19 hopt: '(' NUM ',' . NUM ')'
+    6 stmt: GVAR '=' GRID '(' . NUM ',' NUM ')'
 
     NUM  shift, and go to state 59
 
 
 State 51
 
-   13 stmt: FITS VAR '(' NUM . ',' NUM ')'
+   17 stmt: WHILE POSSIBLE ':' MOVE . VAR DIR NUM
 
-    ','  shift, and go to state 60
+    VAR  shift, and go to state 60
 
 
 State 52
 
-    8 stmt: PLACE VAR AT '(' . NUM ',' NUM ')'
+   20 hopt: '(' NUM ',' . NUM ')'
 
     NUM  shift, and go to state 61
 
 
 State 53
 
-   14 stmt: IF FITS VAR AT . '(' NUM ',' NUM ')' THEN PLACE
-   15     | IF FITS VAR AT . '(' NUM ',' NUM ')' THEN MOVE
+   14 stmt: FITS VAR '(' NUM . ',' NUM ')'
 
-    '('  shift, and go to state 62
+    ','  shift, and go to state 62
 
 
 State 54
 
-   17 mopt: VAR DIR NUM .
-
-    $default  reduce using rule 17 (mopt)
-
-
-State 55
-
-   18 mopt: VAR AT '(' . NUM ',' NUM ')'
+    8 stmt: PLACE VAR AT '(' . NUM ',' NUM ')'
 
     NUM  shift, and go to state 63
 
 
+State 55
+
+   15 stmt: IF FITS VAR AT . '(' NUM ',' NUM ')' THEN PLACE
+   16     | IF FITS VAR AT . '(' NUM ',' NUM ')' THEN MOVE
+
+    '('  shift, and go to state 64
+
+
 State 56
 
-    7 stmt: VAR '=' TYPE '(' NUM . ',' NUM ')'
+   18 mopt: VAR DIR NUM .
 
-    ','  shift, and go to state 64
+    $default  reduce using rule 18 (mopt)
 
 
 State 57
 
-    6 stmt: GVAR '=' GRID '(' NUM . ',' NUM ')'
+   19 mopt: VAR AT '(' . NUM ',' NUM ')'
 
-    ','  shift, and go to state 65
+    NUM  shift, and go to state 65
 
 
 State 58
 
-   16 stmt: WHILE POSSIBLE ':' MOVE VAR . DIR NUM
+    7 stmt: VAR '=' TYPE '(' NUM . ',' NUM ')'
 
-    DIR  shift, and go to state 66
+    ','  shift, and go to state 66
 
 
 State 59
 
-   19 hopt: '(' NUM ',' NUM . ')'
+    6 stmt: GVAR '=' GRID '(' NUM . ',' NUM ')'
 
-    ')'  shift, and go to state 67
+    ','  shift, and go to state 67
 
 
 State 60
 
-   13 stmt: FITS VAR '(' NUM ',' . NUM ')'
+   17 stmt: WHILE POSSIBLE ':' MOVE VAR . DIR NUM
 
-    NUM  shift, and go to state 68
+    DIR  shift, and go to state 68
 
 
 State 61
 
-    8 stmt: PLACE VAR AT '(' NUM . ',' NUM ')'
+   20 hopt: '(' NUM ',' NUM . ')'
 
-    ','  shift, and go to state 69
+    ')'  shift, and go to state 69
 
 
 State 62
 
-   14 stmt: IF FITS VAR AT '(' . NUM ',' NUM ')' THEN PLACE
-   15     | IF FITS VAR AT '(' . NUM ',' NUM ')' THEN MOVE
+   14 stmt: FITS VAR '(' NUM ',' . NUM ')'
 
     NUM  shift, and go to state 70
 
 
 State 63
 
-   18 mopt: VAR AT '(' NUM . ',' NUM ')'
+    8 stmt: PLACE VAR AT '(' NUM . ',' NUM ')'
 
     ','  shift, and go to state 71
 
 
 State 64
 
-    7 stmt: VAR '=' TYPE '(' NUM ',' . NUM ')'
+   15 stmt: IF FITS VAR AT '(' . NUM ',' NUM ')' THEN PLACE
+   16     | IF FITS VAR AT '(' . NUM ',' NUM ')' THEN MOVE
 
     NUM  shift, and go to state 72
 
 
 State 65
 
-    6 stmt: GVAR '=' GRID '(' NUM ',' . NUM ')'
+   19 mopt: VAR AT '(' NUM . ',' NUM ')'
 
-    NUM  shift, and go to state 73
+    ','  shift, and go to state 73
 
 
 State 66
 
-   16 stmt: WHILE POSSIBLE ':' MOVE VAR DIR . NUM
+    7 stmt: VAR '=' TYPE '(' NUM ',' . NUM ')'
 
     NUM  shift, and go to state 74
 
 
 State 67
 
-   19 hopt: '(' NUM ',' NUM ')' .
+    6 stmt: GVAR '=' GRID '(' NUM ',' . NUM ')'
 
-    $default  reduce using rule 19 (hopt)
+    NUM  shift, and go to state 75
 
 
 State 68
 
-   13 stmt: FITS VAR '(' NUM ',' NUM . ')'
-
-    ')'  shift, and go to state 75
-
-
-State 69
-
-    8 stmt: PLACE VAR AT '(' NUM ',' . NUM ')'
+   17 stmt: WHILE POSSIBLE ':' MOVE VAR DIR . NUM
 
     NUM  shift, and go to state 76
 
 
+State 69
+
+   20 hopt: '(' NUM ',' NUM ')' .
+
+    $default  reduce using rule 20 (hopt)
+
+
 State 70
 
-   14 stmt: IF FITS VAR AT '(' NUM . ',' NUM ')' THEN PLACE
-   15     | IF FITS VAR AT '(' NUM . ',' NUM ')' THEN MOVE
+   14 stmt: FITS VAR '(' NUM ',' NUM . ')'
 
-    ','  shift, and go to state 77
+    ')'  shift, and go to state 77
 
 
 State 71
 
-   18 mopt: VAR AT '(' NUM ',' . NUM ')'
+    8 stmt: PLACE VAR AT '(' NUM ',' . NUM ')'
 
     NUM  shift, and go to state 78
 
 
 State 72
 
-    7 stmt: VAR '=' TYPE '(' NUM ',' NUM . ')'
+   15 stmt: IF FITS VAR AT '(' NUM . ',' NUM ')' THEN PLACE
+   16     | IF FITS VAR AT '(' NUM . ',' NUM ')' THEN MOVE
 
-    ')'  shift, and go to state 79
+    ','  shift, and go to state 79
 
 
 State 73
 
-    6 stmt: GVAR '=' GRID '(' NUM ',' NUM . ')'
+   19 mopt: VAR AT '(' NUM ',' . NUM ')'
 
-    ')'  shift, and go to state 80
+    NUM  shift, and go to state 80
 
 
 State 74
 
-   16 stmt: WHILE POSSIBLE ':' MOVE VAR DIR NUM .
-
-    $default  reduce using rule 16 (stmt)
-
-
-State 75
-
-   13 stmt: FITS VAR '(' NUM ',' NUM ')' .
-
-    $default  reduce using rule 13 (stmt)
-
-
-State 76
-
-    8 stmt: PLACE VAR AT '(' NUM ',' NUM . ')'
+    7 stmt: VAR '=' TYPE '(' NUM ',' NUM . ')'
 
     ')'  shift, and go to state 81
 
 
+State 75
+
+    6 stmt: GVAR '=' GRID '(' NUM ',' NUM . ')'
+
+    ')'  shift, and go to state 82
+
+
+State 76
+
+   17 stmt: WHILE POSSIBLE ':' MOVE VAR DIR NUM .
+
+    $default  reduce using rule 17 (stmt)
+
+
 State 77
 
-   14 stmt: IF FITS VAR AT '(' NUM ',' . NUM ')' THEN PLACE
-   15     | IF FITS VAR AT '(' NUM ',' . NUM ')' THEN MOVE
+   14 stmt: FITS VAR '(' NUM ',' NUM ')' .
 
-    NUM  shift, and go to state 82
+    $default  reduce using rule 14 (stmt)
 
 
 State 78
 
-   18 mopt: VAR AT '(' NUM ',' NUM . ')'
+    8 stmt: PLACE VAR AT '(' NUM ',' NUM . ')'
 
     ')'  shift, and go to state 83
 
 
 State 79
 
+   15 stmt: IF FITS VAR AT '(' NUM ',' . NUM ')' THEN PLACE
+   16     | IF FITS VAR AT '(' NUM ',' . NUM ')' THEN MOVE
+
+    NUM  shift, and go to state 84
+
+
+State 80
+
+   19 mopt: VAR AT '(' NUM ',' NUM . ')'
+
+    ')'  shift, and go to state 85
+
+
+State 81
+
     7 stmt: VAR '=' TYPE '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 7 (stmt)
 
 
-State 80
+State 82
 
     6 stmt: GVAR '=' GRID '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 6 (stmt)
 
 
-State 81
+State 83
 
     8 stmt: PLACE VAR AT '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 8 (stmt)
 
 
-State 82
-
-   14 stmt: IF FITS VAR AT '(' NUM ',' NUM . ')' THEN PLACE
-   15     | IF FITS VAR AT '(' NUM ',' NUM . ')' THEN MOVE
-
-    ')'  shift, and go to state 84
-
-
-State 83
-
-   18 mopt: VAR AT '(' NUM ',' NUM ')' .
-
-    $default  reduce using rule 18 (mopt)
-
-
 State 84
 
-   14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' . THEN PLACE
-   15     | IF FITS VAR AT '(' NUM ',' NUM ')' . THEN MOVE
+   15 stmt: IF FITS VAR AT '(' NUM ',' NUM . ')' THEN PLACE
+   16     | IF FITS VAR AT '(' NUM ',' NUM . ')' THEN MOVE
 
-    THEN  shift, and go to state 85
+    ')'  shift, and go to state 86
 
 
 State 85
 
-   14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN . PLACE
-   15     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN . MOVE
+   19 mopt: VAR AT '(' NUM ',' NUM ')' .
 
-    PLACE  shift, and go to state 86
-    MOVE   shift, and go to state 87
+    $default  reduce using rule 19 (mopt)
 
 
 State 86
 
-   14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE .
+   15 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' . THEN PLACE
+   16     | IF FITS VAR AT '(' NUM ',' NUM ')' . THEN MOVE
 
-    $default  reduce using rule 14 (stmt)
+    THEN  shift, and go to state 87
 
 
 State 87
 
-   15 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE .
+   15 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN . PLACE
+   16     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN . MOVE
+
+    PLACE  shift, and go to state 88
+    MOVE   shift, and go to state 89
+
+
+State 88
+
+   15 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE .
 
     $default  reduce using rule 15 (stmt)
+
+
+State 89
+
+   16 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE .
+
+    $default  reduce using rule 16 (stmt)

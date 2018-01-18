@@ -13,7 +13,7 @@
 
 %union {
        char* lexeme;			//identifier
-       double value;			//value of an identifier of type NUM
+       int value;			//value of an identifier of type NUM
        }
 
 %token <value>    NUM
@@ -24,6 +24,7 @@
 %token SHOW
 %token EXIT
 %token SWITCH
+%token ROTATE
 %token POSSIBLE
 %token WHILE
 %token GRID
@@ -54,6 +55,7 @@ stmt  : EXIT                                              {exit(EXIT_SUCCESS);}
       | PLACE VAR AT '(' NUM ',' NUM ')'                  {update(default_grid,0,$2,$5,$7);}
       | SHOW GVAR                                         {show(grid_list,$2);}
       | MOVE mopt                                         {}
+      | ROTATE VAR                                        {rotate(default_grid, $2);}
       | HEIGHT hopt                                       {}
       | DELETE dopt                                       {}
       | FITS VAR '(' NUM ',' NUM ')'                      {fits(default_grid,$2,$4,$6);} 
@@ -62,13 +64,12 @@ stmt  : EXIT                                              {exit(EXIT_SUCCESS);}
       | WHILE POSSIBLE ':' MOVE VAR DIR NUM               {while_move(default_grid,$5,$6,$7);}
       ;
 
-      ;
 mopt  : VAR DIR NUM                                       {update_dir(default_grid,$1,$2,$3);}
       | VAR AT '(' NUM ',' NUM ')'                        {update(default_grid,1,$1,$4,$6);}
       ;
 
-hopt  : '(' NUM ',' NUM ')'         	  	                {height(default_grid,$2,$4);}
-      | VAR                         	  	                {height_var(default_grid,$1);}
+hopt  : '(' NUM ',' NUM ')'         	  	                {printf("The height of the coordinate (%d,%d) is: %d\n", $2, $4, height(default_grid,$2,$4));}
+      | VAR                         	  	                {printf("The height of the block %s is: %d\n", $1, height_var(default_grid,$1));}
       ;
 
 dopt  : VAR                                               {delete_block(default_grid,$1);}

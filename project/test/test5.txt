@@ -1,0 +1,34 @@
+A1 = grid (10,10)
+a1 = matrix (1,1)
+place a1 at (0,0)
+show A1
+while possible: move a1 right 5
+show A1
+a2 = dome (1,1)
+if fits a2 at (0,4) then place
+while possible: move a1 left 1
+show A1
+a3 = pyramid (2,2)
+place a3 at (2,2)
+show A1
+delete a3
+show A1
+A2 = grid (15,15)
+show A2
+switch grid A1
+show A1
+a4 = matrix (1,2)
+place a4 at (0,0)
+show A1
+a5 = matrix (1,1)
+place a5 at (0,0)
+height a5
+show A1
+delete a5
+show A1
+delete all
+show A1
+delete grid A1
+delete grid A2
+exit
+

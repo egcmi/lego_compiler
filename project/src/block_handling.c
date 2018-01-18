@@ -11,15 +11,15 @@ l_list * create_list(void) {
 /*
 creates brick with desired caracteristics. returns error if:
   - no grid exists
-  - any of of the sides (x,y) is 0
+  - any of of the sides (row,y) is 0
   - another brick with the same id exists
 */
-int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) {
+int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int coocol) {
   if (default_grid == NULL){
     printf("No grid exists: you must create a new grid first. Error in line %d\n", yylineno);
     return 0;
   }
-	  if (x == 0 || y == 0){
+	  if (row == 0 || col == 0){
     	printf("Brick size cannot be 0. Error in line %d\n", yylineno);
       return 0;
     }
@@ -28,11 +28,11 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
     node_t * current = list->head;
     node_t * node = malloc(sizeof(node_t));
     node->id = id;
-    node->x = x;
-    node->y = y;
+    node->row = row;
+    node->col = col;
     node->type = type;
-    node->coox = coox;
-    node->cooy = cooy;
+    node->coorow = coorow;
+    node->coocol = coocol;
 
     if (list->head == NULL){
       list->head = node;
@@ -65,27 +65,27 @@ int add(grid_t * grid, char id[], int x, int y, char* type, int coox, int cooy) 
 }
 
 /*
-checks if the block identified by id fits at the given coordinates (x,y)
+checks if the block identified by id fits at the given coordinates (row,y)
 returns 1 if it fits, 0 if it doesn't
 returns error if:
   - no bricks exists
-  - coordinates (x,y) are less than 0 or bigger than the grid
+  - coordinates (row,y) are less than 0 or bigger than the grid
 returns 0 (false) if:
   - there is not enough room (brick would be "hanging" out of the grid)
   - the surface where the brick needs to be placed is uneven (blocks of different heights, domes, pyramid)
 */
-int fits(grid_t * grid, char id[], int x, int y){
+int fits(grid_t * grid, char id[], int row, int col){
     l_list * list = grid->blocks;
     node_t * current = list->head;
-    int gridx = grid->row;
-    int gridy = grid->col;
+    int gridrow = grid->row;
+    int gridcol = grid->col;
 
     if (list->head == NULL){
       printf("No bricks exist. Error in line %d\n", yylineno);
       return 0;
     }
 
-    if (x > gridx || y > gridy || x < 0 || y < 0){
+    if (row > gridrow || col > gridcol || row < 0 || col < 0){
       printf("Coordinates out of bounds. Error in line %d\n", yylineno);
         return 0;
     }
@@ -93,14 +93,14 @@ int fits(grid_t * grid, char id[], int x, int y){
 
     while (current != NULL) {
       if(strcmp(current->id, id) == 0){
-        int checkx = (current->x)-gridx+x;
-        int checky = (current->y)-gridy+y;
-        if(checkx > 0 || checky > 0){
+        int checkrow = (current->row)-gridrow+row;
+        int checkcol = (current->col)-gridcol+col;
+        if(checkrow > 0 || checkcol > 0){
           printf("Not enough room for %s here: check size and coordinates\n", id);
           return 0;
         }
 
-        char * var = grid->matrix[x][y];
+        char * var = grid->matrix[row][col];
         if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
           printf("Cannot place brick on top of dome or pyramid\n");
           return 0;
@@ -108,8 +108,8 @@ int fits(grid_t * grid, char id[], int x, int y){
 
         char * currVar;
 
-        for(int i = x; i < x+current->x; i++){
-          for(int j = y; j < y+current->y; j++){
+        for(int i = row; i < row+current->row; i++){
+          for(int j = col; j < col+current->col; j++){
             currVar = grid->matrix[i][j];
             if(strcmp(var,currVar) != 0){
                 printf("Cannot place brick on blocks different heights\n");
@@ -117,7 +117,7 @@ int fits(grid_t * grid, char id[], int x, int y){
             }
           }
         }
-        printf("Brick %s placed at %d, %d.\n", id, x, y);
+        printf("Brick %s placed at %d, %d.\n", id, row, col);
         return 1;
       }
       current = current->next;
@@ -132,10 +132,10 @@ int fits(grid_t * grid, char id[], int x, int y){
 checks if brick (node) is on top of the grid. returns 1 when true, 0 otherwise.
 */
 int on_top(grid_t * grid, node_t * node){
-    int coox = node->coox;
-    int cooy = node->cooy;
+    int coorow = node->coorow;
+    int coocol = node->coocol;
     
-    if (node->h == height(grid, coox, cooy)){
+    if (node->h == height(grid, coorow, coocol)){
       return 1;
     }
 
@@ -145,14 +145,14 @@ int on_top(grid_t * grid, node_t * node){
 /*
 returns height of the cell (x,y) on which it is invoked, -1 if coordinates less than 0 or bigger than the grid
 */
-int height(grid_t * grid, int x, int y){
+int height(grid_t * grid, int row, int col){
 
-		if(x >= grid->row || y >= grid->col || x<0 || y<0){
+		if(row >= grid->row || col >= grid->col || row<0 || col<0){
 			printf("Coordinates out of bounds. Error in line %d\n", yylineno);
       return -1;
 		}
 
-    char * var = grid->matrix[x][y];
+    char * var = grid->matrix[row][col];
 		int h = atoi(var);
 		return h;
 }
@@ -173,7 +173,7 @@ int height_var(grid_t * grid, char* id){
 
     while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
-        if(current->coox == -1 && current->cooy == -1){
+        if(current->coorow == -1 && current->coocol == -1){
           printf("Cannot check height of lego. It has to be placed before the height can be retrieved. Error in line %d\n", yylineno);
           return 0;
         }else{
@@ -192,11 +192,11 @@ int height_var(grid_t * grid, char* id){
 /*
 
 */
-int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
-		int x = node->x;
-		int y = node->y;
+int add_in_matrix(grid_t * grid, node_t * node, int coorow, int coocol){
+		int row = node->row;
+		int col = node->col;
 		char * type = node->type;
-		int cell_height = height(grid, coox,cooy);
+		int cell_height = height(grid, coorow,coocol);
 		node->h = cell_height + 1;
 
 		char * t = "";
@@ -206,8 +206,8 @@ int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
 			t = "x";
 		}
 
-		for(int i = coox; i < x+coox; i++){
-	    for(int j = cooy; j < y+cooy; j++){
+		for(int i = coorow; i < row+coorow; i++){
+	    for(int j = coocol; j < col+coocol; j++){
 	    	int curr = atoi(grid->matrix[i][j])+1;
 	    	char * res = malloc(sizeof(char)*4);
 	    	snprintf(res, sizeof(res), "%d", curr);
@@ -223,13 +223,13 @@ int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy){
 */
 int delete_in_matrix(grid_t * grid, node_t * node){
 
-		int x = node->x;
-		int y = node->y;
-		int coox = node->coox;
-		int cooy = node->cooy;
+		int row = node->row;
+		int col = node->col;
+		int coorow = node->coorow;
+		int coocol = node->coocol;
 
-		for(int i = coox; i < x+coox; i++){
-	    for(int j = cooy; j < y+cooy; j++){
+		for(int i = coorow; i < row+coorow; i++){
+	    for(int j = coocol; j < col+coocol; j++){
 	    	int curr = atoi(grid->matrix[i][j])-1;
 	    	char * res = malloc(sizeof(char)*4);
 	    	snprintf(res, sizeof(res), "%d", curr);
@@ -241,7 +241,7 @@ int delete_in_matrix(grid_t * grid, node_t * node){
 /*
 
 */
-int update(grid_t * grid, int method, char* id, int coox, int cooy) {
+int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
     l_list * list = grid->blocks;
     node_t * current = list->head;
 
@@ -253,11 +253,11 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
     while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
         if(method == 0){
-          if(current->coox == -1 && current->cooy == -1){
-          	if(fits(grid, current->id, coox, cooy)){
-          		current->coox = coox;
-            	current->cooy = cooy;
-            	add_in_matrix(grid, current, coox, cooy);
+          if(current->coorow == -1 && current->coocol == -1){
+          	if(fits(grid, current->id, coorow, coocol)){
+          		current->coorow = coorow;
+            	current->coocol = coocol;
+            	add_in_matrix(grid, current, coorow, coocol);
             	return 1;
           	}else{
           		return 0;
@@ -267,22 +267,22 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
             return 0;
           }
         }else{
-          if(current->coox != -1 && current->cooy != -1){
-						int past_x = current->coox;
-						int past_y = current->cooy;
+          if(current->coorow != -1 && current->coocol != -1){
+						int past_row = current->coorow;
+						int past_col = current->coocol;
             if (on_top(grid, current)){
               delete_in_matrix(grid, current);
             }else{
               printf("Variable %s is not on top. Thus, it cannot be deleted. Error in line %d\n", id, yylineno);
               return 0;
             }
-          	if(fits(grid, current->id, coox, cooy)){
-	            current->coox = coox;
-	            current->cooy = cooy;
-	            add_in_matrix(grid, current, coox, cooy);
+          	if(fits(grid, current->id, coorow, coocol)){
+	            current->coorow = coorow;
+	            current->coocol = coocol;
+	            add_in_matrix(grid, current, coorow, coocol);
 	            return 1;
           	}else{
-          		add_in_matrix(grid, current, past_x, past_y);
+          		add_in_matrix(grid, current, past_row, past_col);
           		return 0;
           	}
           }else{
@@ -291,6 +291,48 @@ int update(grid_t * grid, int method, char* id, int coox, int cooy) {
           }
         }
       }
+      current = current->next;
+    }
+
+    printf("This variable does not exist. Error in line %d\n", yylineno);
+
+    return 0;
+}
+
+int rotate(grid_t * grid, char* id) {
+    l_list * list = grid->blocks;
+    node_t * current = list->head;
+
+    if (list->head == NULL){
+      printf("This variable does not exist. Error in line %d\n", yylineno);
+      return 0;
+    }
+
+    while (current != NULL) {
+        if(current->coorow != -1 && current->coocol != -1){
+          if (on_top(grid, current)){
+            delete_in_matrix(grid, current);
+          }else{
+            printf("Variable %s is not on top. Thus, it cannot be deleted. Error in line %d\n", id, yylineno);
+            return 0;
+          }
+          int temp = current->row;
+          current->row = current->col;
+          current->col = temp;
+          if(fits(grid, current->id, current->coorow, current->coocol)){
+            add_in_matrix(grid, current, current->coorow, current->coocol);
+            return 1;
+          }else{
+            temp = current->row;
+            current->row = current->col;
+            current->col = temp;
+            add_in_matrix(grid, current, current->coorow, current->coocol);
+            return 0;
+          }
+        }else{
+          printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
+          return 0;
+        }
       current = current->next;
     }
 
@@ -330,31 +372,31 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 
     while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
-        if(current->coox == -1 && current->cooy == -1){
+        if(current->coorow == -1 && current->coocol == -1){
           printf("Cannot move the lego. It has to be placed before it can be moved. Error in line %d\n", yylineno);
           return 0;
         }else{
-          int tempx;
-          int tempy;
+          int temprow;
+          int tempcol;
           switch (dir_num){
             case 1:
-              tempx = current->coox;
-              tempy = current->cooy-num;
+              temprow = current->coorow;
+              tempcol = current->coocol-num;
               break;
             case 2:
-              tempx = current->coox;
-              tempy = current->cooy+num;
+              temprow = current->coorow;
+              tempcol = current->coocol+num;
               break;
             case 3:
-              tempx = current->coox-num;
-              tempy = current->cooy;
+              temprow = current->coorow-num;
+              tempcol = current->coocol;
               break;
             case 4:
-              tempx = current->coox+num;
-              tempy = current->cooy;
+              temprow = current->coorow+num;
+              tempcol = current->coocol;
               break;
           }
-          update(grid, 1, id, tempx, tempy);
+          update(grid, 1, id, temprow, tempcol);
           return 1;
         }
       }
@@ -439,7 +481,6 @@ int delete_all(grid_t * grid){
       
     }
 
-    //printf("Variable does not exist: it cannot be deleted. Error in line %d\n", yylineno);
     return 1;
 }
 
@@ -478,44 +519,44 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 
     while (current != NULL) {
       if((strcmp(current->id, id) == 0)){
-        int tempx;
-        int tempy;
+        int temprow;
+        int tempcol;
         switch (dir_num){
           case 1:
-            tempx = current->coox;
-            tempy = current->cooy-num;
+            temprow = current->coorow;
+            tempcol = current->coocol-num;
             break;
           case 2:
-            tempx = current->coox;
-            tempy = current->cooy+num;
+            temprow = current->coorow;
+            tempcol = current->coocol+num;
             break;
           case 3:
-            tempx = current->coox-num;
-            tempy = current->cooy;
+            temprow = current->coorow-num;
+            tempcol = current->coocol;
             break;
           case 4:
-            tempx = current->coox+num;
-            tempy = current->cooy;
+            temprow = current->coorow+num;
+            tempcol = current->coocol;
             break;
         }
-        while(fits(grid, id, tempx, tempy) != 0){
+        while(fits(grid, id, temprow, tempcol) != 0){
           update_dir(grid, id, dir, num);
           switch (dir_num){
             case 1:
-              tempx = current->coox;
-              tempy = current->cooy-num;
+              temprow = current->coorow;
+              tempcol = current->coocol-num;
               break;
             case 2:
-              tempx = current->coox;
-              tempy = current->cooy+num;
+              temprow = current->coorow;
+              tempcol = current->coocol+num;
               break;
             case 3:
-              tempx = current->coox-num;
-              tempy = current->cooy;
+              temprow = current->coorow-num;
+              tempcol = current->coocol;
               break;
             case 4:
-              tempx = current->coox+num;
-              tempy = current->cooy;
+              temprow = current->coorow+num;
+              tempcol = current->coocol;
               break;
           }
         }

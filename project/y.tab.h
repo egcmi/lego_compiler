@@ -53,18 +53,19 @@ extern int yydebug;
     SHOW = 263,
     EXIT = 264,
     SWITCH = 265,
-    POSSIBLE = 266,
-    WHILE = 267,
-    GRID = 268,
-    HEIGHT = 269,
-    FITS = 270,
-    PLACE = 271,
-    DELETE = 272,
-    ALL = 273,
-    IF = 274,
-    THEN = 275,
-    MOVE = 276,
-    AT = 277
+    ROTATE = 266,
+    POSSIBLE = 267,
+    WHILE = 268,
+    GRID = 269,
+    HEIGHT = 270,
+    FITS = 271,
+    PLACE = 272,
+    DELETE = 273,
+    ALL = 274,
+    IF = 275,
+    THEN = 276,
+    MOVE = 277,
+    AT = 278
   };
 #endif
 /* Tokens.  */
@@ -76,18 +77,19 @@ extern int yydebug;
 #define SHOW 263
 #define EXIT 264
 #define SWITCH 265
-#define POSSIBLE 266
-#define WHILE 267
-#define GRID 268
-#define HEIGHT 269
-#define FITS 270
-#define PLACE 271
-#define DELETE 272
-#define ALL 273
-#define IF 274
-#define THEN 275
-#define MOVE 276
-#define AT 277
+#define ROTATE 266
+#define POSSIBLE 267
+#define WHILE 268
+#define GRID 269
+#define HEIGHT 270
+#define FITS 271
+#define PLACE 272
+#define DELETE 273
+#define ALL 274
+#define IF 275
+#define THEN 276
+#define MOVE 277
+#define AT 278
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -97,10 +99,10 @@ union YYSTYPE
 #line 14 "lego.y" /* yacc.c:1909  */
 
        char* lexeme;			//identifier
-       double value;			//value of an identifier of type NUM
+       int value;			//value of an identifier of type NUM
        
 
-#line 104 "y.tab.h" /* yacc.c:1909  */
+#line 106 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

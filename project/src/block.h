@@ -4,11 +4,11 @@
 /*
 represents a lego brick characterised as follows:
     id:     unique name
-    x:      depth; e.g. if x==2 then the brick has depth of 2 units
-    y:      width; e.g. if y==3 then the brick has width 3 units
+    row:      depth; e.g. if row==2 then the brick has depth of 2 units
+    col:      width; e.g. if col==3 then the brick has width 3 units
     type:   matrix, dome or pyramid
-    coox:   coordinate x on which it is placed to on the grid, -1 before it is placed on the grid
-    cooy:   coordinate y on which it is placed to on the grid, -1 before it is placed on the grid
+    coorow:   coordinate y on which it is placed to on the grid, -1 before it is placed on the grid
+    coocol:   coordinate x on which it is placed to on the grid, -1 before it is placed on the grid
     h:      vertical position at which the brick is placed.
             given that each brick is 1 unit tall, h is defined as the sum of the number of bricks placed under it plus 1.
             e.g. if the brick is placed directly on the grid its height is 1;
@@ -17,11 +17,11 @@ represents a lego brick characterised as follows:
 */
 typedef struct node {
     char* id;
-    int x;      // swapped
-    int y;      // swapped
+    int row;
+    int col;
     char* type;
-    int coox;   // swapped
-    int cooy;   // swapped
+    int coorow;
+    int coocol;
     int h;
     struct node * next;
 } node_t;
@@ -71,5 +71,6 @@ int on_top(grid_t * grid, node_t * node);
 int height(grid_t * grid, int x, int y);
 int height_var(grid_t * grid, char* id);
 int while_move(grid_t * grid, char* id, char* dir, int num);
+int rotate(grid_t * grid, char* id);
 
 #endif

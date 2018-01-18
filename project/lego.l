@@ -44,6 +44,7 @@ gvar		[A-Z]{num}{1,2}
 "then"		{return THEN;}
 "possible"	{return POSSIBLE;}
 "while"		{return WHILE;}
+"rotate"	{return ROTATE;}
 "move"		{return MOVE;}
 
 .			{yyerror("Unknown character");}
