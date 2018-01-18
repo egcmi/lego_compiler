@@ -1,8 +1,0 @@
-dome b2 = (2,3)
-dome b2 = (2,3)
-dome b3 = (2,3)
-dome b4 = (2,3)
-dome b5 = (2,3)
-dome b6 = (2,3)
-dome b6 = (2,3)
-exit

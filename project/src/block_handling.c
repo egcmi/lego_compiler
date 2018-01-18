@@ -16,12 +16,12 @@ creates brick with desired caracteristics. returns error if:
 */
 int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int coocol) {
 	if (default_grid == NULL){
-		printf("No grids: create grid first. Error in line %d\n", yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 		return 0;
 	}
 
 	if (row <= 0 || col <= 0){
-		printf("Brick size cannot be 0 or less. Error in line %d\n", yylineno);
+		printf("Error in line %d: size too small\n", yylineno);
 		return 0;
 	}
 
@@ -38,13 +38,12 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 	if (list->head == NULL){
 		list->head = node;
 		list->head->next = NULL;
-		printf("Created brick %s\n", id);
 		return 1;
 	}
 
 	while (current->next != NULL) {
 		if(strcmp(current->id, id) == 0){
-			printf("Brick %s already exists. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s already defined\n", yylineno, id);
 			free(node);
 			return 0;
 		}
@@ -52,7 +51,7 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 	}
 
 	if(strcmp(current->id, id) == 0){
-		printf("Brick %s already exists. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s already defined\n", yylineno, id);
 		free(node);
 		return 0;
 	}
@@ -60,8 +59,6 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 	current->next = malloc(sizeof(node_t));
 	current->next = node;
 	current->next->next = NULL;
-
-	printf("Created brick %s\n", id);
 	return 1;
 }
 
@@ -82,12 +79,12 @@ int fits(grid_t * grid, char id[], int row, int col){
 	int gridcol = grid->col;
 
 	if (list->head == NULL){
-		printf("No bricks. Error in line %d\n", yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
 	if (row > gridrow || col > gridcol || row < 0 || col < 0){
-		printf("Coordinates out of bounds. Error in line %d\n", yylineno);
+		printf("Error in line %d: cell out of bounds\n", yylineno);
 		return 0;
 	}
 
@@ -96,13 +93,13 @@ int fits(grid_t * grid, char id[], int row, int col){
 			int checkrow = (current->row)-gridrow+row;
 			int checkcol = (current->col)-gridcol+col;
 			if(checkrow > 0 || checkcol > 0){
-				printf("No room for %s here: check size and coordinates\n", id);
+				//printf("No room for %s here: check size and coordinates\n", id);
 				return 0;
 			}
 
 			char * var = grid->matrix[row][col];
 			if(strstr(var, "o") != NULL || strstr(var,"x") != NULL){
-				printf("Cannot place brick on top of dome or pyramid\n");
+				//printf("Cannot place brick on top of dome or pyramid\n");
 				return 0;
 			}
 
@@ -111,18 +108,17 @@ int fits(grid_t * grid, char id[], int row, int col){
 				for(int j = col; j < col+current->col; j++){
 					currVar = grid->matrix[i][j];
 					if(strcmp(var,currVar) != 0){
-						printf("Cannot place brick on blocks different heights\n");
+						//printf("Cannot place brick on blocks of different heights\n");
 						return 0;
 					}
 				}
 			}
-			printf("Brick %s placed at %d, %d.\n", id, row, col);
 			return 1;
 		}
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -144,9 +140,8 @@ int on_top(grid_t * grid, node_t * node){
 returns height of the cell (row,col) on which it is invoked, -1 if coordinates less than 0 or bigger than the size of the grid
 */
 int height(grid_t * grid, int row, int col){
-
 	if(row >= grid->row || col >= grid->col || row<0 || col<0){
-		printf("Coordinates out of bounds. Error in line %d\n", yylineno);
+		printf("Error in line %d: cell out of bounds\n", yylineno);
 		return -1;
 	}
 
@@ -166,14 +161,14 @@ int height_var(grid_t * grid, char* id){
 	int h = 0;
 
 	if (list->head == NULL){
-		printf("No bricks found. Error in line %d\n", yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
 	while (current != NULL) {
 		if((strcmp(current->id, id) == 0)){
 			if(current->coorow == -1 && current->coocol == -1){
-				printf("Brick %s not placed. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s not placed\n", yylineno, id);
 				return 0;
 			}else{
 				h = current->h;
@@ -183,7 +178,7 @@ int height_var(grid_t * grid, char* id){
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -241,11 +236,15 @@ int delete_in_matrix(grid_t * grid, node_t * node){
 used for move at coordinates (coorow, coocol). updates coordinates inside block and matrix inside grid
 */
 int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
+	if(grid == NULL){
+		printf("Error in line %d: grid not defined\n", yylineno);
+		return 0;
+	}
 	l_list * list = grid->blocks;
 	node_t * current = list->head;
 
 	if (list->head == NULL){
-		printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
@@ -285,7 +284,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						return 0;
 					}
 				}else{
-					printf("Brick %s not placed. Error in line %d\n", yylineno);
+					printf("Brick %s not placed. Error in line %d\n", id, yylineno);
 					return 0;
 				}
 			}
@@ -293,7 +292,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -310,7 +309,7 @@ int rotate(grid_t * grid, char* id) {
 	node_t * current = list->head;
 
 	if (list->head == NULL){
-		printf("Brick %s not found. Error in line %d\n", id, yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
@@ -336,13 +335,13 @@ int rotate(grid_t * grid, char* id) {
 				return 0;
 			}
 		}else{
-					printf("Brick %s not placed. Error in line %d\n", yylineno);
+			printf("Brick %s not placed. Error in line %d\n", id, yylineno);
 			return 0;
 		}
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -354,7 +353,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 	node_t * current = list->head;
 
 	if (list->head == NULL){
-		printf("No bricks. Error in line %d\n", yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 	int dir_num;
@@ -378,7 +377,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 	while (current != NULL) {
 		if((strcmp(current->id, id) == 0)){
 			if(current->coorow == -1 && current->coocol == -1){
-					printf("Brick %s not placed. Error in line %d\n", yylineno);
+					printf("Brick %s not placed. Error in line %d\n", id, yylineno);
 				return 0;
 			}else{
 				int temprow;
@@ -408,7 +407,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -422,7 +421,7 @@ int delete_block(grid_t * grid, char* id) {
 	node_t* temp = malloc(sizeof(node_t));
 
 	if (list->head == NULL){
-		printf("Brick %s not found. Error in line %d\n", id, yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
@@ -434,7 +433,7 @@ int delete_block(grid_t * grid, char* id) {
 			printf("Deleted node id=%s\n", id);
 			return 1;
 		}else{
-					printf("Brick %s not on top: cannot delete. Error in line %d\n", id, yylineno);
+			printf("Brick %s not on top: cannot delete. Error in line %d\n", id, yylineno);
 			return 0;
 		}
 	}
@@ -446,10 +445,9 @@ int delete_block(grid_t * grid, char* id) {
 				current->next = temp->next;
 				delete_in_matrix(grid, temp);
 				free(temp);
-				printf("Deleted node id=%s\n", id);
 				return 1;
 			}else{
-					printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
+				printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
 				return 0;
 			}
 
@@ -458,7 +456,7 @@ int delete_block(grid_t * grid, char* id) {
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -471,7 +469,6 @@ int delete_all(grid_t * grid){
 
 	while(list->head != NULL){
 		delete_in_matrix(grid, list->head);
-		printf("deleted id=%s\n",list->head->id);
 		current=list->head;
 		list->head = list->head->next;
 		free(current);
@@ -488,7 +485,7 @@ while the block still fits, move it by a number of cells given by num in the dir
 int while_move (grid_t * grid, char* id, char* dir, int num){
 
 	if(default_grid == NULL){
-		printf("No grids: create grid first. Error in line %d\n", yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 		return 0;
 	}
 
@@ -565,6 +562,6 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 		current = current->next;
 	}
 
-	printf("Brick %s not found. Error in line %d\n", id, yylineno);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }

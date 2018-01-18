@@ -11,7 +11,7 @@ typedef struct grid_list {
 
 
 /*
-functions defined in block_handling.c
+functions defined in grid_handling.c
 */
 g_list * grid_list;
 grid_t * default_grid;

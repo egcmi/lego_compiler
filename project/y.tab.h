@@ -98,9 +98,9 @@ union YYSTYPE
 {
 #line 14 "lego.y" /* yacc.c:1909  */
 
-       char* lexeme;			//identifier
-       int value;			//value of an identifier of type NUM
-       
+	char* lexeme;
+	int value;
+		
 
 #line 106 "y.tab.h" /* yacc.c:1909  */
 };
