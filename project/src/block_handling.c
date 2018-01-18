@@ -11,7 +11,7 @@ l_list * create_list(void) {
 /*
 creates brick with desired caracteristics. returns error if:
   - no grid exists
-  - any of of the sides (row,y) is 0
+  - any of of the sides (row,col) is 0
   - another brick with the same id exists
 */
 int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int coocol) {
@@ -67,12 +67,12 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 /*
 checks if the block identified by id fits at the given coordinates (row,y)
 returns 1 if it fits, 0 if it doesn't
-returns error if:
-  - no bricks exists
-  - coordinates (row,y) are less than 0 or bigger than the grid
 returns 0 (false) if:
   - there is not enough room (brick would be "hanging" out of the grid)
   - the surface where the brick needs to be placed is uneven (blocks of different heights, domes, pyramid)
+  returns error if:
+  - no bricks exists
+  - coordinates (row,col) are less than 0 or bigger than the grid
 */
 int fits(grid_t * grid, char id[], int row, int col){
     l_list * list = grid->blocks;
@@ -89,7 +89,6 @@ int fits(grid_t * grid, char id[], int row, int col){
       printf("Coordinates out of bounds. Error in line %d\n", yylineno);
         return 0;
     }
-
 
     while (current != NULL) {
       if(strcmp(current->id, id) == 0){
@@ -127,7 +126,6 @@ int fits(grid_t * grid, char id[], int row, int col){
     return 0;
 }
 
-
 /*
 checks if brick (node) is on top of the grid. returns 1 when true, 0 otherwise.
 */
@@ -143,7 +141,7 @@ int on_top(grid_t * grid, node_t * node){
 }
 
 /*
-returns height of the cell (x,y) on which it is invoked, -1 if coordinates less than 0 or bigger than the grid
+returns height of the cell (row,col) on which it is invoked, -1 if coordinates less than 0 or bigger than the grid
 */
 int height(grid_t * grid, int row, int col){
 
@@ -465,7 +463,6 @@ int delete_all(grid_t * grid){
     l_list * list = grid->blocks;
     node_t * current;
 
-    // delete any element
     while(list->head != NULL){
     	delete_in_matrix(grid, list->head);
       printf("deleted id=%s\n",list->head->id);
