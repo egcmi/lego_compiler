@@ -32,8 +32,9 @@ int free_matrix(char *** matrix, int row, int col){
 /*
 creates grid with desired characteristics:
   - id:   unique name
-  - row:  
-  - col:  
+  - row:  number of rows
+  - col:  number of columns
+all the values in the matrix are initialised to 0
 */
 int add_grid(g_list * list, char id[], int row, int col) {
 	  if (row <= 0 || col <= 0){

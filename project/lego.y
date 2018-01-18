@@ -45,7 +45,6 @@
 %%
 line  : stmt '\n'                                         {}
       | stmt line                                         {}
-      | '\n'                                              {}
       ;
 
 stmt  : EXIT                                              {exit(EXIT_SUCCESS);}
@@ -80,6 +79,6 @@ dopt  : VAR                                               {delete_block(default_
 %%
 
 int main (void) {
-  grid_list = create_list();
+  grid_list = create_grid_list();
   return yyparse ( );
 }

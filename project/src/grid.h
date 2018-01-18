@@ -2,7 +2,8 @@
 #define GRID_H
 
 /*
-
+represents a linked list of grids characterised as follows:
+    head:   points to the first grid in the list
 */
 typedef struct grid_list {
 	grid_t *head;
@@ -10,7 +11,7 @@ typedef struct grid_list {
 
 
 /*
-
+functions defined in block_handling.c
 */
 g_list * grid_list;
 grid_t * default_grid;
