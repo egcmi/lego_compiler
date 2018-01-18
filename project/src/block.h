@@ -36,12 +36,15 @@ typedef struct list {
 
 /*
 represents a grid to place lego bricks on and is characterised as follows:
-    id:     
-    row:    
-    col:    
-    blocks: 
-    matrix: 
-    next:   
+    id:     unique name
+    row:    number of rows
+    col:    number of columns
+    blocks: list of blocks
+    matrix: representation of the grid:
+            each cell contains a numerical value representing the height/number of blocks on that cell,
+            plus an additional optional character 'o' or 'x' representing respectively whether the last
+            brick is a dome or a pyramid
+    next:   next brid in the list
 */
 typedef struct grid{
     char* id;
