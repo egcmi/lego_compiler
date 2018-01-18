@@ -29,6 +29,5 @@ show A1
 delete all
 show A1
 delete grid A1
-delete grid A2
 exit
 

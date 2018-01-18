@@ -463,24 +463,17 @@ int delete_block(grid_t * grid, char* id) {
 */
 int delete_all(grid_t * grid){
     l_list * list = grid->blocks;
-    node_t* current = list->head;
-    node_t* temp = malloc(sizeof(node_t));
-
-    if (list->head == NULL){
-      printf("Variable list is empty: could not delete any element. Error in line %d\n", yylineno);
-      return 0;
-    }
+    node_t * current;
 
     // delete any element
-    while(current != NULL){
-    	delete_in_matrix(grid, current);
-      printf("deleted id=%s\n",current->id );
-      temp=current->next;
+    while(list->head != NULL){
+    	delete_in_matrix(grid, list->head);
+      printf("deleted id=%s\n",list->head->id);
+      current=list->head;
+      list->head = list->head->next;
       free(current);
-      current=temp;
-      
     }
-
+    
     return 1;
 }
 
