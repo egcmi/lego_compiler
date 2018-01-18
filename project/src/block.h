@@ -65,7 +65,7 @@ int delete_all(grid_t * grid);
 int update(grid_t * grid, int method, char* id, int coox, int cooy);
 int update_dir(grid_t * grid, char* id, char* dir, int num);
 int fits(grid_t * grid, char* id, int x, int y);
-int add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy);
+void add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy);
 int delete_in_matrix(grid_t * grid, node_t * node);
 int on_top(grid_t * grid, node_t * node);
 int height(grid_t * grid, int x, int y);
