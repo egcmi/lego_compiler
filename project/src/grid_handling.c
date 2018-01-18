@@ -92,7 +92,7 @@ int add_grid(g_list * list, char id[], int row, int col) {
 }
 
 /*
-
+searches for a grid with the provided id in the grid list (g_list), then sets it as default grid
 */
 int switch_grid(g_list * list, char* id) {
 
@@ -122,7 +122,7 @@ int switch_grid(g_list * list, char* id) {
 }
 
 /*
-
+searches for a grid with the provided id in the grid list (g_list), deletes it, then switches to another grid, if present
 */
 int delete_grid(g_list * list, char* id) {
 
@@ -146,7 +146,6 @@ int delete_grid(g_list * list, char* id) {
       return 1;
     }
 
-    // delete any element
     while(current->next != NULL){
       if (strcmp(current->next->id, id)==0 ){
         delete_all(current);
@@ -167,7 +166,8 @@ int delete_grid(g_list * list, char* id) {
 }
 
 /*
-
+prints a graphical representation of the grid. for each cell, a number represents the height/number of blocks on that cell
+in addition to this, an additional optional character 'o' or 'x' represents respectively a dome or pyramid block
 */
 int show(g_list * list, char* id){
 
