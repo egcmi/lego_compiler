@@ -319,7 +319,7 @@ int rotate(grid_t * grid, char* id) {
 			if (on_top(grid, current)){
 				delete_in_matrix(grid, current);
 			}else{
-					printf("Brick %s not on top: cannot rotate it. Error in line %d\n", id, yylineno);
+					printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
 				return 0;
 			}
 			int temp = current->row;
@@ -434,7 +434,7 @@ int delete_block(grid_t * grid, char* id) {
 			printf("Deleted node id=%s\n", id);
 			return 1;
 		}else{
-					printf("Brick %s not on top: cannot delete it. Error in line %d\n", id, yylineno);
+					printf("Brick %s not on top: cannot delete. Error in line %d\n", id, yylineno);
 			return 0;
 		}
 	}
@@ -449,7 +449,7 @@ int delete_block(grid_t * grid, char* id) {
 				printf("Deleted node id=%s\n", id);
 				return 1;
 			}else{
-					printf("Brick %s not on top: cannot rotate it. Error in line %d\n", id, yylineno);
+					printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
 				return 0;
 			}
 
