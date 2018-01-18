@@ -48,32 +48,32 @@ line  : stmt '\n'                                         {}
       ;
 
 stmt  : EXIT                                              {exit(EXIT_SUCCESS);}
-      | SWITCH GRID GVAR                                  {printf("%d\n",switch_grid(grid_list,$3));}
-      | GVAR '=' GRID '(' NUM ',' NUM ')'                 {printf("%d\n",add_grid(grid_list,$1,$5,$7));}
-      | VAR '=' TYPE '(' NUM ',' NUM ')'                  {printf("%d\n",add(default_grid,$1,$5,$7,$3,-1,-1));}
-      | PLACE VAR AT '(' NUM ',' NUM ')'                  {printf("%d\n",update(default_grid,0,$2,$5,$7));}
-      | SHOW GVAR                                         {printf("%d\n",show(grid_list,$2));}
+      | SWITCH GRID GVAR                                  {switch_grid(grid_list,$3);}
+      | GVAR '=' GRID '(' NUM ',' NUM ')'                 {add_grid(grid_list,$1,$5,$7);}
+      | VAR '=' TYPE '(' NUM ',' NUM ')'                  {add(default_grid,$1,$5,$7,$3,-1,-1);}
+      | PLACE VAR AT '(' NUM ',' NUM ')'                  {update(default_grid,0,$2,$5,$7);}
+      | SHOW GVAR                                         {show(grid_list,$2);}
       | MOVE mopt                                         {}
       | HEIGHT hopt                                       {}
       | DELETE dopt                                       {}
-      | FITS VAR '(' NUM ',' NUM ')'                      {printf("%d\n",fits(default_grid,$2,$4,$6));} 
-      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE     {printf("%d\n",update(default_grid,0,$3,$6,$8));}
-      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE      {printf("%d\n",update(default_grid,1,$3,$6,$8));}
-      | WHILE POSSIBLE ':' '\n' MOVE VAR DIR NUM          {printf("%d\n",while_move(default_grid,$6,$7,$8));}
+      | FITS VAR '(' NUM ',' NUM ')'                      {fits(default_grid,$2,$4,$6);} 
+      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE     {update(default_grid,0,$3,$6,$8);}
+      | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE      {update(default_grid,1,$3,$6,$8);}
+      | WHILE POSSIBLE ':' MOVE VAR DIR NUM               {while_move(default_grid,$5,$6,$7);}
       ;
 
       ;
-mopt  : VAR DIR NUM                                       {printf("%d\n",update_dir(default_grid,$1,$2,$3));}
-      | VAR AT '(' NUM ',' NUM ')'                        {printf("%d\n",update(default_grid,1,$1,$4,$6));}
+mopt  : VAR DIR NUM                                       {update_dir(default_grid,$1,$2,$3);}
+      | VAR AT '(' NUM ',' NUM ')'                        {update(default_grid,1,$1,$4,$6);}
       ;
 
-hopt  : '(' NUM ',' NUM ')'         	  	                {printf("%d\n",height(default_grid,$2,$4));}
-      | VAR                         	  	                {printf("%d\n",height_var(default_grid,$1));}
+hopt  : '(' NUM ',' NUM ')'         	  	                {height(default_grid,$2,$4);}
+      | VAR                         	  	                {height_var(default_grid,$1);}
       ;
 
-dopt  : VAR                                               {printf("%d\n",delete_block(default_grid,$1));}
-      | ALL                                               {printf("%d\n",delete_all(default_grid));}
-      | GRID GVAR                                         {printf("%d\n",delete_grid(grid_list,$2));}
+dopt  : VAR                                               {delete_block(default_grid,$1);}
+      | ALL                                               {delete_all(default_grid);}
+      | GRID GVAR                                         {delete_grid(grid_list,$2);}
       ;
 
 %%

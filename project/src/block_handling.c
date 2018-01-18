@@ -355,7 +355,6 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
               break;
           }
           update(grid, 1, id, tempx, tempy);
-          //printf("before coox = %d, cooy = %d\n", coox, cooy);
           return 1;
         }
       }
@@ -445,6 +444,12 @@ int delete_all(grid_t * grid){
 }
 
 int while_move (grid_t * grid, char* id, char* dir, int num){
+
+    if(default_grid == NULL){
+      printf("No grid exists: you must create a new grid first. Error in line %d\n", yylineno);
+      return 0;
+    }
+
     l_list * list = grid->blocks;
     node_t * current = list->head;
 
@@ -493,27 +498,27 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
             tempy = current->cooy;
             break;
         }
-          while(fits(grid, id, )){
-            switch (dir_num){
-              case 1:
-                tempx = current->coox;
-                tempy = current->cooy-num;
-                break;
-              case 2:
-                tempx = current->coox;
-                tempy = current->cooy+num;
-                break;
-              case 3:
-                tempx = current->coox-num;
-                tempy = current->cooy;
-                break;
-              case 4:
-                tempx = current->coox+num;
-                tempy = current->cooy;
-                break;
-            }
-
+        while(fits(grid, id, tempx, tempy) != 0){
+          update_dir(grid, id, dir, num);
+          switch (dir_num){
+            case 1:
+              tempx = current->coox;
+              tempy = current->cooy-num;
+              break;
+            case 2:
+              tempx = current->coox;
+              tempy = current->cooy+num;
+              break;
+            case 3:
+              tempx = current->coox-num;
+              tempy = current->cooy;
+              break;
+            case 4:
+              tempx = current->coox+num;
+              tempy = current->cooy;
+              break;
           }
+        }
       }
       current = current->next;
     }

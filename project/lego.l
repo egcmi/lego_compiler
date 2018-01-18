@@ -28,7 +28,7 @@ gvar		[A-Z]{num}{1,2}
 {type}		{yylval.lexeme = strdup(yytext);
 			return TYPE;}
 
-[(),=:] 	{return *yytext;}
+[:(),=] 	{return *yytext;}
 
 "exit"		{return EXIT;}
 "switch"	{return SWITCH;}
