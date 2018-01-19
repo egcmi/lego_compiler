@@ -15,7 +15,7 @@ represents a lego brick characterised as follows:
             if the brick is placed on top of another brick placed on top of another brick, then its height is 3
     next:   next brick in the list
 */
-typedef struct node {
+typedef struct brick {
     char* id;
     int row;
     int col;
@@ -23,16 +23,19 @@ typedef struct node {
     int coorow;
     int coocol;
     int h;
-    struct node * next;
-} node_t;
+    struct brick* prev;
+    struct brick* next;
+} brick_t;
 
 /*
 represents a linked list of lego bricks characterised as follows:
-    head:   points to the first lego brick (node_t) in the list
+    head:   points to the first lego brick (brick_t) in the list
 */
-typedef struct list {
-    node_t *head;
-} l_list;
+typedef struct doubly_ll {
+    brick_t *head;
+    brick_t *tail;
+    int length;
+} brick_list;
 
 /*
 represents a grid to place lego bricks on and is characterised as follows:
@@ -50,7 +53,7 @@ typedef struct grid{
     char* id;
     int row;
     int col;
-    l_list * blocks;
+    brick_list * blocks;
     char *** matrix;
     struct grid * next;
 } grid_t;
@@ -58,16 +61,16 @@ typedef struct grid{
 /*
 functions defined in block_handling.c
 */
-l_list * create_list(void);
+brick_list * create_list(void);
 int add(grid_t * grid, char* id, int x, int y, char* type, int coox, int cooy);
 int delete_block(grid_t * grid, char* id);
 int delete_all(grid_t * grid);
 int update(grid_t * grid, int method, char* id, int coox, int cooy);
 int update_dir(grid_t * grid, char* id, char* dir, int num);
 int fits(grid_t * grid, char* id, int x, int y);
-void add_in_matrix(grid_t * grid, node_t * node, int coox, int cooy);
-int delete_in_matrix(grid_t * grid, node_t * node);
-int on_top(grid_t * grid, node_t * node);
+void add_in_matrix(grid_t * grid, brick_t * brick, int coox, int cooy);
+int delete_in_matrix(grid_t * grid, brick_t * brick);
+int on_top(grid_t * grid, brick_t * brick);
 int height(grid_t * grid, int x, int y);
 int height_var(grid_t * grid, char* id);
 int while_move(grid_t * grid, char* id, char* dir, int num);

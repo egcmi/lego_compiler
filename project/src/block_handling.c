@@ -1,11 +1,76 @@
 /*
 creates an empty list of blocks
 */
-l_list * create_list(void) {
-	l_list* p;
-	p = malloc(sizeof(l_list));
+brick_list* create_list(void) {
+	brick_list* p = malloc(sizeof(brick_list));
 	p->head = NULL;
+	p->tail = NULL;
+	p->length = 0;
 	return p;
+}
+
+brick_t* create_brick(char* id, int row, int col, char* type){
+	brick_t* p = malloc(sizeof(brick_t));
+	p->id = id;
+	p->row = row;
+	p->col = col;
+	p->type = type;
+	p->coorow = -1;
+	p->coocol = -1;
+	p->prev = NULL;
+	p->next = NULL;
+	return p;
+}
+
+int is_list_empty(brick_list* list) {
+   return (list->head == NULL);
+}
+
+int insert_brick_tail(brick_list* list, brick_t* brick){
+	if(is_list_empty(list)){
+		list->head = brick;
+		list->tail = brick;
+		list->length++;
+		return 1;
+	}
+
+	brick->prev = list->tail;
+	list->tail->next = brick;
+	list->tail = brick;
+	list->length++;
+	return 1;
+}
+
+brick_t* find_brick(brick_list* list, char* id){
+	brick_t* b = list->head;
+	while (b != NULL){
+		if (strcmp(b->id, id) == 0){
+			return b;
+		}
+		b = b->next;
+	}
+	return NULL;
+}
+
+int remove_brick(brick_list* list, brick_t* brick){
+	if (brick == NULL || list->head == NULL){
+		return 0;
+	}
+
+	if (brick->prev == NULL){
+		list->head = brick->next;
+	} else {
+		brick->prev->next = brick->next;
+	}
+
+	if (brick->next == NULL){
+		list->tail = brick->prev;
+	} else {
+		brick->next->prev = brick->prev;
+	}
+
+	free(brick);
+	return 1;
 }
 
 /*
@@ -25,18 +90,18 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
-	node_t * node = malloc(sizeof(node_t));
-	node->id = id;
-	node->row = row;
-	node->col = col;
-	node->type = type;
-	node->coorow = coorow;
-	node->coocol = coocol;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
+	brick_t * brick = malloc(sizeof(brick_t));
+	brick->id = id;
+	brick->row = row;
+	brick->col = col;
+	brick->type = type;
+	brick->coorow = coorow;
+	brick->coocol = coocol;
 
 	if (list->head == NULL){
-		list->head = node;
+		list->head = brick;
 		list->head->next = NULL;
 		return 1;
 	}
@@ -44,7 +109,7 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 	while (current->next != NULL) {
 		if(strcmp(current->id, id) == 0){
 			printf("Error in line %d: %s already defined\n", yylineno, id);
-			free(node);
+			free(brick);
 			return 0;
 		}
 		current = current->next;
@@ -52,12 +117,12 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 
 	if(strcmp(current->id, id) == 0){
 			printf("Error in line %d: %s already defined\n", yylineno, id);
-		free(node);
+		free(brick);
 		return 0;
 	}
 
-	current->next = malloc(sizeof(node_t));
-	current->next = node;
+	current->next = malloc(sizeof(brick_t));
+	current->next = brick;
 	current->next->next = NULL;
 	return 1;
 }
@@ -78,8 +143,8 @@ int fits(grid_t * grid, char id[], int row, int col){
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 	int gridrow = grid->row;
 	int gridcol = grid->col;
 
@@ -128,18 +193,18 @@ int fits(grid_t * grid, char id[], int row, int col){
 }
 
 /*
-checks if brick (node) is on top of the grid. returns 1 when true, 0 otherwise.
+checks if brick (brick) is on top of the grid. returns 1 when true, 0 otherwise.
 */
-int on_top(grid_t * grid, node_t * node){
+int on_top(grid_t * grid, brick_t * brick){
 	if (grid == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
-	int coorow = node->coorow;
-	int coocol = node->coocol;
+	int coorow = brick->coorow;
+	int coocol = brick->coocol;
 
-	if (node->h == height(grid, coorow, coocol)){
+	if (brick->h == height(grid, coorow, coocol)){
 		return 1;
 	}
 
@@ -175,8 +240,8 @@ int height_var(grid_t * grid, char* id){
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 	int h = 0;
 
 	if (list->head == NULL){
@@ -203,19 +268,19 @@ int height_var(grid_t * grid, char* id){
 
 /*
 increases the height/number of blocks of the cell in the grid defined by (coorow, coocool) by one when a new block is placed/moved.
-if the (topmost) block (node_t) added is a pyramid or dome, concatenates an 'x' or 'o' to the number to represent it
+if the (topmost) block (brick_t) added is a pyramid or dome, concatenates an 'x' or 'o' to the number to represent it
 */
-void add_in_matrix(grid_t * grid, node_t * node, int coorow, int coocol){
+void add_in_matrix(grid_t * grid, brick_t * brick, int coorow, int coocol){
 	if (grid == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return;
 	}
 
-	int row = node->row;
-	int col = node->col;
-	char * type = node->type;
+	int row = brick->row;
+	int col = brick->col;
+	char * type = brick->type;
 	int cell_height = height(grid, coorow,coocol);
-	node->h = cell_height + 1;
+	brick->h = cell_height + 1;
 
 	char * t = "";
 	if(strcmp(type, "dome") == 0){
@@ -238,18 +303,18 @@ void add_in_matrix(grid_t * grid, node_t * node, int coorow, int coocol){
 
 /*
 decreases the height/number of blocks of the cell in the grid defined by (coorow, coocool) by one when a new block is deleted/moved.
-if the (topmost) block (node_t) removed is a pyramid or dome, the 'x' or 'o' that represent this condition are removed
+if the (topmost) block (brick_t) removed is a pyramid or dome, the 'x' or 'o' that represent this condition are removed
 */
-int delete_in_matrix(grid_t * grid, node_t * node){
+int delete_in_matrix(grid_t * grid, brick_t * brick){
 	if (grid == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
-	int row = node->row;
-	int col = node->col;
-	int coorow = node->coorow;
-	int coocol = node->coocol;
+	int row = brick->row;
+	int col = brick->col;
+	int coorow = brick->coorow;
+	int coocol = brick->coocol;
 
 	if (coorow < 0 || coocol < 0){
 		return 0;
@@ -275,8 +340,8 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 
 	if (list->head == NULL){
 	printf("Error in line %d: %s not defined\n", yylineno, id);
@@ -344,8 +409,8 @@ int rotate(grid_t * grid, char* id) {
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 
 	if (list->head == NULL){
 		printf("Error in line %d: %s not defined\n", yylineno, id);
@@ -394,8 +459,8 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 
 	if (list->head == NULL){
 		printf("Error in line %d: %s not defined\n", yylineno, id);
@@ -467,9 +532,9 @@ int delete_block(grid_t * grid, char* id) {
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t* current = list->head;
-	node_t* temp = malloc(sizeof(node_t));
+	brick_list * list = grid->blocks;
+	brick_t* current = list->head;
+	brick_t* temp = malloc(sizeof(brick_t));
 
 	if (list->head == NULL){
 		printf("Error in line %d: %s not defined\n", yylineno, id);
@@ -519,8 +584,8 @@ int delete_all(grid_t * grid){
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current;
+	brick_list * list = grid->blocks;
+	brick_t * current;
 
 	while(list->head != NULL){
 		delete_in_matrix(grid, list->head);
@@ -543,8 +608,8 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 		return 0;
 	}
 
-	l_list * list = grid->blocks;
-	node_t * current = list->head;
+	brick_list * list = grid->blocks;
+	brick_t * current = list->head;
 
 	if (list->head == NULL){
 		printf("Brick %s not found. Error in line %d\n", id, yylineno);
