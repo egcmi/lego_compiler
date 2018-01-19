@@ -94,7 +94,7 @@ searches for a grid with the provided id in the grid list (g_list), then sets it
 int switch_grid(g_list * list, char* id) {
 
 	if (list->head == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
@@ -112,7 +112,7 @@ int switch_grid(g_list * list, char* id) {
 		current = current->next;
 	}
 
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -122,7 +122,7 @@ searches for a grid with the provided id in the grid list (g_list), deletes it, 
 int delete_grid(g_list * list, char* id) {
 
 	if (list->head == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
@@ -154,7 +154,7 @@ int delete_grid(g_list * list, char* id) {
 		current = current->next;
 	}
 
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -167,7 +167,7 @@ int show(g_list * list, char* id){
 	grid_t* current = list->head;
 
 	if (list->head == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 

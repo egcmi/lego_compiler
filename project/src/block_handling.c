@@ -16,7 +16,7 @@ creates brick with desired caracteristics. returns error if:
 */
 int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int coocol) {
 	if (default_grid == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
@@ -73,6 +73,11 @@ returns 0 (false) if:
 	- coordinates (row,col) are less than 0 or bigger than the grid
 */
 int fits(grid_t * grid, char id[], int row, int col){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	l_list * list = grid->blocks;
 	node_t * current = list->head;
 	int gridrow = grid->row;
@@ -126,6 +131,11 @@ int fits(grid_t * grid, char id[], int row, int col){
 checks if brick (node) is on top of the grid. returns 1 when true, 0 otherwise.
 */
 int on_top(grid_t * grid, node_t * node){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	int coorow = node->coorow;
 	int coocol = node->coocol;
 
@@ -140,6 +150,11 @@ int on_top(grid_t * grid, node_t * node){
 returns height of the cell (row,col) on which it is invoked, -1 if coordinates less than 0 or bigger than the size of the grid
 */
 int height(grid_t * grid, int row, int col){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	if(row >= grid->row || col >= grid->col || row<0 || col<0){
 		printf("Error in line %d: cell out of bounds\n", yylineno);
 		return -1;
@@ -155,6 +170,10 @@ returns height of the brick placed on the grid and identified by the provided id
 returns error if the brick is not placed or if it does not exist
 */
 int height_var(grid_t * grid, char* id){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
 
 	l_list * list = grid->blocks;
 	node_t * current = list->head;
@@ -187,6 +206,11 @@ increases the height/number of blocks of the cell in the grid defined by (coorow
 if the (topmost) block (node_t) added is a pyramid or dome, concatenates an 'x' or 'o' to the number to represent it
 */
 void add_in_matrix(grid_t * grid, node_t * node, int coorow, int coocol){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return;
+	}
+
 	int row = node->row;
 	int col = node->col;
 	char * type = node->type;
@@ -217,6 +241,11 @@ decreases the height/number of blocks of the cell in the grid defined by (coorow
 if the (topmost) block (node_t) removed is a pyramid or dome, the 'x' or 'o' that represent this condition are removed
 */
 int delete_in_matrix(grid_t * grid, node_t * node){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	int row = node->row;
 	int col = node->col;
 	int coorow = node->coorow;
@@ -237,7 +266,7 @@ used for move at coordinates (coorow, coocol). updates coordinates inside block 
 */
 int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 	if(grid == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 	l_list * list = grid->blocks;
@@ -305,6 +334,10 @@ returns error if:
 	- brick is not placed
 */
 int rotate(grid_t * grid, char* id) {
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
 	l_list * list = grid->blocks;
 	node_t * current = list->head;
 
@@ -349,6 +382,11 @@ int rotate(grid_t * grid, char* id) {
 used for move in direction dir by a number of cells specified by num. updates coordinates inside block and matrix inside grid
 */
 int update_dir(grid_t * grid, char* id, char* dir, int num){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	l_list * list = grid->blocks;
 	node_t * current = list->head;
 
@@ -416,6 +454,11 @@ deletes brick identified by the provided id from the grid, removes it from the m
 then frees memory allocated for it
 */
 int delete_block(grid_t * grid, char* id) {
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	l_list * list = grid->blocks;
 	node_t* current = list->head;
 	node_t* temp = malloc(sizeof(node_t));
@@ -464,6 +507,11 @@ int delete_block(grid_t * grid, char* id) {
 deletes all blocks from the grid
 */
 int delete_all(grid_t * grid){
+	if (grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
+		return 0;
+	}
+
 	l_list * list = grid->blocks;
 	node_t * current;
 
@@ -483,9 +531,8 @@ function for handling while loop
 while the block still fits, move it by a number of cells given by num in the direction given by dir
 */
 int while_move (grid_t * grid, char* id, char* dir, int num){
-
-	if(default_grid == NULL){
-		printf("Error in line %d: grid not defined\n", yylineno);
+	if (default_grid == NULL){
+		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
 
