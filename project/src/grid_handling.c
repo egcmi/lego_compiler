@@ -92,7 +92,6 @@ int add_grid(g_list * list, char id[], int row, int col) {
 searches for a grid with the provided id in the grid list (g_list), then sets it as default grid
 */
 int switch_grid(g_list * list, char* id) {
-
 	if (list->head == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
@@ -120,7 +119,6 @@ int switch_grid(g_list * list, char* id) {
 searches for a grid with the provided id in the grid list (g_list), deletes it, then switches to another grid, if present
 */
 int delete_grid(g_list * list, char* id) {
-
 	if (list->head == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
@@ -131,9 +129,23 @@ int delete_grid(g_list * list, char* id) {
 	char* def_id = default_grid->id;
 
 	if (strcmp(current->id, id) == 0){
+
+		// trouble code seems to be here
 		delete_all(current);
+		// trouble code !!!!
+
+		printf("after delete_all\n");
+
 		free(current);
-		list->head = current->next;
+
+		printf("after free(current)\n");
+
+
+		if (current->next != NULL){
+			printf("current->next not NULL\n");
+			list->head = current->next;
+		}
+
 		if (strcmp(def_id, id) == 0){
 			switch_grid(list, "-1");
 		}
