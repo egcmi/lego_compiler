@@ -63,7 +63,10 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																														if ( update(default_grid,0,$2,$5,$7) )
 																															printf("Placed %s at (%d,%d)\n", $2, $5, $7);
 																													}
-			| SHOW GVAR																					{ show(grid_list,$2); }
+			| SHOW GVAR																					{
+																														printf("\n");
+																														show(grid_list,$2);
+																													}
 			| MOVE mopt																					{}
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
 			| HEIGHT hopt																				{}
@@ -77,12 +80,22 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE			{
 																														if ( update(default_grid,0,$3,$6,$8) )
 																															printf("Placed %s at (%d,%d)\n", $3, $6, $8);
-			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE			{ update(default_grid,1,$3,$6,$8); }
+																													}
+			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE			{
+																														if ( update(default_grid,1,$3,$6,$8) )
+																															printf("Moved %s to (%d,%d)\n", $3, $6, $8);
+																													}
 			| WHILE POSSIBLE ':' MOVE VAR DIR NUM								{ while_move(default_grid,$5,$6,$7); }
 			;
 
-mopt  : VAR DIR NUM																				{ update_dir(default_grid,$1,$2,$3); }
-			| VAR AT '(' NUM ',' NUM ')'												{ update(default_grid,1,$1,$4,$6); }
+mopt  : VAR DIR NUM																				{
+																														if ( update_dir(default_grid,$1,$2,$3) )
+																															printf("Moved %s %s by %d", $1, $2, $3);
+																													}
+			| VAR AT '(' NUM ',' NUM ')'												{
+																														if ( update(default_grid,1,$1,$4,$6) )
+																														printf("Moved %s to (%d,%d)\n", $1,$4,$6);
+																												 }
 			;
 
 hopt  : '(' NUM ',' NUM ')'																{	
@@ -97,9 +110,18 @@ hopt  : '(' NUM ',' NUM ')'																{
 																													}
 			;
 
-dopt  : VAR																								{ delete_block(default_grid,$1); }
-			| ALL																								{ delete_all(default_grid); }
-			| GRID GVAR																					{ delete_grid(grid_list,$2); }
+dopt  : VAR																								{
+																														if ( delete_block(default_grid,$1) )
+																															printf("Deleted brick %s\n", $1);
+																													}
+			| ALL																								{
+																														if ( delete_all(default_grid) )
+																														printf("Deleted all bricks on %s\n", default_grid->id);
+																													}
+			| GRID GVAR																					{
+																														if ( delete_grid(grid_list,$2) )
+																														printf("Deleted grid %s\n", $2);
+																													}
 			;
 
 %%

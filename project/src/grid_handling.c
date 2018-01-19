@@ -38,7 +38,7 @@ all the values in the matrix are initialised to 0
 */
 int add_grid(g_list * list, char id[], int row, int col) {
 	if (row <= 0 || col <= 0){
-		printf("Grid size must be greater than 0. Error in line %d\n", yylineno);
+		printf("Error in line %d: size too small\n", yylineno);
 		return 0;
 	}
 	grid_t * current = list->head;
@@ -66,7 +66,7 @@ int add_grid(g_list * list, char id[], int row, int col) {
 
 	while (current->next != NULL) {
 		if(strcmp(current->id, id) == 0){
-			printf("Grid %s already exists. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s already defined\n", yylineno, id);
 			free(grid->matrix);
 			free(grid);
 			return 0;
@@ -75,7 +75,7 @@ int add_grid(g_list * list, char id[], int row, int col) {
 	}
 
 	if(strcmp(current->id, id) == 0){
-		printf("Grid %s already exists. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s already defined\n", yylineno, id);
 		free(grid->matrix);
 		free(grid);
 		return 0;
@@ -94,7 +94,7 @@ searches for a grid with the provided id in the grid list (g_list), then sets it
 int switch_grid(g_list * list, char* id) {
 
 	if (list->head == NULL){
-		printf("No grids: cannot switch. Error in line %d\n", yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 		return 0;
 	}
 
@@ -112,7 +112,7 @@ int switch_grid(g_list * list, char* id) {
 		current = current->next;
 	}
 
-	printf("Grid %s not found. Error in line %d\n", id, yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 	return 0;
 }
 
@@ -122,7 +122,7 @@ searches for a grid with the provided id in the grid list (g_list), deletes it, 
 int delete_grid(g_list * list, char* id) {
 
 	if (list->head == NULL){
-		printf("No grids: could not delete. Error in line %d\n", yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 		return 0;
 	}
 
@@ -134,7 +134,6 @@ int delete_grid(g_list * list, char* id) {
 		delete_all(current);
 		free(current);
 		list->head = current->next;
-		printf("Deleted grid %s\n", id);
 		if (strcmp(def_id, id) == 0){
 			switch_grid(list, "-1");
 		}
@@ -147,7 +146,6 @@ int delete_grid(g_list * list, char* id) {
 			temp = current->next;
 			current->next = temp->next;
 			free(temp);
-			printf("Deleted grid %s\n", id);
 			if (strcmp(def_id, id) == 0){
 				switch_grid(list, list->head->id);
 			}
@@ -156,7 +154,7 @@ int delete_grid(g_list * list, char* id) {
 		current = current->next;
 	}
 
-	printf("Grid %s not found. Error in line %d\n", id, yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 	return 0;
 }
 
@@ -169,7 +167,7 @@ int show(g_list * list, char* id){
 	grid_t* current = list->head;
 
 	if (list->head == NULL){
-		printf("No grids: could not print. Error in line %d\n", yylineno);
+		printf("Error in line %d: grid not defined\n", yylineno);
 		return 0;
 	}
 
