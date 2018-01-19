@@ -371,6 +371,7 @@ int rotate(grid_t * grid, char* id) {
 				current->row = current->col;
 				current->col = temp;
 				add_in_matrix(grid, current, current->coorow, current->coocol);
+				printf("Error in line %d: cannot rotate\n", yylineno);
 				return 0;
 			}
 		}else{
@@ -444,8 +445,9 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 					tempcol = current->coocol;
 					break;
 				}
-				update(grid, 1, id, temprow, tempcol);
-				return 1;
+				if ( update(grid, 1, id, temprow, tempcol))
+					return 1;
+				else return 0;
 			}
 		}
 		current = current->next;
@@ -479,7 +481,6 @@ int delete_block(grid_t * grid, char* id) {
 			free(current);
 			list->head = current->next;
 			delete_in_matrix(grid, current);
-			printf("Deleted node id=%s\n", id);
 			return 1;
 		}else{
 			printf("Error in line %d: %s not on top\n", yylineno, id);
@@ -611,6 +612,7 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 					break;
 				}
 			}
+			return 1;
 		}
 		current = current->next;
 	}
