@@ -1,0 +1,4 @@
+A1=grid(2,2)
+show A1
+delete grid A1
+exit

@@ -124,27 +124,14 @@ int delete_grid(g_list * list, char* id) {
 		return 0;
 	}
 
-	grid_t* current = list->head;
-	grid_t* temp = malloc(sizeof(grid_t));
-	char* def_id = default_grid->id;
+  grid_t* current = list->head;
+  grid_t* temp = malloc(sizeof(grid_t));
+  char* def_id = default_grid->id;
 
-	if (strcmp(current->id, id) == 0){
-
-		// trouble code seems to be here
-		delete_all(current);
-		// trouble code !!!!
-
-		printf("after delete_all\n");
-
-		free(current);
-
-		printf("after free(current)\n");
-
-
-		if (current->next != NULL){
-			printf("current->next not NULL\n");
-			list->head = current->next;
-		}
+  if (strcmp(current->id, id) == 0){
+    delete_all(current);
+    free(current);
+    list->head = current->next;
 
 		if (strcmp(def_id, id) == 0){
 			switch_grid(list, "-1");
@@ -166,7 +153,7 @@ int delete_grid(g_list * list, char* id) {
 		current = current->next;
 	}
 
-		printf("Error in line %d: %s not defined\n", yylineno, id);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -188,7 +175,7 @@ int show(g_list * list, char* id){
 			int maxRow = current->row;
 			int maxCol = current->col;
 			
-			printf("%-6s", id);
+			printf("\n%-6s", id);
 			for(int col=0; col<maxCol; col++){
 				printf("%-4d", col);
 			}
@@ -199,7 +186,7 @@ int show(g_list * list, char* id){
 				for(int col=0; col<maxCol; col++){
 					printf("%-4s", current->matrix[row][col]);
 				}
-				printf("\n");
+				printf("\n\n");
 			}
 			return 1;
 		}

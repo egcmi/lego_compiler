@@ -251,6 +251,10 @@ int delete_in_matrix(grid_t * grid, node_t * node){
 	int coorow = node->coorow;
 	int coocol = node->coocol;
 
+	if (coorow < 0 || coocol < 0){
+		return 0;
+	}
+
 	for(int i = coorow; i < row+coorow; i++){
 		for(int j = coocol; j < col+coocol; j++){
 			int curr = atoi(grid->matrix[i][j])-1;
@@ -259,6 +263,8 @@ int delete_in_matrix(grid_t * grid, node_t * node){
 			grid->matrix[i][j] = res;
 		}
 	}
+
+	return 1;
 }
 
 /*

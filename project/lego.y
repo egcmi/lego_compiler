@@ -63,10 +63,7 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																														if ( update(default_grid,0,$2,$5,$7) )
 																															printf("Placed %s at (%d,%d)\n", $2, $5, $7);
 																													}
-			| SHOW GVAR																					{
-																														printf("\n");
-																														show(grid_list,$2);
-																													}
+			| SHOW GVAR																					{ show(grid_list,$2); }
 			| MOVE mopt																					{}
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
 			| HEIGHT hopt																				{}

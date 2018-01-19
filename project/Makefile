@@ -7,7 +7,7 @@ flex:lego.l
 	flex -l lego.l
 
 gcc:y.tab.c
-	gcc -o lego.out y.tab.c -ly -ll
+	gcc -g -o lego.out y.tab.c -ly -ll
 
 run:
 	./lego.out
