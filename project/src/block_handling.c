@@ -261,7 +261,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						return 0;
 					}
 				}else{
-					printf("Brick %s already placed. Error in line %d\n", id, yylineno);
+					printf("Error in line %d: %s already placed\n", yylineno, id);
 					return 0;
 				}
 			}else{
@@ -271,7 +271,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 					if (on_top(grid, current)){
 						delete_in_matrix(grid, current);
 					}else{
-						printf("Brick %s not on top: cannot move it. Error in line %d\n", id, yylineno);
+						printf("Error in line %d: %s not on top\n", yylineno, id);
 						return 0;
 					}
 					if(fits(grid, current->id, coorow, coocol)){
@@ -284,7 +284,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						return 0;
 					}
 				}else{
-					printf("Brick %s not placed. Error in line %d\n", id, yylineno);
+					printf("Error in line %d: %s not placed\n", yylineno, id);
 					return 0;
 				}
 			}
@@ -318,7 +318,7 @@ int rotate(grid_t * grid, char* id) {
 			if (on_top(grid, current)){
 				delete_in_matrix(grid, current);
 			}else{
-					printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
+				printf("Error in line %d: %s not on top\n", yylineno, id);
 				return 0;
 			}
 			int temp = current->row;
@@ -335,7 +335,7 @@ int rotate(grid_t * grid, char* id) {
 				return 0;
 			}
 		}else{
-			printf("Brick %s not placed. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s not placed\n", yylineno, id);
 			return 0;
 		}
 		current = current->next;
@@ -377,7 +377,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 	while (current != NULL) {
 		if((strcmp(current->id, id) == 0)){
 			if(current->coorow == -1 && current->coocol == -1){
-					printf("Brick %s not placed. Error in line %d\n", id, yylineno);
+					printf("Error in line %d: %s not placed\n", yylineno, id);
 				return 0;
 			}else{
 				int temprow;
@@ -433,7 +433,7 @@ int delete_block(grid_t * grid, char* id) {
 			printf("Deleted node id=%s\n", id);
 			return 1;
 		}else{
-			printf("Brick %s not on top: cannot delete. Error in line %d\n", id, yylineno);
+			printf("Error in line %d: %s not on top\n", yylineno, id);
 			return 0;
 		}
 	}
@@ -447,7 +447,7 @@ int delete_block(grid_t * grid, char* id) {
 				free(temp);
 				return 1;
 			}else{
-				printf("Brick %s not on top: cannot rotate. Error in line %d\n", id, yylineno);
+				printf("Error in line %d: %s not on top\n", yylineno, id);
 				return 0;
 			}
 

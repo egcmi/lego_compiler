@@ -59,7 +59,10 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																														if( add(default_grid,$1,$5,$7,$3,-1,-1) )
 																															printf("Created brick %s\n", $1);
 																													}
-			| PLACE VAR AT '(' NUM ',' NUM ')'									{ update(default_grid,0,$2,$5,$7); }
+			| PLACE VAR AT '(' NUM ',' NUM ')'									{
+																														if ( update(default_grid,0,$2,$5,$7) )
+																															printf("Placed %s at (%d,%d)\n", $2, $5, $7);
+																													}
 			| SHOW GVAR																					{ show(grid_list,$2); }
 			| MOVE mopt																					{}
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
@@ -71,7 +74,9 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																														else
 																															printf("FALSE\n");
 																													} 
-			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE			{ update(default_grid,0,$3,$6,$8); }
+			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE			{
+																														if ( update(default_grid,0,$3,$6,$8) )
+																															printf("Placed %s at (%d,%d)\n", $3, $6, $8);
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE			{ update(default_grid,1,$3,$6,$8); }
 			| WHILE POSSIBLE ':' MOVE VAR DIR NUM								{ while_move(default_grid,$5,$6,$7); }
 			;
