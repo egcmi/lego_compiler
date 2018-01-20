@@ -63,7 +63,8 @@ typedef struct grid{
     int col;
     brick_list* bricks;
     char *** matrix;
-    struct grid * next;
+    struct grid* prev;
+    struct grid* next;
 } grid_t;
 
 /*
@@ -71,7 +72,9 @@ represents a linked list of grids characterised as follows:
     head:   points to the first grid in the list
 */
 typedef struct grid_list {
-    grid_t *head;
+    grid_t* head;
+    grid_t* tail;
+    int length;
 } grid_list;
 
 
@@ -106,6 +109,14 @@ functions defined in grid_handling.c
 grid_list* list;
 grid_t* default_grid;
 grid_list* create_grid_list(void);
+void delete_grid_list(grid_list* list);
+grid_t* create_grid(char* id, int row, int col);
+int is_grid_list_empty(grid_list* list);
+int insert_grid_tail(grid_list* list, grid_t* grid);
+grid_t* find_grid(grid_list* list, char* id);
+int remove_grid(grid_list* list, grid_t* grid);
+
+
 grid_t* create_grid_t(void);
 int add_grid(grid_list* list, char id[], int row, int col);
 int delete_grid(grid_list* list, char* id);

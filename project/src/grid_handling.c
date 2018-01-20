@@ -1,13 +1,108 @@
-
 /*
-creates an empty list of bricks
+creates an empty list of grids
 */
 grid_list* create_grid_list(void) {
-	grid_list* p;
-	p = malloc(sizeof(grid_list));
+	grid_list* p = malloc(sizeof(grid_list));
 	p->head = NULL;
+	p->tail = NULL;
+	p->length = 0;
+	printf("Initiialised empty list of grids\n");
 	return p;
 }
+
+void delete_grid_list(grid_list* list){
+	if (is_grid_list_empty(list)){
+		printf("Deleted empty list\n");
+		free(list);
+		return;
+	}
+
+	grid_t* b = list->head;
+	while(b != NULL){
+		printf("Deleted grid %s\n", b->id);
+		list->head = list->head->next;
+		free(b);
+		b = list->head;
+	}
+	printf("Deleted entire list\n");
+	free(list);
+	return;
+}
+
+grid_t* create_grid(char* id, int row, int col){
+	if (row <= 0 || col <= 0){
+		printf("Size too small\n");
+		return NULL;
+	}
+
+	grid_t* p = malloc(sizeof(grid_t));
+	p->id = id;
+	p->row = row;
+	p->col = col;
+	p->prev = NULL;
+	p->next = NULL;
+	printf("Initialised grid %s\n", id);
+	return p;
+}
+
+int is_grid_list_empty(grid_list* list) {
+	printf("List length is %d\n", list->length);
+   return (list->head == NULL);
+}
+
+int insert_grid_tail(grid_list* list, grid_t* grid){
+	if (is_grid_list_empty(list)){
+		list->head = grid;
+	} else {
+		list->tail->next = grid;
+		grid->prev = list->tail;
+	}
+
+	list->tail = grid;
+	list->length++;
+	printf("Inserted grid %s, list length: %d\n", grid->id, list->length);
+	return 1;
+}
+
+grid_t* find_grid(grid_list* list, char* id){
+	grid_t* b = list->head;
+	while (b != NULL){
+		if (strcmp(b->id, id) == 0){
+			printf("grid %s found\n", id);
+			return b;
+		}
+		b = b->next;
+	}
+	printf("grid %s not found\n", id);
+	return NULL;
+}
+
+
+// segfault if grid is not in list
+int remove_grid(grid_list* list, grid_t* grid){
+	if (grid == NULL || list->head == NULL){
+		return 0;
+	}
+
+	if (grid->prev == NULL){
+		list->head = grid->next;
+	} else {
+		grid->prev->next = grid->next;
+	}
+
+	if (grid->next == NULL){
+		list->tail = grid->prev;
+	} else {
+		grid->next->prev = grid->prev;
+	}
+
+	printf("Deleted grid %s, list length: %d\n", grid->id, list->length-1);
+	free(grid);
+	list->length--;
+	return 1;
+}
+
+// up to here ------------------------------------------------------------------------------
 
 /*
 creates empty grid
