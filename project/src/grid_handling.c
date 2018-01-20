@@ -1,3 +1,49 @@
+grid_t* create_grid(char* id, int row, int col){
+	if (row <= 0 || col <= 0){
+		printf("Size too small\n");
+		return NULL;
+	}
+
+	grid_t* p = malloc(sizeof(grid_t));
+	p->id = id;
+	p->row = row;
+	p->col = col;
+	p->prev = NULL;
+	p->next = NULL;
+	p->bricks = create_brick_list();
+	p->matrix = create_matrix(row, col);
+
+// what is this????????????????????????????????????????????????????????????????????????????????????????
+	default_grid=create_grid_t();
+// ????????????????????????????????????????????????????????????????????????????????????????????????????
+
+	printf("Initialised grid %s\n", id);
+	return p;
+}
+
+char*** create_matrix(int row, int col){
+	char*** p = malloc(row * sizeof(char**));
+	for(int i=0; i < row; i++){
+		p[i] = (char**) malloc(col * sizeof(char*));
+		for(int j=0; j < col; j++){
+			p[i][j] = "0";
+		}
+	}
+	return p;
+}
+
+/*
+frees memory allocated for matrix
+*/
+int free_matrix(char *** matrix, int row, int col){
+	for(int i=0; i < row; i++){
+		for(int j=0; j < col; j++){
+			free(matrix[i][j]);
+		}
+	}
+	free(matrix);
+}
+
 /*
 creates an empty list of grids
 */
@@ -11,7 +57,7 @@ grid_list* create_grid_list(void) {
 }
 
 void delete_grid_list(grid_list* list){
-	if (is_grid_list_empty(list)){
+	if (grid_list_empty(list)){
 		printf("Deleted empty list\n");
 		free(list);
 		return;
@@ -29,58 +75,43 @@ void delete_grid_list(grid_list* list){
 	return;
 }
 
-grid_t* create_grid(char* id, int row, int col){
-	if (row <= 0 || col <= 0){
-		printf("Size too small\n");
-		return NULL;
-	}
-
-	grid_t* p = malloc(sizeof(grid_t));
-	p->id = id;
-	p->row = row;
-	p->col = col;
-	p->prev = NULL;
-	p->next = NULL;
-	printf("Initialised grid %s\n", id);
-	return p;
-}
-
-int is_grid_list_empty(grid_list* list) {
+int grid_list_empty(grid_list* list) {
 	printf("List length is %d\n", list->length);
-   return (list->head == NULL);
+	return (list->head == NULL);
 }
 
-int insert_grid_tail(grid_list* list, grid_t* grid){
-	if (is_grid_list_empty(list)){
+int insert_grid_list(grid_list* list, grid_t* grid){
+	if (grid_list_empty(list)){
 		list->head = grid;
-	} else {
-		list->tail->next = grid;
-		grid->prev = list->tail;
+	} else if (find_grid(list, grid->id)){
+		printf("Grid %s already exists\n", grid->id);
+		free(grid);
+		return 0;
 	}
-
+	default_grid = grid;
+	list->tail->next = grid;
+	grid->prev = list->tail;
 	list->tail = grid;
-	list->length++;
-	printf("Inserted grid %s, list length: %d\n", grid->id, list->length);
+	printf("Inserted grid %s, list length: %d\n", grid->id, ++(list->length));
 	return 1;
 }
 
 grid_t* find_grid(grid_list* list, char* id){
-	grid_t* b = list->head;
-	while (b != NULL){
-		if (strcmp(b->id, id) == 0){
-			printf("grid %s found\n", id);
-			return b;
+	grid_t* g = list->head;
+	while (g != NULL){
+		if (strcmp(g->id, id) == 0){
+			printf("Grid %s found\n", id);
+			return g;
 		}
-		b = b->next;
+		g = g->next;
 	}
-	printf("grid %s not found\n", id);
+	printf("Grid %s not found\n", id);
 	return NULL;
 }
 
-
-// segfault if grid is not in list
-int remove_grid(grid_list* list, grid_t* grid){
-	if (grid == NULL || list->head == NULL){
+int remove_grid(grid_list* list, char* id){
+	grid_t* grid = find_grid(list, id);
+	if (grid == NULL){
 		return 0;
 	}
 
@@ -96,13 +127,61 @@ int remove_grid(grid_list* list, grid_t* grid){
 		grid->next->prev = grid->prev;
 	}
 
-	printf("Deleted grid %s, list length: %d\n", grid->id, list->length-1);
+	printf("Deleted grid %s, list length: %d\n", grid->id, --(list->length));
 	free(grid);
-	list->length--;
 	return 1;
 }
 
-// up to here ------------------------------------------------------------------------------
+/*
+prints a graphical representation of the grid. for each cell, a number represents the height/number of bricks on that cell
+in addition to this, an additional optional character 'o' or 'x' represents respectively a dome or pyramid block
+*/
+int print_grid(grid_list* list, char* id){
+	grid_t* grid = find_grid(list, id);
+	if (grid == NULL){
+		return 0;
+	}
+
+	printf("\n%-5s", id);
+	for(int col=0; col<grid->col; col++){
+		printf("%-4d", col);
+	}
+	printf("\n\n");
+
+	for (int row=0; row<grid->row; row++){
+		printf("%-5d", row);
+		for(int col=0; col<grid->col; col++){
+			printf("%-4s", grid->matrix[row][col]);
+		}
+		printf("\n\n");
+	}
+	return 1;
+}
+
+/*
+searches for a grid with the provided id in the grid list (grid_list), then sets it as default grid
+*/
+int change_grid(grid_list* list, char* id) {
+	default_grid = NULL;
+	if (grid_list_empty(list)){
+		printf("No grids\n");
+		return 0;
+	}
+
+	if(strcmp(id, "-1") == 0){
+		id = list->head->id;
+	}
+
+	default_grid = find_grid(list, id);
+	if (default_grid == NULL){
+		return 0;
+	}
+	return 1;
+}
+
+
+
+// up to here ##############################################################################################
 
 /*
 creates empty grid
@@ -111,18 +190,6 @@ grid_t* create_grid_t(void) {
 	grid_t* p;
 	p = malloc(sizeof(grid_t));
 	return p;
-}
-
-/*
-frees memory allocated for matrix
-*/
-int free_matrix(char *** matrix, int row, int col){
-	for(int i=0; i < row; i++){
-		for(int j=0; j < col; j++){
-			free(matrix[i][j]);
-		}
-	}
-	free(matrix);
 }
 
 /*
@@ -171,7 +238,7 @@ int add_grid(grid_list* list, char id[], int row, int col) {
 	}
 
 	if(strcmp(current->id, id) == 0){
-			printf("Error in line %d: %s already defined\n", yylineno, id);
+		printf("Error in line %d: %s already defined\n", yylineno, id);
 		free(grid->matrix);
 		free(grid);
 		return 0;
@@ -207,7 +274,7 @@ int switch_grid(grid_list* list, char* id) {
 		current = current->next;
 	}
 
-		printf("Error in line %d: %s not defined\n", yylineno, id);
+	printf("Error in line %d: %s not defined\n", yylineno, id);
 	return 0;
 }
 
@@ -220,14 +287,14 @@ int delete_grid(grid_list* list, char* id) {
 		return 0;
 	}
 
-  grid_t* current = list->head;
-  grid_t* temp = malloc(sizeof(grid_t));
-  char* def_id = default_grid->id;
+	grid_t* current = list->head;
+	grid_t* temp = malloc(sizeof(grid_t));
+	char* def_id = default_grid->id;
 
-  if (strcmp(current->id, id) == 0){
-    delete_all(current);
-    free(current);
-    list->head = current->next;
+	if (strcmp(current->id, id) == 0){
+		delete_all(current);
+		free(current);
+		list->head = current->next;
 
 		if (strcmp(def_id, id) == 0){
 			switch_grid(list, "-1");
@@ -270,7 +337,7 @@ int show(grid_list* list, char* id){
 		if(strcmp(current->id, id) == 0){
 			int maxRow = current->row;
 			int maxCol = current->col;
-			
+
 			printf("\n%-6s", id);
 			for(int col=0; col<maxCol; col++){
 				printf("%-4d", col);

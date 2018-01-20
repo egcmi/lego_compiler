@@ -13,7 +13,7 @@
 %union {
 	char* lexeme;
 	int value;
-		}
+}
 
 %token <value>    NUM
 %token <lexeme>   DIR
@@ -48,10 +48,10 @@ line	:	stmt '\n'																					{}
 
 stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 			| SWITCH GRID GVAR																	{
-																														if ( switch_grid(list,$3) )
+																														if ( switch_grid(gl,$3) )
 																															printf("Switched to grid %s\n", $3);
 																													}
-			| GVAR '=' GRID '(' NUM ',' NUM ')'									{ if ( add_grid(list,$1,$5,$7) )
+			| GVAR '=' GRID '(' NUM ',' NUM ')'									{ if ( add_grid(gl,$1,$5,$7) )
 																															printf("Created grid %s\nSwitched to grid %s\n", $1, $1);
 																													}
 			| VAR '=' TYPE '(' NUM ',' NUM ')'									{
@@ -62,7 +62,7 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																														if ( update(default_grid,0,$2,$5,$7) )
 																															printf("Placed %s at (%d,%d)\n", $2, $5, $7);
 																													}
-			| SHOW GVAR																					{ show(list,$2); }
+			| SHOW GVAR																					{ show(gl,$2); }
 			| MOVE mopt																					{}
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
 			| HEIGHT hopt																				{}
@@ -115,7 +115,7 @@ dopt  : VAR																								{
 																														printf("Deleted all bricks on %s\n", default_grid->id);
 																													}
 			| GRID GVAR																					{
-																														if ( delete_grid(list,$2) )
+																														if ( delete_grid(gl,$2) )
 																														printf("Deleted grid %s\n", $2);
 																													}
 			;
@@ -123,7 +123,8 @@ dopt  : VAR																								{
 %%
 
 int main (void) {
-	// grid_list = create_grid_list();
+
+	gl = create_grid_list();
 	// return yyparse ( );
 
 	brick_t* b1 = create_brick("b1", 1,1, "dome");
@@ -133,23 +134,23 @@ int main (void) {
 	brick_t* b5 = create_brick("b5", 2,2, "matrix");
 
 	brick_list* list = create_brick_list();
-	is_brick_list_empty(list);
+	brick_list_empty(list);
 
-	insert_brick_tail(list, b2);
-	insert_brick_tail(list, b3);
-	insert_brick_tail(list, b1);
-	insert_brick_tail(list, b5);
+	insert_brick_list(list, b2);
+	insert_brick_list(list, b3);
+	insert_brick_list(list, b1);
+	insert_brick_list(list, b5);
 
-	remove_brick(list, b2);
-	remove_brick(list, find_brick(list, "b4"));
-	remove_brick(list, b5);
-	remove_brick(list, find_brick(list, "b3"));
-	remove_brick(list, b1);
+	remove_brick(list, "b2");
+	remove_brick(list, "b4");
+	remove_brick(list, "b5");
+	remove_brick(list, "b3");
+	remove_brick(list, "b1");
 
-	insert_brick_tail(list, b2);
-	insert_brick_tail(list, b3);
-	insert_brick_tail(list, b1);
-	insert_brick_tail(list, b5);
+	insert_brick_list(list, b2);
+	insert_brick_list(list, b3);
+	insert_brick_list(list, b1);
+	insert_brick_list(list, b5);
 
 	delete_brick_list(list);
 

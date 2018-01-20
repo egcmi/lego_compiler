@@ -100,9 +100,8 @@ union YYSTYPE
 
 	char* lexeme;
 	int value;
-		
 
-#line 106 "y.tab.h" /* yacc.c:1909  */
+#line 105 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

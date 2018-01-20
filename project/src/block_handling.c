@@ -11,7 +11,7 @@ brick_list* create_brick_list(void) {
 }
 
 void delete_brick_list(brick_list* list){
-	if (is_brick_list_empty(list)){
+	if (brick_list_empty(list)){
 		printf("Deleted empty list\n");
 		free(list);
 		return;
@@ -48,22 +48,25 @@ brick_t* create_brick(char* id, int row, int col, char* type){
 	return p;
 }
 
-int is_brick_list_empty(brick_list* list) {
+int brick_list_empty(brick_list* list) {
 	printf("List length is %d\n", list->length);
    return (list->head == NULL);
 }
 
-int insert_brick_tail(brick_list* list, brick_t* brick){
-	if (is_brick_list_empty(list)){
+int insert_brick_list(brick_list* list, brick_t* brick){
+	if (brick_list_empty(list)){
 		list->head = brick;
-	} else {
+	} else if (find_brick(list, brick->id)){
+			printf("brick %s already exists\n", brick->id);
+			free(brick);
+			return 0;
+		}
+
 		list->tail->next = brick;
 		brick->prev = list->tail;
-	}
 
 	list->tail = brick;
-	list->length++;
-	printf("Inserted brick %s, list length: %d\n", brick->id, list->length);
+	printf("Inserted brick %s, list length: %d\n", brick->id, ++(list->length));
 	return 1;
 }
 
@@ -81,9 +84,9 @@ brick_t* find_brick(brick_list* list, char* id){
 }
 
 
-// segfault if brick is not in list
-int remove_brick(brick_list* list, brick_t* brick){
-	if (brick == NULL || list->head == NULL){
+int remove_brick(brick_list* list, char* id){
+	brick_t* brick = find_brick(list, id);
+	if (brick == NULL){
 		return 0;
 	}
 
@@ -99,9 +102,8 @@ int remove_brick(brick_list* list, brick_t* brick){
 		brick->next->prev = brick->prev;
 	}
 
-	printf("Deleted brick %s, list length: %d\n", brick->id, list->length-1);
+	printf("Deleted brick %s, list length: %d\n", brick->id, --(list->length));
 	free(brick);
-	list->length--;
 	return 1;
 }
 

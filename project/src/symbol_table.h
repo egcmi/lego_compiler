@@ -77,6 +77,11 @@ typedef struct grid_list {
     int length;
 } grid_list;
 
+/*
+global variables
+*/
+grid_list* gl;
+grid_t* default_grid;
 
 /*
 functions defined in block_handling.c
@@ -84,10 +89,10 @@ functions defined in block_handling.c
 brick_list* create_brick_list(void);
 void delete_brick_list(brick_list* list);
 brick_t* create_brick(char* id, int row, int col, char* type);
-int is_brick_list_empty(brick_list* list);
-int insert_brick_tail(brick_list* list, brick_t* brick);
+int brick_list_empty(brick_list* list);
+int insert_brick_list(brick_list* list, brick_t* brick);
 brick_t* find_brick(brick_list* list, char* id);
-int remove_brick(brick_list* list, brick_t* brick);
+int remove_brick(brick_list* list, char* brick);
 
 int add(grid_t* grid, char* id, int x, int y, char* type, int coox, int cooy);
 int delete_block(grid_t* grid, char* id);
@@ -106,22 +111,21 @@ int rotate(grid_t* grid, char* id);
 /*
 functions defined in grid_handling.c
 */
-grid_list* list;
-grid_t* default_grid;
 grid_list* create_grid_list(void);
 void delete_grid_list(grid_list* list);
 grid_t* create_grid(char* id, int row, int col);
-int is_grid_list_empty(grid_list* list);
-int insert_grid_tail(grid_list* list, grid_t* grid);
+int grid_list_empty(grid_list* list);
+int insert_grid_list(grid_list* list, grid_t* grid);
 grid_t* find_grid(grid_list* list, char* id);
-int remove_grid(grid_list* list, grid_t* grid);
-
+int remove_grid(grid_list* list, char* id);
+char*** create_matrix(int row, int col);
+int change_grid(grid_list* list, char* id);
 
 grid_t* create_grid_t(void);
 int add_grid(grid_list* list, char id[], int row, int col);
 int delete_grid(grid_list* list, char* id);
 int switch_grid(grid_list* list, char* id);
 int show(grid_list* list, char* id);
-int free_matrix(char *** matrix, int row, int col);
+int free_matrix(char*** matrix, int row, int col);
 
 #endif
