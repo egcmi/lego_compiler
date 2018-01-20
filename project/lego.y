@@ -3,9 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
-#include "src/block.h"
-#include "src/grid.h"
 #include "lex.yy.c"
+#include "src/symbol_table.h"
 #include "src/grid_handling.c"
 #include "src/block_handling.c"
 %}
@@ -124,6 +123,35 @@ dopt  : VAR																								{
 %%
 
 int main (void) {
-	grid_list = create_grid_list();
-	return yyparse ( );
+	// grid_list = create_grid_list();
+	// return yyparse ( );
+
+	brick_t* b1 = create_brick("b1", 1,1, "dome");
+	brick_t* b2 = create_brick("b2", 2,1, "matrix");
+	brick_t* b3 = create_brick("b3", 1,2, "pyramid");
+	brick_t* b4 = create_brick("b4", 0,0, "dome");
+	brick_t* b5 = create_brick("b5", 2,2, "matrix");
+
+	brick_list* list = create_brick_list();
+	is_list_empty(list);
+
+	insert_brick_tail(list, b2);
+	insert_brick_tail(list, b3);
+	insert_brick_tail(list, b1);
+	insert_brick_tail(list, b5);
+
+	remove_brick(list, b2);
+	remove_brick(list, find_brick(list, "b4"));
+	remove_brick(list, b5);
+	remove_brick(list, find_brick(list, "b3"));
+	remove_brick(list, b1);
+
+	insert_brick_tail(list, b2);
+	insert_brick_tail(list, b3);
+	insert_brick_tail(list, b1);
+	insert_brick_tail(list, b5);
+
+	delete_brick_list(list);
+
+	exit(EXIT_SUCCESS);
 }

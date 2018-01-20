@@ -68,13 +68,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
-#include "src/block.h"
-#include "src/grid.h"
 #include "lex.yy.c"
+#include "src/symbol_table.h"
 #include "src/grid_handling.c"
 #include "src/block_handling.c"
 
-#line 78 "y.tab.c" /* yacc.c:339  */
+#line 77 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -160,13 +159,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "lego.y" /* yacc.c:355  */
+#line 13 "lego.y" /* yacc.c:355  */
 
 	char* lexeme;
 	int value;
 		
 
-#line 170 "y.tab.c" /* yacc.c:355  */
+#line 169 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -183,7 +182,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 187 "y.tab.c" /* yacc.c:358  */
+#line 186 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -482,9 +481,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    46,    46,    47,    50,    51,    55,    58,    62,    66,
-      67,    68,    69,    70,    71,    77,    81,    85,    88,    92,
-      98,   103,   110,   114,   118
+       0,    45,    45,    46,    49,    50,    54,    57,    61,    65,
+      66,    67,    68,    69,    70,    76,    80,    84,    87,    91,
+      97,   102,   109,   113,   117
 };
 #endif
 
@@ -1303,190 +1302,190 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 46 "lego.y" /* yacc.c:1646  */
+#line 45 "lego.y" /* yacc.c:1646  */
     {}
-#line 1309 "y.tab.c" /* yacc.c:1646  */
+#line 1308 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 47 "lego.y" /* yacc.c:1646  */
+#line 46 "lego.y" /* yacc.c:1646  */
     {}
-#line 1315 "y.tab.c" /* yacc.c:1646  */
+#line 1314 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 50 "lego.y" /* yacc.c:1646  */
+#line 49 "lego.y" /* yacc.c:1646  */
     { exit(EXIT_SUCCESS); }
-#line 1321 "y.tab.c" /* yacc.c:1646  */
+#line 1320 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 51 "lego.y" /* yacc.c:1646  */
+#line 50 "lego.y" /* yacc.c:1646  */
     {
 																														if ( switch_grid(grid_list,(yyvsp[0].lexeme)) )
 																															printf("Switched to grid %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1330 "y.tab.c" /* yacc.c:1646  */
+#line 1329 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 55 "lego.y" /* yacc.c:1646  */
+#line 54 "lego.y" /* yacc.c:1646  */
     { if ( add_grid(grid_list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
 																															printf("Created grid %s\nSwitched to grid %s\n", (yyvsp[-7].lexeme), (yyvsp[-7].lexeme));
 																													}
-#line 1338 "y.tab.c" /* yacc.c:1646  */
+#line 1337 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 58 "lego.y" /* yacc.c:1646  */
+#line 57 "lego.y" /* yacc.c:1646  */
     {
 																														if( add(default_grid,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-5].lexeme),-1,-1) )
 																															printf("Created brick %s\n", (yyvsp[-7].lexeme));
 																													}
-#line 1347 "y.tab.c" /* yacc.c:1646  */
+#line 1346 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 62 "lego.y" /* yacc.c:1646  */
+#line 61 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
 																															printf("Placed %s at (%d,%d)\n", (yyvsp[-6].lexeme), (yyvsp[-3].value), (yyvsp[-1].value));
 																													}
-#line 1356 "y.tab.c" /* yacc.c:1646  */
+#line 1355 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 66 "lego.y" /* yacc.c:1646  */
+#line 65 "lego.y" /* yacc.c:1646  */
     { show(grid_list,(yyvsp[0].lexeme)); }
-#line 1362 "y.tab.c" /* yacc.c:1646  */
+#line 1361 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 67 "lego.y" /* yacc.c:1646  */
+#line 66 "lego.y" /* yacc.c:1646  */
     {}
-#line 1368 "y.tab.c" /* yacc.c:1646  */
+#line 1367 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "lego.y" /* yacc.c:1646  */
+#line 67 "lego.y" /* yacc.c:1646  */
     { rotate(default_grid, (yyvsp[0].lexeme)); }
-#line 1374 "y.tab.c" /* yacc.c:1646  */
+#line 1373 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 69 "lego.y" /* yacc.c:1646  */
+#line 68 "lego.y" /* yacc.c:1646  */
     {}
-#line 1380 "y.tab.c" /* yacc.c:1646  */
+#line 1379 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 70 "lego.y" /* yacc.c:1646  */
+#line 69 "lego.y" /* yacc.c:1646  */
     {}
-#line 1386 "y.tab.c" /* yacc.c:1646  */
+#line 1385 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 71 "lego.y" /* yacc.c:1646  */
+#line 70 "lego.y" /* yacc.c:1646  */
     {
 																														if ( fits(default_grid,(yyvsp[-5].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)))
 																															printf("TRUE\n");
 																														else
 																															printf("FALSE\n");
 																													}
-#line 1397 "y.tab.c" /* yacc.c:1646  */
+#line 1396 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 77 "lego.y" /* yacc.c:1646  */
+#line 76 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,0,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
 																															printf("Placed %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1406 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 81 "lego.y" /* yacc.c:1646  */
+#line 80 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,1,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
 																															printf("Moved %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1414 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 85 "lego.y" /* yacc.c:1646  */
+#line 84 "lego.y" /* yacc.c:1646  */
     { while_move(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)); }
-#line 1421 "y.tab.c" /* yacc.c:1646  */
+#line 1420 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 88 "lego.y" /* yacc.c:1646  */
+#line 87 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)) )
 																															printf("Moved %s %s by %d", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
 																													}
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 92 "lego.y" /* yacc.c:1646  */
+#line 91 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
 																														printf("Moved %s to (%d,%d)\n", (yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
 																												 }
-#line 1439 "y.tab.c" /* yacc.c:1646  */
+#line 1438 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 98 "lego.y" /* yacc.c:1646  */
+#line 97 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height(default_grid,(yyvsp[-3].value),(yyvsp[-1].value));
 																														if(h > 0)
 																															printf("height of cell (%d,%d): %d\n", (yyvsp[-3].value), (yyvsp[-1].value), h);
 																													}
-#line 1449 "y.tab.c" /* yacc.c:1646  */
+#line 1448 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 103 "lego.y" /* yacc.c:1646  */
+#line 102 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height_var(default_grid,(yyvsp[0].lexeme));
 																														if(h > 0)
 																															printf("Height of brick %s is: %d\n", (yyvsp[0].lexeme), h);
 																													}
-#line 1459 "y.tab.c" /* yacc.c:1646  */
+#line 1458 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 110 "lego.y" /* yacc.c:1646  */
+#line 109 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_block(default_grid,(yyvsp[0].lexeme)) )
 																															printf("Deleted brick %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1468 "y.tab.c" /* yacc.c:1646  */
+#line 1467 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 114 "lego.y" /* yacc.c:1646  */
+#line 113 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_all(default_grid) )
 																														printf("Deleted all bricks on %s\n", default_grid->id);
 																													}
-#line 1477 "y.tab.c" /* yacc.c:1646  */
+#line 1476 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 118 "lego.y" /* yacc.c:1646  */
+#line 117 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_grid(grid_list,(yyvsp[0].lexeme)) )
 																														printf("Deleted grid %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
+#line 1485 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1490 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1714,10 +1713,39 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 124 "lego.y" /* yacc.c:1906  */
+#line 123 "lego.y" /* yacc.c:1906  */
 
 
 int main (void) {
-	grid_list = create_grid_list();
-	return yyparse ( );
+	// grid_list = create_grid_list();
+	// return yyparse ( );
+
+	brick_t* b1 = create_brick("b1", 1,1, "dome");
+	brick_t* b2 = create_brick("b2", 2,1, "matrix");
+	brick_t* b3 = create_brick("b3", 1,2, "pyramid");
+	brick_t* b4 = create_brick("b4", 0,0, "dome");
+	brick_t* b5 = create_brick("b5", 2,2, "matrix");
+
+	brick_list* list = create_brick_list();
+	is_list_empty(list);
+
+	insert_brick_tail(list, b2);
+	insert_brick_tail(list, b3);
+	insert_brick_tail(list, b1);
+	insert_brick_tail(list, b5);
+
+	remove_brick(list, b2);
+	remove_brick(list, find_brick(list, "b4"));
+	remove_brick(list, b5);
+	remove_brick(list, find_brick(list, "b3"));
+	remove_brick(list, b1);
+
+	insert_brick_tail(list, b2);
+	insert_brick_tail(list, b3);
+	insert_brick_tail(list, b1);
+	insert_brick_tail(list, b5);
+
+	delete_brick_list(list);
+
+	exit(EXIT_SUCCESS);
 }

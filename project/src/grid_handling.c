@@ -1,5 +1,5 @@
 /*
-creates an empty list of blocks
+creates an empty list of bricks
 */
 g_list* create_grid_list(void) {
 	g_list* p;
@@ -46,7 +46,7 @@ int add_grid(g_list * list, char id[], int row, int col) {
 	grid->id = id;
 	grid->row = row;
 	grid->col = col;
-	grid->blocks = create_list();
+	grid->bricks = create_brick_list();
 	default_grid=create_grid_t();
 	grid->matrix = (char * * *) malloc(row * sizeof(char * *));
 	for(int i=0; i < row; i++){
@@ -158,7 +158,7 @@ int delete_grid(g_list * list, char* id) {
 }
 
 /*
-prints a graphical representation of the grid. for each cell, a number represents the height/number of blocks on that cell
+prints a graphical representation of the grid. for each cell, a number represents the height/number of bricks on that cell
 in addition to this, an additional optional character 'o' or 'x' represents respectively a dome or pyramid block
 */
 int show(g_list * list, char* id){

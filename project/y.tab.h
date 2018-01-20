@@ -96,7 +96,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "lego.y" /* yacc.c:1909  */
+#line 13 "lego.y" /* yacc.c:1909  */
 
 	char* lexeme;
 	int value;

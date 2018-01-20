@@ -1,5 +1,5 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef SYMBOL_TABLE
+#define SYMBOL_TABLE
 
 /*
 represents a lego brick characterised as follows:
@@ -31,7 +31,7 @@ typedef struct brick {
 represents a linked list of lego bricks characterised as follows:
     head:   points to the first lego brick (brick_t) in the list
 */
-typedef struct doubly_ll {
+typedef struct brick_list {
     brick_t *head;
     brick_t *tail;
     int length;
@@ -42,9 +42,9 @@ represents a grid to place lego bricks on and is characterised as follows:
     id:     unique name
     row:    number of rows
     col:    number of columns
-    blocks: list of blocks
+    bricks: list of bricks
     matrix: representation of the grid:
-            each cell contains a numerical value representing the height/number of blocks on that cell,
+            each cell contains a numerical value representing the height/number of bricks on that cell,
             plus an additional optional character 'o' or 'x' representing respectively whether the last
             brick is a dome or a pyramid
     next:   next brid in the list
@@ -53,15 +53,31 @@ typedef struct grid{
     char* id;
     int row;
     int col;
-    brick_list * blocks;
+    brick_list* bricks;
     char *** matrix;
     struct grid * next;
 } grid_t;
 
 /*
+represents a linked list of grids characterised as follows:
+    head:   points to the first grid in the list
+*/
+typedef struct grid_list {
+    grid_t *head;
+} g_list;
+
+
+/*
 functions defined in block_handling.c
 */
-brick_list * create_list(void);
+brick_list * create_brick_list(void);
+void delete_brick_list(brick_list* list);
+brick_t* create_brick(char* id, int row, int col, char* type);
+int is_list_empty(brick_list* list);
+int insert_brick_tail(brick_list* list, brick_t* brick);
+brick_t* find_brick(brick_list* list, char* id);
+int remove_brick(brick_list* list, brick_t* brick);
+
 int add(grid_t * grid, char* id, int x, int y, char* type, int coox, int cooy);
 int delete_block(grid_t * grid, char* id);
 int delete_all(grid_t * grid);
@@ -75,5 +91,18 @@ int height(grid_t * grid, int x, int y);
 int height_var(grid_t * grid, char* id);
 int while_move(grid_t * grid, char* id, char* dir, int num);
 int rotate(grid_t * grid, char* id);
+
+/*
+functions defined in grid_handling.c
+*/
+g_list * grid_list;
+grid_t * default_grid;
+g_list* create_grid_list(void);
+grid_t* create_grid_t(void);
+int add_grid(g_list * list, char id[], int row, int col);
+int delete_grid(g_list * list, char* id);
+int switch_grid(g_list * list, char* id);
+int show(g_list * list, char* id);
+int free_matrix(char *** matrix, int row, int col);
 
 #endif
