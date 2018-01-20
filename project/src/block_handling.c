@@ -11,7 +11,7 @@ brick_list* create_brick_list(void) {
 }
 
 void delete_brick_list(brick_list* list){
-	if (is_list_empty(list)){
+	if (is_brick_list_empty(list)){
 		printf("Deleted empty list\n");
 		free(list);
 		return;
@@ -48,13 +48,13 @@ brick_t* create_brick(char* id, int row, int col, char* type){
 	return p;
 }
 
-int is_list_empty(brick_list* list) {
+int is_brick_list_empty(brick_list* list) {
 	printf("List length is %d\n", list->length);
    return (list->head == NULL);
 }
 
 int insert_brick_tail(brick_list* list, brick_t* brick){
-	if (is_list_empty(list)){
+	if (is_brick_list_empty(list)){
 		list->head = brick;
 	} else {
 		list->tail->next = brick;

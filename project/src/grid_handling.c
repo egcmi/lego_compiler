@@ -1,9 +1,10 @@
+
 /*
 creates an empty list of bricks
 */
-g_list* create_grid_list(void) {
-	g_list* p;
-	p = malloc(sizeof(g_list));
+grid_list* create_grid_list(void) {
+	grid_list* p;
+	p = malloc(sizeof(grid_list));
 	p->head = NULL;
 	return p;
 }
@@ -36,7 +37,7 @@ creates grid with desired characteristics:
 	- col:  number of columns
 all the values in the matrix are initialised to 0
 */
-int add_grid(g_list * list, char id[], int row, int col) {
+int add_grid(grid_list* list, char id[], int row, int col) {
 	if (row <= 0 || col <= 0){
 		printf("Error in line %d: size too small\n", yylineno);
 		return 0;
@@ -89,9 +90,9 @@ int add_grid(g_list * list, char id[], int row, int col) {
 }
 
 /*
-searches for a grid with the provided id in the grid list (g_list), then sets it as default grid
+searches for a grid with the provided id in the grid list (grid_list), then sets it as default grid
 */
-int switch_grid(g_list * list, char* id) {
+int switch_grid(grid_list* list, char* id) {
 	if (list->head == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
@@ -116,9 +117,9 @@ int switch_grid(g_list * list, char* id) {
 }
 
 /*
-searches for a grid with the provided id in the grid list (g_list), deletes it, then switches to another grid, if present
+searches for a grid with the provided id in the grid list (grid_list), deletes it, then switches to another grid, if present
 */
-int delete_grid(g_list * list, char* id) {
+int delete_grid(grid_list* list, char* id) {
 	if (list->head == NULL){
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
@@ -161,7 +162,7 @@ int delete_grid(g_list * list, char* id) {
 prints a graphical representation of the grid. for each cell, a number represents the height/number of bricks on that cell
 in addition to this, an additional optional character 'o' or 'x' represents respectively a dome or pyramid block
 */
-int show(g_list * list, char* id){
+int show(grid_list* list, char* id){
 
 	grid_t* current = list->head;
 

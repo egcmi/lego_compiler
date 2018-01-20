@@ -1322,7 +1322,7 @@ yyreduce:
   case 5:
 #line 50 "lego.y" /* yacc.c:1646  */
     {
-																														if ( switch_grid(grid_list,(yyvsp[0].lexeme)) )
+																														if ( switch_grid(list,(yyvsp[0].lexeme)) )
 																															printf("Switched to grid %s\n", (yyvsp[0].lexeme));
 																													}
 #line 1329 "y.tab.c" /* yacc.c:1646  */
@@ -1330,7 +1330,7 @@ yyreduce:
 
   case 6:
 #line 54 "lego.y" /* yacc.c:1646  */
-    { if ( add_grid(grid_list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
+    { if ( add_grid(list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
 																															printf("Created grid %s\nSwitched to grid %s\n", (yyvsp[-7].lexeme), (yyvsp[-7].lexeme));
 																													}
 #line 1337 "y.tab.c" /* yacc.c:1646  */
@@ -1356,7 +1356,7 @@ yyreduce:
 
   case 9:
 #line 65 "lego.y" /* yacc.c:1646  */
-    { show(grid_list,(yyvsp[0].lexeme)); }
+    { show(list,(yyvsp[0].lexeme)); }
 #line 1361 "y.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1478,7 +1478,7 @@ yyreduce:
   case 24:
 #line 117 "lego.y" /* yacc.c:1646  */
     {
-																														if ( delete_grid(grid_list,(yyvsp[0].lexeme)) )
+																														if ( delete_grid(list,(yyvsp[0].lexeme)) )
 																														printf("Deleted grid %s\n", (yyvsp[0].lexeme));
 																													}
 #line 1485 "y.tab.c" /* yacc.c:1646  */
@@ -1727,7 +1727,7 @@ int main (void) {
 	brick_t* b5 = create_brick("b5", 2,2, "matrix");
 
 	brick_list* list = create_brick_list();
-	is_list_empty(list);
+	is_brick_list_empty(list);
 
 	insert_brick_tail(list, b2);
 	insert_brick_tail(list, b3);
