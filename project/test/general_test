@@ -1,0 +1,54 @@
+delete grid A1
+switch grid A2
+a1=matrix(1,1)
+place a1 at (0,0)
+A1 = grid(9,9)
+show A1
+place a1 at (0,0)
+move a2 right 5
+move a3 at (10,10)
+a1=matrix(3,3)
+a2=matrix(2,2)
+place a1 at (0,0)
+show A1
+move a2 left 2
+show A1
+place a2 at (0,0)
+show A1
+while possible: move a2 right 1
+show A1
+a3=dome(1,1)
+move a3 at (10,10)
+place a3 at (10,10)
+place a3 at (0,1)
+show A1
+move a3 at (10,10)
+while possible: move a2 left 1 
+show A1
+A2=grid (10,10)
+show A2
+delete a3
+move a2 at (5,5)
+place a1 at (2,3)
+delete all
+a4=matrix(1,1)
+delete a4
+switch grid A1
+show A1
+delete a1
+show A1
+delete all
+show A1
+switch grid A2
+b1=matrix(2,2)
+b2=pyramid(1,1)
+place b2 at (1,1)
+show A2
+if fits b1 at (1,1) then place
+if fits b2 at (1,1) then move
+show A2
+while possible: move b2 right 2
+show A2
+delete grid A2
+delete grid A1
+exit

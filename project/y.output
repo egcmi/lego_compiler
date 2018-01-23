@@ -15,7 +15,7 @@ Grammar
    10     | ROTATE VAR
    11     | HEIGHT hopt
    12     | DELETE dopt
-   13     | FITS VAR '(' NUM ',' NUM ')'
+   13     | FITS VAR AT '(' NUM ',' NUM ')'
    14     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE
    15     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE
    16     | WHILE POSSIBLE ':' MOVE VAR DIR NUM
@@ -61,7 +61,7 @@ ALL (274) 22
 IF (275) 14 15
 THEN (276) 14 15
 MOVE (277) 9 15 16
-AT (278) 7 14 15 18
+AT (278) 7 13 14 15 18
 
 
 Nonterminals, with rules where they appear
@@ -163,7 +163,7 @@ State 8
 
 State 9
 
-   13 stmt: FITS . VAR '(' NUM ',' NUM ')'
+   13 stmt: FITS . VAR AT '(' NUM ',' NUM ')'
 
     VAR  shift, and go to state 25
 
@@ -299,9 +299,9 @@ State 24
 
 State 25
 
-   13 stmt: FITS VAR . '(' NUM ',' NUM ')'
+   13 stmt: FITS VAR . AT '(' NUM ',' NUM ')'
 
-    '('  shift, and go to state 42
+    AT  shift, and go to state 42
 
 
 State 26
@@ -421,9 +421,9 @@ State 41
 
 State 42
 
-   13 stmt: FITS VAR '(' . NUM ',' NUM ')'
+   13 stmt: FITS VAR AT . '(' NUM ',' NUM ')'
 
-    NUM  shift, and go to state 52
+    '('  shift, and go to state 52
 
 
 State 43
@@ -492,9 +492,9 @@ State 51
 
 State 52
 
-   13 stmt: FITS VAR '(' NUM . ',' NUM ')'
+   13 stmt: FITS VAR AT '(' . NUM ',' NUM ')'
 
-    ','  shift, and go to state 61
+    NUM  shift, and go to state 61
 
 
 State 53
@@ -556,9 +556,9 @@ State 60
 
 State 61
 
-   13 stmt: FITS VAR '(' NUM ',' . NUM ')'
+   13 stmt: FITS VAR AT '(' NUM . ',' NUM ')'
 
-    NUM  shift, and go to state 69
+    ','  shift, and go to state 69
 
 
 State 62
@@ -613,9 +613,9 @@ State 68
 
 State 69
 
-   13 stmt: FITS VAR '(' NUM ',' NUM . ')'
+   13 stmt: FITS VAR AT '(' NUM ',' . NUM ')'
 
-    ')'  shift, and go to state 76
+    NUM  shift, and go to state 76
 
 
 State 70
@@ -663,16 +663,16 @@ State 75
 
 State 76
 
-   13 stmt: FITS VAR '(' NUM ',' NUM ')' .
+   13 stmt: FITS VAR AT '(' NUM ',' NUM . ')'
 
-    $default  reduce using rule 13 (stmt)
+    ')'  shift, and go to state 82
 
 
 State 77
 
     7 stmt: PLACE VAR AT '(' NUM ',' NUM . ')'
 
-    ')'  shift, and go to state 82
+    ')'  shift, and go to state 83
 
 
 State 78
@@ -680,14 +680,14 @@ State 78
    14 stmt: IF FITS VAR AT '(' NUM ',' . NUM ')' THEN PLACE
    15     | IF FITS VAR AT '(' NUM ',' . NUM ')' THEN MOVE
 
-    NUM  shift, and go to state 83
+    NUM  shift, and go to state 84
 
 
 State 79
 
    18 mopt: VAR AT '(' NUM ',' NUM . ')'
 
-    ')'  shift, and go to state 84
+    ')'  shift, and go to state 85
 
 
 State 80
@@ -706,51 +706,58 @@ State 81
 
 State 82
 
+   13 stmt: FITS VAR AT '(' NUM ',' NUM ')' .
+
+    $default  reduce using rule 13 (stmt)
+
+
+State 83
+
     7 stmt: PLACE VAR AT '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 7 (stmt)
 
 
-State 83
+State 84
 
    14 stmt: IF FITS VAR AT '(' NUM ',' NUM . ')' THEN PLACE
    15     | IF FITS VAR AT '(' NUM ',' NUM . ')' THEN MOVE
 
-    ')'  shift, and go to state 85
+    ')'  shift, and go to state 86
 
 
-State 84
+State 85
 
    18 mopt: VAR AT '(' NUM ',' NUM ')' .
 
     $default  reduce using rule 18 (mopt)
 
 
-State 85
+State 86
 
    14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' . THEN PLACE
    15     | IF FITS VAR AT '(' NUM ',' NUM ')' . THEN MOVE
 
-    THEN  shift, and go to state 86
+    THEN  shift, and go to state 87
 
 
-State 86
+State 87
 
    14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN . PLACE
    15     | IF FITS VAR AT '(' NUM ',' NUM ')' THEN . MOVE
 
-    PLACE  shift, and go to state 87
-    MOVE   shift, and go to state 88
+    PLACE  shift, and go to state 88
+    MOVE   shift, and go to state 89
 
 
-State 87
+State 88
 
    14 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE .
 
     $default  reduce using rule 14 (stmt)
 
 
-State 88
+State 89
 
    15 stmt: IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE .
 

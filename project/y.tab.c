@@ -425,7 +425,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  34
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   102
+#define YYLAST   103
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  30
@@ -434,7 +434,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  24
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  89
+#define YYNSTATES  90
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
@@ -483,8 +483,8 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    46,    46,    47,    50,    51,    55,    58,    62,    66,
-      67,    68,    69,    70,    71,    77,    81,    85,    88,    92,
-      98,   103,   110,   114,   118
+      67,    68,    69,    70,    71,    77,    82,    87,    90,    94,
+     100,   105,   112,   116,   120
 };
 #endif
 
@@ -528,13 +528,13 @@ static const yytype_int8 yypact[] =
 {
       -3,   -24,   -16,     4,   -25,     2,    12,    18,    -6,    22,
       33,    29,    25,    38,    45,    16,    41,    35,   -25,    40,
-     -25,    21,   -25,    48,   -25,    26,    30,   -25,    47,   -25,
-     -25,    49,    -2,   -25,   -25,   -25,   -25,    31,    32,   -25,
-      34,    36,    56,    39,   -25,    37,    58,    42,    59,    61,
-      60,    64,    43,    66,    46,   -25,    68,    50,    51,    69,
-      52,    71,    54,    72,    55,    73,    76,    80,   -25,    57,
-      81,    62,    83,    63,    65,   -25,   -25,    67,    84,    70,
-     -25,   -25,   -25,    74,   -25,    75,    20,   -25,   -25
+     -25,    21,   -25,    48,   -25,    30,    31,   -25,    49,   -25,
+     -25,    46,    -2,   -25,   -25,   -25,   -25,    32,    34,   -25,
+      37,    28,    36,    39,   -25,    43,    54,    42,    58,    60,
+      61,    66,    67,    68,    47,   -25,    69,    50,    51,    70,
+      52,    55,    56,    72,    57,    73,    76,    78,   -25,    82,
+      83,    62,    84,    63,    64,   -25,    65,    71,    85,    74,
+     -25,   -25,   -25,   -25,    75,   -25,    77,    20,   -25,   -25
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -549,14 +549,14 @@ static const yytype_uint8 yydefact[] =
        0,     0,     0,     0,    24,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,    18,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    20,     0,
-       0,     0,     0,     0,     0,    17,    14,     0,     0,     0,
-       7,     6,     8,     0,    19,     0,     0,    15,    16
+       0,     0,     0,     0,     0,    17,     0,     0,     0,     0,
+       7,     6,    14,     8,     0,    19,     0,     0,    15,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -25,    77,   -25,   -25,   -25,   -25
+     -25,    79,   -25,   -25,   -25,   -25
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -573,14 +573,14 @@ static const yytype_uint8 yytable[] =
       22,    16,    46,     1,     2,     3,     4,     5,     6,    17,
        7,    18,     8,     9,    10,    11,    19,    12,    20,    13,
       23,    47,     1,     2,     3,     4,     5,     6,    25,     7,
-      21,     8,     9,    10,    11,    27,    12,    87,    13,    26,
-      35,    31,    88,    28,    32,    34,    37,    39,    29,    38,
-      40,    41,    42,    43,    44,    45,    50,    48,    49,    52,
-      54,    55,    57,    51,    58,    53,    59,    60,    56,    62,
-      61,    64,    63,    67,    69,    71,    73,    65,    66,    74,
-      68,    70,    72,    75,    77,    76,    79,    83,     0,    78,
-       0,    80,    36,    81,     0,    82,    86,     0,    84,     0,
-       0,     0,    85
+      21,     8,     9,    10,    11,    27,    12,    88,    13,    26,
+      35,    31,    89,    28,    32,    34,    37,    39,    29,    38,
+      40,    41,    45,    42,    43,    51,    44,    55,    48,    50,
+      49,    57,    52,    58,     0,    53,    54,    59,    56,    60,
+      61,    62,    64,    63,    67,    71,    73,    65,    66,    74,
+      68,    75,    69,    70,    72,    76,    77,    79,    84,    78,
+       0,    80,    81,    82,    36,     0,     0,     0,    87,    83,
+       0,     0,    85,    86
 };
 
 static const yytype_int8 yycheck[] =
@@ -590,12 +590,12 @@ static const yytype_int8 yycheck[] =
       26,    23,     6,     7,     8,     9,    10,    11,     6,    13,
       12,    15,    16,    17,    18,     6,    20,    17,    22,     6,
       24,    16,    22,    14,     6,     0,     5,     7,    19,    14,
-      29,     3,    26,    23,     7,     6,    22,    26,    26,     3,
-      23,     3,     3,    27,     3,    26,     6,     3,    26,     3,
-      27,     3,    26,     4,     3,     3,     3,    27,    27,     3,
-      28,    27,    27,     3,     3,    28,     3,     3,    -1,    27,
-      -1,    28,    15,    28,    -1,    28,    21,    -1,    28,    -1,
-      -1,    -1,    28
+      29,     3,     6,    23,    23,    27,     7,     3,    26,    22,
+      26,     3,    26,     3,    -1,    26,    23,     6,    26,     3,
+       3,     3,     3,    26,     4,     3,     3,    27,    27,     3,
+      28,     3,    27,    27,    27,     3,     3,     3,     3,    27,
+      -1,    28,    28,    28,    15,    -1,    -1,    -1,    21,    28,
+      -1,    -1,    28,    28
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -606,11 +606,11 @@ static const yytype_uint8 yystos[] =
       17,    18,    20,    22,    31,    32,    25,    25,     7,    14,
        6,    12,     6,    26,    34,     6,     6,     6,    14,    19,
       35,    16,     6,    33,     0,    24,    31,     5,    14,     7,
-      29,     3,    26,    23,     7,     6,     4,    23,    26,    26,
-      22,    27,     3,    26,    23,     3,    26,     3,     3,     6,
-       3,    27,     3,    26,     3,    27,    27,     4,    28,     3,
-      27,     3,    27,     3,     3,     3,    28,     3,    27,     3,
-      28,    28,    28,     3,    28,    28,    21,    17,    22
+      29,     3,    23,    23,     7,     6,     4,    23,    26,    26,
+      22,    27,    26,    26,    23,     3,    26,     3,     3,     6,
+       3,     3,     3,    26,     3,    27,    27,     4,    28,    27,
+      27,     3,    27,     3,     3,     3,     3,     3,    27,     3,
+      28,    28,    28,    28,     3,    28,    28,    21,    17,    22
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
@@ -625,7 +625,7 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     2,     2,     1,     3,     8,     8,     8,     2,
-       2,     2,     2,     2,     7,    11,    11,     7,     3,     7,
+       2,     2,     2,     2,     8,    11,    11,     7,     3,     7,
        5,     1,     1,     1,     2
 };
 
@@ -1332,7 +1332,7 @@ yyreduce:
   case 6:
 #line 55 "lego.y" /* yacc.c:1646  */
     { if ( add_grid(grid_list,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
-																															printf("Created grid %s\nSwitched to grid %s\n", (yyvsp[-7].lexeme), (yyvsp[-7].lexeme));
+																															printf("Created grid %s and switched to grid %s\n", (yyvsp[-7].lexeme), (yyvsp[-7].lexeme));
 																													}
 #line 1338 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1341,7 +1341,7 @@ yyreduce:
 #line 58 "lego.y" /* yacc.c:1646  */
     {
 																														if( add(default_grid,(yyvsp[-7].lexeme),(yyvsp[-3].value),(yyvsp[-1].value),(yyvsp[-5].lexeme),-1,-1) )
-																															printf("Created brick %s\n", (yyvsp[-7].lexeme));
+																															printf("Created lego %s\n", (yyvsp[-7].lexeme));
 																													}
 #line 1347 "y.tab.c" /* yacc.c:1646  */
     break;
@@ -1388,7 +1388,7 @@ yyreduce:
   case 14:
 #line 71 "lego.y" /* yacc.c:1646  */
     {
-																														if ( fits(default_grid,(yyvsp[-5].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)))
+																														if ( fits(default_grid,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)))
 																															printf("TRUE\n");
 																														else
 																															printf("FALSE\n");
@@ -1401,92 +1401,94 @@ yyreduce:
     {
 																														if ( update(default_grid,0,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
 																															printf("Placed %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
+																														else printf("Could not place %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1406 "y.tab.c" /* yacc.c:1646  */
+#line 1407 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 81 "lego.y" /* yacc.c:1646  */
+#line 82 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,1,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
 																															printf("Moved %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
+																														else printf("Could not move %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1415 "y.tab.c" /* yacc.c:1646  */
+#line 1417 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 85 "lego.y" /* yacc.c:1646  */
+#line 87 "lego.y" /* yacc.c:1646  */
     { while_move(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)); }
-#line 1421 "y.tab.c" /* yacc.c:1646  */
+#line 1423 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 88 "lego.y" /* yacc.c:1646  */
+#line 90 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)) )
 																															printf("Moved %s %s by %d", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
 																													}
-#line 1430 "y.tab.c" /* yacc.c:1646  */
+#line 1432 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 92 "lego.y" /* yacc.c:1646  */
+#line 94 "lego.y" /* yacc.c:1646  */
     {
 																														if ( update(default_grid,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
 																														printf("Moved %s to (%d,%d)\n", (yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
 																												 }
-#line 1439 "y.tab.c" /* yacc.c:1646  */
+#line 1441 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 98 "lego.y" /* yacc.c:1646  */
+#line 100 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height(default_grid,(yyvsp[-3].value),(yyvsp[-1].value));
 																														if(h > 0)
-																															printf("height of cell (%d,%d): %d\n", (yyvsp[-3].value), (yyvsp[-1].value), h);
+																															printf("Height of cell (%d,%d): %d\n", (yyvsp[-3].value), (yyvsp[-1].value), h);
 																													}
-#line 1449 "y.tab.c" /* yacc.c:1646  */
+#line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 103 "lego.y" /* yacc.c:1646  */
+#line 105 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height_var(default_grid,(yyvsp[0].lexeme));
 																														if(h > 0)
-																															printf("Height of brick %s is: %d\n", (yyvsp[0].lexeme), h);
+																															printf("Height of lego %s is: %d\n", (yyvsp[0].lexeme), h);
 																													}
-#line 1459 "y.tab.c" /* yacc.c:1646  */
+#line 1461 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 110 "lego.y" /* yacc.c:1646  */
+#line 112 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_block(default_grid,(yyvsp[0].lexeme)) )
-																															printf("Deleted brick %s\n", (yyvsp[0].lexeme));
+																															printf("Deleted lego %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1468 "y.tab.c" /* yacc.c:1646  */
+#line 1470 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 114 "lego.y" /* yacc.c:1646  */
+#line 116 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_all(default_grid) )
-																														printf("Deleted all bricks on %s\n", default_grid->id);
+																														printf("Deleted all legos on grid %s\n", default_grid->id);
 																													}
-#line 1477 "y.tab.c" /* yacc.c:1646  */
+#line 1479 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 118 "lego.y" /* yacc.c:1646  */
+#line 120 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_grid(grid_list,(yyvsp[0].lexeme)) )
 																														printf("Deleted grid %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
+#line 1488 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1490 "y.tab.c" /* yacc.c:1646  */
+#line 1492 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1714,7 +1716,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 124 "lego.y" /* yacc.c:1906  */
+#line 126 "lego.y" /* yacc.c:1906  */
 
 
 int main (void) {

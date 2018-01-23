@@ -155,6 +155,8 @@ int height(grid_t * grid, int row, int col){
 		return 0;
 	}
 
+
+
 	if(row >= grid->row || col >= grid->col || row<0 || col<0){
 		printf("Error in line %d: cell out of bounds\n", yylineno);
 		return -1;
@@ -231,6 +233,7 @@ void add_in_matrix(grid_t * grid, node_t * node, int coorow, int coocol){
 			snprintf(res, sizeof(res), "%d", curr);
 			strcat(res, t);
 			grid->matrix[i][j] = res;
+
 		}
 	}
 
@@ -477,6 +480,11 @@ int delete_block(grid_t * grid, char* id) {
 	}
 
 	if (strcmp(current->id, id) == 0){
+		if(current->coorow <0 || current->coocol<0){
+			free(current);
+			list->head = current->next;
+			return 1;
+		}
 		if (on_top(grid, current)){
 			free(current);
 			list->head = current->next;
@@ -490,6 +498,12 @@ int delete_block(grid_t * grid, char* id) {
 
 	while(current->next != NULL){
 		if (strcmp(current->next->id, id)==0 ){
+			if(current->coorow <0 || current->coocol<0){
+				temp = current->next;
+				current->next = temp->next;
+				free(temp);
+				return 1;
+			}
 			if (on_top(grid, current->next)){
 				temp = current->next;
 				current->next = temp->next;
@@ -573,45 +587,65 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 		if((strcmp(current->id, id) == 0)){
 			int temprow;
 			int tempcol;
+			int past_row;
+			int past_col;			
 			switch (dir_num){
-				case 1:
+				case 1:					// left
 				temprow = current->coorow;
 				tempcol = current->coocol-num;
 				break;
-				case 2:
+				case 2:					// right
 				temprow = current->coorow;
 				tempcol = current->coocol+num;
 				break;
-				case 3:
+				case 3:					/// up
 				temprow = current->coorow-num;
 				tempcol = current->coocol;
 				break;
-				case 4:
+				case 4:					//down
 				temprow = current->coorow+num;
 				tempcol = current->coocol;
 				break;
 			}
+			if (on_top(grid, current)){
+					delete_in_matrix(grid, current);
+					past_row=current->coorow;
+					past_col=current->coocol;
+					current->coorow=-1;
+					current->coocol=-1;
+					current->h=current->h-1;	
+			}
+			else{
+				return 0;
+			}
+			if(fits(grid, id, temprow, tempcol) == 0){
+				update(grid,0, id,past_row,past_col);
+				return 0;
+			}
+			int temprow1=temprow;
+			int temprcol1=tempcol;
+
 			while(fits(grid, id, temprow, tempcol) != 0){
-				update_dir(grid, id, dir, num);
 				switch (dir_num){
 					case 1:
-					temprow = current->coorow;
-					tempcol = current->coocol-num;
+					temprcol1=tempcol;					
+					tempcol = tempcol-num;
 					break;
 					case 2:
-					temprow = current->coorow;
-					tempcol = current->coocol+num;
+					temprcol1=tempcol;					
+					tempcol = tempcol+num;
 					break;
 					case 3:
-					temprow = current->coorow-num;
-					tempcol = current->coocol;
+					temprow1=temprow;
+					temprow = temprow-num;
 					break;
 					case 4:
-					temprow = current->coorow+num;
-					tempcol = current->coocol;
+					temprow1=temprow;
+					temprow = temprow+num;
 					break;
 				}
 			}
+			update(grid,0, id,temprow1,temprcol1);
 			return 1;
 		}
 		current = current->next;

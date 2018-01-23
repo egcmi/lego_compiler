@@ -93,6 +93,8 @@ searches for a grid with the provided id in the grid list (g_list), then sets it
 */
 int switch_grid(g_list * list, char* id) {
 	if (list->head == NULL){
+		if(strcmp(id,"-1")==0)
+			return 0;
 		printf("Error in line %d: no grids defined\n", yylineno);
 		return 0;
 	}
@@ -175,14 +177,14 @@ int show(g_list * list, char* id){
 			int maxRow = current->row;
 			int maxCol = current->col;
 			
-			printf("\n%-6s", id);
+			printf("\n%-4s", id);
 			for(int col=0; col<maxCol; col++){
 				printf("%-4d", col);
 			}
 			printf("\n\n");
 
 			for (int row=0; row<maxRow; row++){
-				printf("%-6d", row);
+				printf("%-4d", row);
 				for(int col=0; col<maxCol; col++){
 					printf("%-4s", current->matrix[row][col]);
 				}

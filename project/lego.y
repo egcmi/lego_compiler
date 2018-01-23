@@ -53,11 +53,11 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																															printf("Switched to grid %s\n", $3);
 																													}
 			| GVAR '=' GRID '(' NUM ',' NUM ')'									{ if ( add_grid(grid_list,$1,$5,$7) )
-																															printf("Created grid %s\nSwitched to grid %s\n", $1, $1);
+																															printf("Created grid %s and switched to grid %s\n", $1, $1);
 																													}
 			| VAR '=' TYPE '(' NUM ',' NUM ')'									{
 																														if( add(default_grid,$1,$5,$7,$3,-1,-1) )
-																															printf("Created brick %s\n", $1);
+																															printf("Created lego %s\n", $1);
 																													}
 			| PLACE VAR AT '(' NUM ',' NUM ')'									{
 																														if ( update(default_grid,0,$2,$5,$7) )
@@ -68,8 +68,8 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
 			| HEIGHT hopt																				{}
 			| DELETE dopt																				{}
-			| FITS VAR '(' NUM ',' NUM ')'											{
-																														if ( fits(default_grid,$2,$4,$6))
+			| FITS VAR AT '(' NUM ',' NUM ')'											{
+																														if ( fits(default_grid,$2,$5,$7))
 																															printf("TRUE\n");
 																														else
 																															printf("FALSE\n");
@@ -77,10 +77,12 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE			{
 																														if ( update(default_grid,0,$3,$6,$8) )
 																															printf("Placed %s at (%d,%d)\n", $3, $6, $8);
+																														else printf("Could not place %s at (%d,%d)\n", $3, $6, $8);
 																													}
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE			{
 																														if ( update(default_grid,1,$3,$6,$8) )
 																															printf("Moved %s to (%d,%d)\n", $3, $6, $8);
+																														else printf("Could not move %s to (%d,%d)\n", $3, $6, $8);
 																													}
 			| WHILE POSSIBLE ':' MOVE VAR DIR NUM								{ while_move(default_grid,$5,$6,$7); }
 			;
@@ -98,22 +100,22 @@ mopt  : VAR DIR NUM																				{
 hopt  : '(' NUM ',' NUM ')'																{	
 																														int h = height(default_grid,$2,$4);
 																														if(h > 0)
-																															printf("height of cell (%d,%d): %d\n", $2, $4, h);
+																															printf("Height of cell (%d,%d): %d\n", $2, $4, h);
 																													}
 			| VAR																								{	
 																														int h = height_var(default_grid,$1);
 																														if(h > 0)
-																															printf("Height of brick %s is: %d\n", $1, h);
+																															printf("Height of lego %s is: %d\n", $1, h);
 																													}
 			;
 
 dopt  : VAR																								{
 																														if ( delete_block(default_grid,$1) )
-																															printf("Deleted brick %s\n", $1);
+																															printf("Deleted lego %s\n", $1);
 																													}
 			| ALL																								{
 																														if ( delete_all(default_grid) )
-																														printf("Deleted all bricks on %s\n", default_grid->id);
+																														printf("Deleted all legos on grid %s\n", default_grid->id);
 																													}
 			| GRID GVAR																					{
 																														if ( delete_grid(grid_list,$2) )
