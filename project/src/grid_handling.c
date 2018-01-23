@@ -194,5 +194,5 @@ int show(g_list * list, char* id){
 		}
 		current = current->next;
 	}
-
+	printf("Error in line %d: %s defined\n", yylineno, id);
 }

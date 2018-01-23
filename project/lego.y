@@ -114,7 +114,7 @@ mopt  : VAR DIR NUM																				{
 																														int u = update_dir(default_grid,$1,$2,$3);
 																														switch(u){
 																															case 1:
-																																printf("Moved %s %s by %d", $1, $2, $3);
+																																printf("Moved %s %s by %d\n", $1, $2, $3);
 																																break;
 																															case -1:
 																																printf("Error in line %d: cell out of bounds\n", yylineno);
@@ -154,7 +154,7 @@ hopt  : '(' NUM ',' NUM ')'																{
 			| VAR																								{	
 																														int h = height_var(default_grid,$1);
 																														if(h > 0)
-																															printf("Height of lego %s is: %d\n", $1, h);
+																															printf("Height of lego %s: %d\n", $1, h);
 																													}
 			;
 

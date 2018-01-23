@@ -51,7 +51,7 @@ int add(grid_t * grid, char id[], int row, int col, char* type, int coorow, int 
 	}
 
 	if(strcmp(current->id, id) == 0){
-			printf("Error in line %d: %s already defined\n", yylineno, id);
+		printf("Error in line %d: %s already defined\n", yylineno, id);
 		free(node);
 		return 0;
 	}
@@ -185,7 +185,7 @@ int height_var(grid_t * grid, char* id){
 	while (current != NULL) {
 		if((strcmp(current->id, id) == 0)){
 			if(current->coorow == -1 && current->coocol == -1){
-			printf("Error in line %d: %s not placed\n", yylineno, id);
+				printf("Error in line %d: %s not placed\n", yylineno, id);
 				return 0;
 			}else{
 				h = current->h;
@@ -279,7 +279,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 	node_t * current = list->head;
 
 	if (list->head == NULL){
-	printf("Error in line %d: %s not defined\n", yylineno, id);
+		printf("Error in line %d: %s not defined\n", yylineno, id);
 		return 0;
 	}
 
@@ -294,7 +294,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						add_in_matrix(grid, current, coorow, coocol);
 						return f;
 					}else if (f == -4){
-						printf("Error in line %d: no room for %s\n", yylineno, id);
+						printf("Error in line %d: not enough room\n", yylineno);
 						return f;
 					}
 				}else{
@@ -318,6 +318,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						add_in_matrix(grid, current, coorow, coocol);
 						return f;
 					}else{
+						printf("Error in line %d: not enough room\n", yylineno);
 						add_in_matrix(grid, current, past_row, past_col);
 						return f;
 					}
@@ -356,30 +357,32 @@ int rotate(grid_t * grid, char* id) {
 	}
 
 	while (current != NULL) {
-		if(current->coorow != -1 && current->coocol != -1){
-			if (on_top(grid, current)){
-				delete_in_matrix(grid, current);
-			}else{
-				printf("Error in line %d: %s not on top\n", yylineno, id);
-				return 0;
-			}
-			int temp = current->row;
-			current->row = current->col;
-			current->col = temp;
-			if(fits(grid, current->id, current->coorow, current->coocol) == 1){
-				add_in_matrix(grid, current, current->coorow, current->coocol);
-				return 1;
-			}else{
-				temp = current->row;
+		if((strcmp(current->id, id) == 0)){
+			if(current->coorow != -1 && current->coocol != -1){
+				if (on_top(grid, current)){
+					delete_in_matrix(grid, current);
+				}else{
+					printf("Error in line %d: %s not on top\n", yylineno, id);
+					return 0;
+				}
+				int temp = current->row;
 				current->row = current->col;
 				current->col = temp;
-				add_in_matrix(grid, current, current->coorow, current->coocol);
-				printf("Error in line %d: cannot rotate\n", yylineno);
+				if(fits(grid, current->id, current->coorow, current->coocol) == 1){
+					add_in_matrix(grid, current, current->coorow, current->coocol);
+					return 1;
+				}else{
+					temp = current->row;
+					current->row = current->col;
+					current->col = temp;
+					add_in_matrix(grid, current, current->coorow, current->coocol);
+					printf("Error in line %d: cannot rotate\n", yylineno);
+					return 0;
+				}
+			}else{
+				printf("Error in line %d: %s not placed\n", yylineno, id);
 				return 0;
 			}
-		}else{
-			printf("Error in line %d: %s not placed\n", yylineno, id);
-			return 0;
 		}
 		current = current->next;
 	}
@@ -425,7 +428,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 	while (current != NULL) {
 		if((strcmp(current->id, id) == 0)){
 			if(current->coorow == -1 && current->coocol == -1){
-					printf("Error in line %d: %s not placed\n", yylineno, id);
+				printf("Error in line %d: %s not placed\n", yylineno, id);
 				return 0;
 			}else{
 				int temprow;
@@ -598,7 +601,7 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 				temprow = current->coorow;
 				tempcol = current->coocol+num;
 				break;
-				case 3:					/// up
+				case 3:					// up
 				temprow = current->coorow-num;
 				tempcol = current->coocol;
 				break;
@@ -608,14 +611,15 @@ int while_move (grid_t * grid, char* id, char* dir, int num){
 				break;
 			}
 			if (on_top(grid, current)){
-					delete_in_matrix(grid, current);
-					past_row=current->coorow;
-					past_col=current->coocol;
-					current->coorow=-1;
-					current->coocol=-1;
-					current->h=current->h-1;	
+				delete_in_matrix(grid, current);
+				past_row=current->coorow;
+				past_col=current->coocol;
+				current->coorow=-1;
+				current->coocol=-1;
+				current->h=current->h-1;	
 			}
 			else{
+				printf("Error in line %d: %s not on top\n", yylineno, id);
 				return 0;
 			}
 			if(fits(grid, id, temprow, tempcol) != 1){

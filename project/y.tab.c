@@ -1451,7 +1451,7 @@ yyreduce:
 																														int u = update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value));
 																														switch(u){
 																															case 1:
-																																printf("Moved %s %s by %d", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
+																																printf("Moved %s %s by %d\n", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
 																																break;
 																															case -1:
 																																printf("Error in line %d: cell out of bounds\n", yylineno);
@@ -1504,7 +1504,7 @@ yyreduce:
     {	
 																														int h = height_var(default_grid,(yyvsp[0].lexeme));
 																														if(h > 0)
-																															printf("Height of lego %s is: %d\n", (yyvsp[0].lexeme), h);
+																															printf("Height of lego %s: %d\n", (yyvsp[0].lexeme), h);
 																													}
 #line 1510 "y.tab.c" /* yacc.c:1646  */
     break;
