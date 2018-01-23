@@ -97,7 +97,7 @@ int fits(grid_t * grid, char id[], int row, int col){
 			int checkrow = (current->row)-gridrow+row;
 			int checkcol = (current->col)-gridcol+col;
 			if(checkrow > 0 || checkcol > 0){
-				return 0;
+				return -4;
 			}
 
 			char * var = grid->matrix[row][col];
@@ -293,7 +293,8 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						current->coocol = coocol;
 						add_in_matrix(grid, current, coorow, coocol);
 						return f;
-					}else{
+					}else if (f == -4){
+						printf("Error in line %d: no room for %s\n", yylineno, id);
 						return f;
 					}
 				}else{

@@ -92,6 +92,7 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																																break;
 																															case -2:
 																															case -3:
+																															case -4:
 																																printf("FALSE\n");
 																																break;
 																														}
