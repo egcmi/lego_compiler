@@ -482,9 +482,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    46,    46,    47,    50,    51,    55,    58,    62,    66,
-      67,    68,    69,    70,    71,    77,    82,    87,    90,    94,
-     100,   105,   112,   116,   120
+       0,    46,    46,    47,    50,    51,    55,    58,    62,    79,
+      80,    81,    82,    83,    84,    99,   104,   109,   112,   129,
+     148,   153,   160,   164,   168
 };
 #endif
 
@@ -1349,146 +1349,194 @@ yyreduce:
   case 8:
 #line 62 "lego.y" /* yacc.c:1646  */
     {
-																														if ( update(default_grid,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
-																															printf("Placed %s at (%d,%d)\n", (yyvsp[-6].lexeme), (yyvsp[-3].value), (yyvsp[-1].value));
+																														int u = update(default_grid,0,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
+																														switch(u){
+																															case 1:
+																																printf("Placed %s at (%d,%d)\n", (yyvsp[-6].lexeme), (yyvsp[-3].value), (yyvsp[-1].value));
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																													}
-#line 1356 "y.tab.c" /* yacc.c:1646  */
+#line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 66 "lego.y" /* yacc.c:1646  */
+#line 79 "lego.y" /* yacc.c:1646  */
     { show(grid_list,(yyvsp[0].lexeme)); }
-#line 1362 "y.tab.c" /* yacc.c:1646  */
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 67 "lego.y" /* yacc.c:1646  */
+#line 80 "lego.y" /* yacc.c:1646  */
     {}
-#line 1368 "y.tab.c" /* yacc.c:1646  */
+#line 1381 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 68 "lego.y" /* yacc.c:1646  */
+#line 81 "lego.y" /* yacc.c:1646  */
     { rotate(default_grid, (yyvsp[0].lexeme)); }
-#line 1374 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 69 "lego.y" /* yacc.c:1646  */
+#line 82 "lego.y" /* yacc.c:1646  */
     {}
-#line 1380 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 70 "lego.y" /* yacc.c:1646  */
+#line 83 "lego.y" /* yacc.c:1646  */
     {}
-#line 1386 "y.tab.c" /* yacc.c:1646  */
+#line 1399 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 71 "lego.y" /* yacc.c:1646  */
+#line 84 "lego.y" /* yacc.c:1646  */
     {
-																														if ( fits(default_grid,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)))
-																															printf("TRUE\n");
-																														else
-																															printf("FALSE\n");
+																														int f = fits(default_grid,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
+																														switch(f){
+																															case 1:
+																																printf("TRUE\n");
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																															case -3:
+																																printf("FALSE\n");
+																																break;
+																														}
 																													}
-#line 1397 "y.tab.c" /* yacc.c:1646  */
+#line 1419 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 77 "lego.y" /* yacc.c:1646  */
+#line 99 "lego.y" /* yacc.c:1646  */
     {
-																														if ( update(default_grid,0,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
+																														if ( update(default_grid,0,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) == 1)
 																															printf("Placed %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
-																														else printf("Could not place %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
+																														else printf("Cannot place %s at (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 82 "lego.y" /* yacc.c:1646  */
+#line 104 "lego.y" /* yacc.c:1646  */
     {
-																														if ( update(default_grid,1,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) )
+																														if ( update(default_grid,1,(yyvsp[-8].lexeme),(yyvsp[-5].value),(yyvsp[-3].value)) == 1)
 																															printf("Moved %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
-																														else printf("Could not move %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
+																														else printf("Cannot move %s to (%d,%d)\n", (yyvsp[-8].lexeme), (yyvsp[-5].value), (yyvsp[-3].value));
 																													}
-#line 1417 "y.tab.c" /* yacc.c:1646  */
+#line 1439 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 87 "lego.y" /* yacc.c:1646  */
+#line 109 "lego.y" /* yacc.c:1646  */
     { while_move(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)); }
-#line 1423 "y.tab.c" /* yacc.c:1646  */
+#line 1445 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 90 "lego.y" /* yacc.c:1646  */
+#line 112 "lego.y" /* yacc.c:1646  */
     {
-																														if ( update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value)) )
-																															printf("Moved %s %s by %d", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
+																														int u = update_dir(default_grid,(yyvsp[-2].lexeme),(yyvsp[-1].lexeme),(yyvsp[0].value));
+																														switch(u){
+																															case 1:
+																																printf("Moved %s %s by %d", (yyvsp[-2].lexeme), (yyvsp[-1].lexeme), (yyvsp[0].value));
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																													}
-#line 1432 "y.tab.c" /* yacc.c:1646  */
+#line 1467 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 94 "lego.y" /* yacc.c:1646  */
+#line 129 "lego.y" /* yacc.c:1646  */
     {
-																														if ( update(default_grid,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value)) )
-																														printf("Moved %s to (%d,%d)\n", (yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
+																														int u = update(default_grid,1,(yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
+																														switch(u){
+																															case 1:
+																																printf("Moved %s to (%d,%d)\n", (yyvsp[-6].lexeme),(yyvsp[-3].value),(yyvsp[-1].value));
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																												 }
-#line 1441 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 100 "lego.y" /* yacc.c:1646  */
+#line 148 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height(default_grid,(yyvsp[-3].value),(yyvsp[-1].value));
 																														if(h > 0)
 																															printf("Height of cell (%d,%d): %d\n", (yyvsp[-3].value), (yyvsp[-1].value), h);
 																													}
-#line 1451 "y.tab.c" /* yacc.c:1646  */
+#line 1499 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 105 "lego.y" /* yacc.c:1646  */
+#line 153 "lego.y" /* yacc.c:1646  */
     {	
 																														int h = height_var(default_grid,(yyvsp[0].lexeme));
 																														if(h > 0)
 																															printf("Height of lego %s is: %d\n", (yyvsp[0].lexeme), h);
 																													}
-#line 1461 "y.tab.c" /* yacc.c:1646  */
+#line 1509 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 112 "lego.y" /* yacc.c:1646  */
+#line 160 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_block(default_grid,(yyvsp[0].lexeme)) )
 																															printf("Deleted lego %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1470 "y.tab.c" /* yacc.c:1646  */
+#line 1518 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 116 "lego.y" /* yacc.c:1646  */
+#line 164 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_all(default_grid) )
 																														printf("Deleted all legos on grid %s\n", default_grid->id);
 																													}
-#line 1479 "y.tab.c" /* yacc.c:1646  */
+#line 1527 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 120 "lego.y" /* yacc.c:1646  */
+#line 168 "lego.y" /* yacc.c:1646  */
     {
 																														if ( delete_grid(grid_list,(yyvsp[0].lexeme)) )
 																														printf("Deleted grid %s\n", (yyvsp[0].lexeme));
 																													}
-#line 1488 "y.tab.c" /* yacc.c:1646  */
+#line 1536 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1492 "y.tab.c" /* yacc.c:1646  */
+#line 1540 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1716,7 +1764,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 126 "lego.y" /* yacc.c:1906  */
+#line 174 "lego.y" /* yacc.c:1906  */
 
 
 int main (void) {

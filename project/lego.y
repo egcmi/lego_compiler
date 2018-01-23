@@ -60,40 +60,88 @@ stmt  : EXIT																							{ exit(EXIT_SUCCESS); }
 																															printf("Created lego %s\n", $1);
 																													}
 			| PLACE VAR AT '(' NUM ',' NUM ')'									{
-																														if ( update(default_grid,0,$2,$5,$7) )
-																															printf("Placed %s at (%d,%d)\n", $2, $5, $7);
+																														int u = update(default_grid,0,$2,$5,$7);
+																														switch(u){
+																															case 1:
+																																printf("Placed %s at (%d,%d)\n", $2, $5, $7);
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																													}
 			| SHOW GVAR																					{ show(grid_list,$2); }
 			| MOVE mopt																					{}
 			| ROTATE VAR																				{ rotate(default_grid, $2); }
 			| HEIGHT hopt																				{}
 			| DELETE dopt																				{}
-			| FITS VAR AT '(' NUM ',' NUM ')'											{
-																														if ( fits(default_grid,$2,$5,$7))
-																															printf("TRUE\n");
-																														else
-																															printf("FALSE\n");
-																													} 
+			| FITS VAR AT '(' NUM ',' NUM ')'										{
+																														int f = fits(default_grid,$2,$5,$7);
+																														switch(f){
+																															case 1:
+																																printf("TRUE\n");
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																															case -3:
+																																printf("FALSE\n");
+																																break;
+																														}
+																													}
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN PLACE			{
-																														if ( update(default_grid,0,$3,$6,$8) )
+																														if ( update(default_grid,0,$3,$6,$8) == 1)
 																															printf("Placed %s at (%d,%d)\n", $3, $6, $8);
-																														else printf("Could not place %s at (%d,%d)\n", $3, $6, $8);
+																														else printf("Cannot place %s at (%d,%d)\n", $3, $6, $8);
 																													}
 			| IF FITS VAR AT '(' NUM ',' NUM ')' THEN MOVE			{
-																														if ( update(default_grid,1,$3,$6,$8) )
+																														if ( update(default_grid,1,$3,$6,$8) == 1)
 																															printf("Moved %s to (%d,%d)\n", $3, $6, $8);
-																														else printf("Could not move %s to (%d,%d)\n", $3, $6, $8);
+																														else printf("Cannot move %s to (%d,%d)\n", $3, $6, $8);
 																													}
 			| WHILE POSSIBLE ':' MOVE VAR DIR NUM								{ while_move(default_grid,$5,$6,$7); }
 			;
 
 mopt  : VAR DIR NUM																				{
-																														if ( update_dir(default_grid,$1,$2,$3) )
-																															printf("Moved %s %s by %d", $1, $2, $3);
+																														int u = update_dir(default_grid,$1,$2,$3);
+																														switch(u){
+																															case 1:
+																																printf("Moved %s %s by %d", $1, $2, $3);
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																													}
 			| VAR AT '(' NUM ',' NUM ')'												{
-																														if ( update(default_grid,1,$1,$4,$6) )
-																														printf("Moved %s to (%d,%d)\n", $1,$4,$6);
+																														int u = update(default_grid,1,$1,$4,$6);
+																														switch(u){
+																															case 1:
+																																printf("Moved %s to (%d,%d)\n", $1,$4,$6);
+																																break;
+																															case -1:
+																																printf("Error in line %d: cell out of bounds\n", yylineno);
+																																break;
+																															case -2:
+																																printf("Error in line %d: cannot place on top of dome or pyramid\n", yylineno);
+																																break;
+																															case -3:
+																																printf("Error in line %d: cannot place on blocks of different heights\n", yylineno);
+																																break;
+																														}
 																												 }
 			;
 
