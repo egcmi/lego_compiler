@@ -47,6 +47,6 @@ gvar		[A-Z]{num}{1,2}
 "rotate"	{return ROTATE;}
 "move"		{return MOVE;}
 
-.			{yyerror("Unknown character");}
+.			{yyerror("unknown character"); exit(1);}
 
 %%

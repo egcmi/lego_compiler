@@ -13,4 +13,6 @@ while possible: move a4 down 1
 show A1
 rotate a4
 show A1
+delete grid A1
+show A1
 exit

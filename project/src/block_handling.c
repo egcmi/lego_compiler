@@ -296,7 +296,7 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 					}else if (f == -4){
 						printf("Error in line %d: not enough room\n", yylineno);
 						return f;
-					}
+					} else return f;
 				}else{
 					printf("Error in line %d: %s already placed\n", yylineno, id);
 					return 0;
@@ -317,11 +317,11 @@ int update(grid_t * grid, int method, char* id, int coorow, int coocol) {
 						current->coocol = coocol;
 						add_in_matrix(grid, current, coorow, coocol);
 						return f;
-					}else{
+					}else if (f == -4){
 						printf("Error in line %d: not enough room\n", yylineno);
 						add_in_matrix(grid, current, past_row, past_col);
 						return f;
-					}
+					} else return f;
 				}else{
 					printf("Error in line %d: %s not placed\n", yylineno, id);
 					return 0;

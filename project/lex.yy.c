@@ -984,7 +984,7 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 50 "lego.l"
-{yyerror("Unknown character");}
+{yyerror("Unknown character"); exit(1);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
