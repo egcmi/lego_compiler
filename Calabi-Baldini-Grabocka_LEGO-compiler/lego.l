@@ -9,7 +9,7 @@
 
 num         [0-9]+
 dir         (left|right|up|down)
-type        (dome|pyramid|matrix|array) 
+type        (dome|pyramid|matrix) 
 var         [a-z]{num}{1,2}
 gvar        [A-Z]{num}{1,2}
 

@@ -1,0 +1,13 @@
+A2=grid (10,10)
+b1=matrix(5,5)
+b2=matrix(2,2)
+place b1 at (0,0)
+place b2 at (0,0)
+show A2
+while possible: move b2 down 1
+show A2
+delete grid A2
+show A2
+delete grid A1
+show A1
+exit
