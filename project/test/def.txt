@@ -1,9 +1,0 @@
-A1 = grid (10,10)
-a1 = matrix (1,3)
-place a1 at (2,2)
-a2 = matrix (1,1)
-place a2 at (4,2)
-show A1
-rotate a1
-show A1
-exit

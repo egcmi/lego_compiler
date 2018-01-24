@@ -451,7 +451,7 @@ int update_dir(grid_t * grid, char* id, char* dir, int num){
 					tempcol = current->coocol;
 					break;
 				}
-				if ( update(grid, 1, id, temprow, tempcol))
+				if ( update(grid, 1, id, temprow, tempcol) == 1)
 					return 1;
 				else return 0;
 			}

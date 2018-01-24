@@ -572,7 +572,7 @@ char *yytext_ptr;
     #include <stdio.h>
     #include <string.h>
     #include "y.tab.h"
-	void yyerror(char *);
+    void yyerror(char *);
 #line 577 "lex.yy.c"
 
 #define INITIAL 0
@@ -864,37 +864,37 @@ case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
 #line 17 "lego.l"
-{/* do we need to skip blanks? */}
+{}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 19 "lego.l"
 {yylval.value = atoi(yytext);
-			 return NUM;}
+             return NUM;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 21 "lego.l"
 {yylval.lexeme = strdup(yytext);
-			 return DIR;}
+             return DIR;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 23 "lego.l"
 {yylval.lexeme = strdup(yytext);
-			return VAR;}
+            return VAR;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 25 "lego.l"
 {yylval.lexeme = strdup(yytext);
-			return GVAR;}
+            return GVAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 28 "lego.l"
 {yylval.lexeme = strdup(yytext);
-			return TYPE;}
+            return TYPE;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
@@ -984,7 +984,7 @@ YY_RULE_SETUP
 case 24:
 YY_RULE_SETUP
 #line 50 "lego.l"
-{yyerror("Unknown character"); exit(1);}
+{yyerror("unknown character"); exit(EXIT_FAILURE);}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
